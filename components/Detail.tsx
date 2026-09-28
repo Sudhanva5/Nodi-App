@@ -15,6 +15,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
   const hasProof = !!report.after;
   const [view, setView] = useState<"before" | "after">(hasProof ? "after" : "before");
   const [askNo, setAskNo] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [viewer, setViewer] = useState<{ items: Media[]; index: number } | null>(null);
   const { speak, speaking } = useSpeak();
   const post = OFFICIAL_POSTS[0];
@@ -28,15 +29,19 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
 
   return (
     <div className="screen detail enter">
+      <div className={"d-top" + (scrolled ? " solid" : "")}>
+        <StatusBar dark={!scrolled} />
+        <div className="d-nav">
+          <button className="glassbtn" onClick={onBack} aria-label="Back"><ChevronLeft size={24} /></button>
+          {scrolled && <span className="d-toptitle">{report.title}</span>}
+          <button className="glassbtn" aria-label="Share"><Share size={19} /></button>
+        </div>
+      </div>
+      <div className="scroll d-scroll" onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 250)}>
       <div className="d-hero">
         <img src={view === "after" && report.after ? report.after : report.photo} alt="" key={view} className="fadein" />
         <div className="d-hero-shade" />
         <div className="pblur" aria-hidden><i /><i /><i /><i /><i /></div>
-        <StatusBar dark />
-        <div className="d-nav">
-          <button className="glassbtn" onClick={onBack} aria-label="Back"><ChevronLeft size={24} /></button>
-          <button className="glassbtn" aria-label="Share"><Share size={19} /></button>
-        </div>
         {hasProof && (
           <div className="ba-seg">
             <button className={view === "before" ? "on" : ""} onClick={() => setView("before")}>{t("Before")}</button>
@@ -50,7 +55,6 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
         </div>
       </div>
 
-      <div className="scroll d-scroll">
         <section className={"statuscard" + (report.reopened ? " warn" : report.stage === 4 ? " done" : "")}>
           <div className="sc-top">
             <h2 className="sc-head">{headline}</h2>

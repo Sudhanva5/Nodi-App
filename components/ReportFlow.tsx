@@ -1,15 +1,16 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { X, Zap, RefreshCw, Mic, MapPin, Users, Sparkles, ChevronRight, Check, FileText, MessageCircle, Plus, Lock, Play, Pause, Trash2 } from "lucide-react";
+import { X, Zap, RefreshCw, MapPin, Sparkles, ChevronRight, Check, FileText, MessageCircle, Plus, Lock, Play, Camera, Video, Image as ImageIcon } from "lucide-react";
 import { Category, CATEGORIES, Report } from "@/lib/data";
 import { Lang } from "@/lib/i18n";
 import { CatBadge, CatIcon, StatusBar, NyMark, GbaSeal } from "./ui";
 
 type Mode = "photo" | "video" | "voice";
+export type Attachment = { type: "photo" | "video"; src: string; dur?: string };
 
 /* ---------------- Capture ---------------- */
 export function Capture({ initialMode, onClose, onCaptured }: { initialMode: Mode; onClose: () => void; onCaptured: (m: Mode) => void }) {
-  const [mode, setMode] = useState<Mode>(initialMode);
+  const [mode, setMode] = useState<Mode>(initialMode === "video" ? "video" : "photo");
   const [flash, setFlash] = useState(false);
   const [rec, setRec] = useState(false);
   const [secs, setSecs] = useState(0);
@@ -20,51 +21,34 @@ export function Capture({ initialMode, onClose, onCaptured }: { initialMode: Mod
     if (mode === "photo") { setFlash(true); setTimeout(() => onCaptured("photo"), 380); }
     if (mode === "video") { if (!rec) { setSecs(0); setRec(true); } else { setRec(false); onCaptured("video"); } }
   };
-  const voiceDown = () => { setSecs(0); setRec(true); };
-  const voiceUp = () => { if (!rec) return; setRec(false); onCaptured("voice"); };
 
   return (
     <div className="screen capture">
       <StatusBar dark />
-      {mode !== "voice" ? (
-        <div className="viewfinder">
-          <img src="/img/water.jpg" alt="" className="vf-img" />
-          <div className="vf-shade" />
-          <div className="brackets"><i /><i /><i /><i /></div>
-          <div className="vf-hint">{rec ? <span className="recdot">REC 0:0{secs}</span> : "Point at the problem"}</div>
-        </div>
-      ) : (
-        <div className="voicestage">
-          <div className={"voiceorb" + (rec ? " live" : "")}><Mic size={54} strokeWidth={2.2} /></div>
-          <div className="voice-title">{rec ? "Listening…" : "Hold the button and tell us what's wrong"}</div>
-          <div className="voice-sub">{rec ? `0:0${Math.min(secs, 9)} · release to finish` : "Kannada, English, Hindi or Tamil. We'll find your location."}</div>
-          {rec && <div className="wave big">{Array.from({ length: 28 }).map((_, i) => <span key={i} style={{ animationDelay: `${(i % 7) * 0.09}s` }} />)}</div>}
-        </div>
-      )}
+      <div className="viewfinder">
+        <img src="/img/water.jpg" alt="" className="vf-img" />
+        <div className="vf-shade" />
+        <div className="brackets"><i /><i /><i /><i /></div>
+        <div className="vf-hint">{rec ? <span className="recdot">REC 0:0{secs}</span> : "Point at the problem"}</div>
+      </div>
       {flash && <div className="flash" />}
 
       <div className="cap-top">
-        <button className="glassbtn" onClick={onClose} aria-label="Close"><X size={22} strokeWidth={2.5} /></button>
+        <button className="glassbtn" onClick={onClose} aria-label="Close"><X size={22} /></button>
         <span className="safe-pill">Only if it's safe to stop</span>
-        <button className="glassbtn" aria-label="Flash"><Zap size={20} strokeWidth={2.4} /></button>
+        <button className="glassbtn" aria-label="Flash"><Zap size={20} /></button>
       </div>
 
       <div className="cap-bottom">
         <div className="modes">
-          {(["video", "photo", "voice"] as Mode[]).map((m) => (
+          {(["video", "photo"] as Mode[]).map((m) => (
             <button key={m} className={m === mode ? "on" : ""} onClick={() => { setRec(false); setMode(m); }}>{m.toUpperCase()}</button>
           ))}
         </div>
         <div className="shutter-row">
           <div className="gallery-thumb"><img src="/img/pothole.jpg" alt="Gallery" /></div>
-          {mode === "voice" ? (
-            <button className={"shutter mic" + (rec ? " rec" : "")} onPointerDown={voiceDown} onPointerUp={voiceUp} onPointerLeave={voiceUp} aria-label="Hold to speak">
-              <Mic size={34} strokeWidth={2.4} />
-            </button>
-          ) : (
-            <button className={"shutter" + (mode === "video" ? " video" : "") + (rec ? " rec" : "")} onClick={shoot} aria-label="Capture"><span /></button>
-          )}
-          <button className="glassbtn lg" aria-label="Flip camera"><RefreshCw size={22} strokeWidth={2.3} /></button>
+          <button className={"shutter" + (mode === "video" ? " video" : "") + (rec ? " rec" : "")} onClick={shoot} aria-label="Capture"><span /></button>
+          <button className="glassbtn lg" aria-label="Flip camera"><RefreshCw size={22} /></button>
         </div>
       </div>
     </div>
@@ -72,36 +56,38 @@ export function Capture({ initialMode, onClose, onCaptured }: { initialMode: Mod
 }
 
 /* ---------------- Confirm (one sheet, smart defaults) ---------------- */
-export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang; onBack: () => void; onSend: (cat: Category, voice: boolean) => void }) {
+type Att = { type: "photo" | "video"; src: string; dur?: string };
+const EXTRA: Att[] = [
+  { type: "video", src: "/img/water.jpg", dur: "0:09" },
+  { type: "photo", src: "/img/pothole.jpg" },
+  { type: "video", src: "/img/water.jpg", dur: "0:06" },
+];
+
+export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang; onBack: () => void; onSend: (cat: Category, media: Att[]) => void }) {
   const [scanning, setScanning] = useState(true);
   const [cat, setCat] = useState<Category>("water");
   const [picker, setPicker] = useState(false);
-  const [vstate, setVstate] = useState<"idle" | "rec" | "done">(mode === "voice" ? "done" : "idle");
-  const [vsecs, setVsecs] = useState(mode === "voice" ? 8 : 0);
-  const [playing, setPlaying] = useState(false);
+  const [adder, setAdder] = useState(false);
+  const [media, setMedia] = useState<Att[]>([mode === "video" ? { type: "video", src: "/img/water.jpg", dur: "0:04" } : { type: "photo", src: "/img/water.jpg" }]);
   useEffect(() => { const t = setTimeout(() => setScanning(false), 1500); return () => clearTimeout(t); }, []);
-  useEffect(() => { if (vstate !== "rec") return; const i = setInterval(() => setVsecs((s) => s + 1), 1000); return () => clearInterval(i); }, [vstate]);
-  useEffect(() => { if (!playing) return; const t = setTimeout(() => setPlaying(false), 2500); return () => clearTimeout(t); }, [playing]);
-
-  const down = () => { setVsecs(0); setVstate("rec"); };
-  const up = () => { if (vstate === "rec") setVstate("done"); };
+  const add = (type: "photo" | "video") => {
+    const pool = EXTRA.filter((x) => x.type === type);
+    const next = pool[(media.filter((m) => m.type === type).length) % pool.length] ?? EXTRA[0];
+    setMedia((m) => [...m, { ...next }]); setAdder(false);
+  };
 
   return (
     <div className="screen confirm">
       <div className="confirm-media">
-        {mode === "voice" ? (
-          <div className="voicehero"><div className="wave still">{Array.from({ length: 36 }).map((_, i) => <span key={i} style={{ height: 8 + ((i * 37) % 30) }} />)}</div></div>
-        ) : (
-          <img src="/img/water.jpg" alt="Your photo" />
-        )}
+        <img src="/img/water.jpg" alt="Your photo" />
         <StatusBar dark />
         <div className="media-top">
-          <button className="glassbtn" onClick={onBack} aria-label="Retake"><X size={20} strokeWidth={2.5} /></button>
+          <button className="glassbtn" onClick={onBack} aria-label="Retake"><X size={20} /></button>
           {mode === "video" && <span className="safe-pill"><Play size={12} fill="#fff" /> 0:04 video</span>}
-          <button className="glassbtn addmedia" aria-label="Add another"><Plus size={20} strokeWidth={2.5} /></button>
+          <button className="glassbtn addmedia" onClick={() => setAdder(true)} aria-label="Add more photos or videos"><Plus size={20} /></button>
         </div>
         {scanning && (
-          <div className="scan"><div className="scanline" /><span className="scan-label"><Sparkles size={14} /> {mode === "voice" ? "Understanding what you said…" : "Looking at your photo…"}</span></div>
+          <div className="scan"><div className="scanline" /><span className="scan-label"><Sparkles size={14} /> Looking at your photo…</span></div>
         )}
       </div>
 
@@ -120,7 +106,7 @@ export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang
               <span className="field-act">Change</span>
             </button>
             <div className="field">
-              <span className="field-ic"><span className="catbadge" style={{ width: 40, height: 40 }}><MapPin size={20} strokeWidth={1.9} /></span></span>
+              <span className="field-ic"><span className="catbadge" style={{ width: 40, height: 40 }}><MapPin size={20} /></span></span>
               <span className="field-main">
                 <span className="field-label">Where</span>
                 <span className="field-val">80 Feet Rd, Sony World Jn.</span>
@@ -130,42 +116,45 @@ export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang
             </div>
           </div>
 
-          {!scanning && (
-            <div className="dupe">
-              <div className="avatars"><i>A</i><i>S</i><i>K</i></div>
-              <div><b>3 neighbours reported this today.</b> We'll add your report to theirs, so it moves up faster.</div>
+          <div className="attach">
+            <div className="attach-head"><b>Photos and videos</b><span>{media.length} added</span></div>
+            <div className="attach-row">
+              {media.map((m, i) => (
+                <span key={i} className={"att" + (m.type === "video" ? " vid" : "")}>
+                  <img src={m.src} alt="" />
+                  {m.type === "video" && <><span className="att-play"><Play size={10} fill="currentColor" /></span><em>{m.dur}</em></>}
+                  {i > 0 && <button className="att-x" onClick={() => setMedia((all) => all.filter((_, j) => j !== i))} aria-label="Remove"><X size={11} /></button>}
+                </span>
+              ))}
             </div>
-          )}
-
-          <div className="voicebox">
-            {vstate === "done" ? (
-              <div className="vnote">
-                <button className="vplay" onClick={() => setPlaying((p) => !p)} aria-label="Play voice note">{playing ? <Pause size={18} fill="#111" /> : <Play size={18} fill="#111" />}</button>
-                <div className="vnote-main">
-                  <div className={"wave mini" + (playing ? " playing" : "")}>{Array.from({ length: 26 }).map((_, i) => <span key={i} style={{ height: 5 + ((i * 53) % 18) }} />)}</div>
-                  <div className="vtrans">"ಬೆಳಗ್ಗೆಯಿಂದ ನೀರು ಹರಿಯುತ್ತಿದೆ, ಫುಟ್‌ಪಾತ್ ಮುಳುಗಿದೆ"<span>Water has been flowing since morning, the footpath is under water. · Kannada · 0:0{Math.min(vsecs, 9)}</span></div>
-                </div>
-                <button className="vdel" onClick={() => { setVstate("idle"); setPlaying(false); }} aria-label="Delete voice note"><Trash2 size={17} /></button>
-              </div>
-            ) : (
-              <button className={"holdspeak" + (vstate === "rec" ? " rec" : "")} onPointerDown={down} onPointerUp={up} onPointerLeave={up}>
-                {vstate === "rec" ? (
-                  <><span className="recdot" /> <span className="wave mini live">{Array.from({ length: 18 }).map((_, i) => <span key={i} style={{ animationDelay: `${(i % 6) * 0.1}s` }} />)}</span> <span>0:0{Math.min(vsecs, 9)} · release to save</span></>
-                ) : (
-                  <><Mic size={20} strokeWidth={2.4} /> <span><b>Hold to tell us more</b> <em>Optional · any language</em></span></>
-                )}
-              </button>
-            )}
+            <button className="adddetails" onClick={() => setAdder(true)}>
+              <span className="ad-ic"><Plus size={18} /></span>
+              <span className="ad-main"><b>Add more details</b><em>More photos or videos from other angles</em></span>
+            </button>
           </div>
 
           <p className="privacy"><Lock size={13} /> Your name stays private. Faces and number plates are blurred on the public map.</p>
         </div>
         <div className="cs-footer">
-          <button className="primary" disabled={scanning} onClick={() => onSend(cat, vstate === "done")}>
+          <button className="primary" disabled={scanning} onClick={() => onSend(cat, media)}>
             {lang === "kn" ? "GBA ಗೆ ಕಳುಹಿಸಿ" : "Send to GBA"}
           </button>
         </div>
       </div>
+
+      {adder && (
+        <div className="modal-scrim" onClick={() => setAdder(false)}>
+          <div className="picker" onClick={(e) => e.stopPropagation()}>
+            <span className="grabber" />
+            <h3>Add more details</h3>
+            <div className="addopts">
+              <button onClick={() => add("video")}><span><Video size={20} /></span>Record a video</button>
+              <button onClick={() => add("photo")}><span><Camera size={20} /></span>Take another photo</button>
+              <button onClick={() => add("photo")}><span><ImageIcon size={20} /></span>Choose from gallery</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {picker && (
         <div className="modal-scrim" onClick={() => setPicker(false)}>
@@ -239,7 +228,7 @@ export function Success({ report, onTrack, onDone, onLetter }: { report: Report;
         <div className="ticket">
           <div className="ticket-row"><span>Complaint no.</span><b className="mono">{report.id}</b></div>
           <div className="ticket-row"><span>Sent to</span><b>Asst. Engineer, Ward 151</b></div>
-          <div className="ticket-row"><span>Reported by</span><b>You and 3 neighbours</b></div>
+          <div className="ticket-row"><span>Photos and videos</span><b>Attached to the letter</b></div>
         </div>
         <button className="lettercard" onClick={onLetter}>
           <span className="lc-ic"><FileText size={20} strokeWidth={1.9} /></span>
@@ -267,7 +256,7 @@ export function Letter({ report, onClose }: { report: Report; onClose: () => voi
           <p><b>To,</b><br />The Assistant Engineer,<br />Ward 151 (Koramangala), Bengaluru South City Corporation,<br />Greater Bengaluru Authority.</p>
           <p><b>Subject:</b> {CATEGORIES[report.cat].label} at {report.place}</p>
           <p>Respected Sir/Madam,</p>
-          <p>I wish to bring to your notice a {CATEGORIES[report.cat].label.toLowerCase()} at the above location, reported today at 9:38 AM. 4 residents have raised the same issue. A geo-tagged photograph and a voice description are attached.</p>
+          <p>I wish to bring to your notice a {CATEGORIES[report.cat].label.toLowerCase()} at the above location, reported today at 9:38 AM. Geo-tagged photographs and videos of the issue are attached.</p>
           <p>As per the ward's service standard, this is expected to be resolved within {CATEGORIES[report.cat].sla} day(s). I request you to kindly take action and update the status on the Sahaaya portal.</p>
           <div className="paper-photo"><img src={report.photo} alt="" /><span>12.9349° N, 77.6232° E · 27 Sep 2026, 9:38 AM</span></div>
           <p>Yours sincerely,<br /><b>Ramesh K.</b> (resident, Ward 151)<br />Sent through the Nodi app</p>

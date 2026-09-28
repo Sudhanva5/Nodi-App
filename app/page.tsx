@@ -10,15 +10,13 @@ const NOTES: Record<ScreenKey, { n: string; title: string; why: string[] }> = {
     "Tapping the profile photo opens your ward, a link to your ward on Sahaaya, and accessibility settings: language, bigger text, read aloud and reduce motion.",
   ] },
   capture: { n: "02a", title: "Report · Camera first", why: [
-    "The app opens straight into the camera, so there's no form or category to pick first. Photo, video and voice use the same controls as the iOS Camera app.",
-    "In voice mode you hold and speak, like WhatsApp. It's the easiest path for elders and anyone who can't read well.",
+    "The app opens straight into the camera, so there's no form or category to pick first. Photo and video use the same controls as the iOS Camera app.",
     "'Only if it's safe to stop' reminds drivers and riders to report safely.",
   ] },
   confirm: { n: "02b", title: "Report · One confirm sheet", why: [
     "The AI and GPS fill in the category, location and ward. The user just checks and sends, so there's no step-by-step wizard.",
     "If the AI guesses wrong, the category is a chip you can change. A wrong guess never blocks sending.",
-    "Duplicate check: '3 neighbours reported this' merges the new report into theirs, so the city gets one stronger complaint, not four weak ones.",
-    "The voice note works in any language, with a live transcript and translation for the engineer.",
+    "'Add more details' lets people attach more photos or videos from other angles, which gives the engineer a clearer picture before they visit.",
   ] },
   sending: { n: "02c", title: "Trust loader", why: [
     "The wait becomes proof. The loader shows three real steps: attached, delivered to the ward, letter emailed.",

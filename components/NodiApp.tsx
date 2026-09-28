@@ -7,7 +7,7 @@ import Home from "./Home";
 import Detail, { VerifiedSheet } from "./Detail";
 import Nearby from "./Nearby";
 import Profile, { Prefs } from "./Profile";
-import { Capture, Confirm, Sending, Success, Letter } from "./ReportFlow";
+import { Capture, Confirm, Sending, Success, Letter, Attachment } from "./ReportFlow";
 
 export type ScreenKey = "home" | "capture" | "confirm" | "sending" | "success" | "detail" | "nearby";
 type Mode = "photo" | "video" | "voice";
@@ -15,17 +15,17 @@ type Flow = null | "capture" | "confirm" | "sending" | "success";
 
 const NEW_ID = "NODI-24611";
 
-function makeNew(cat: Category, voice: boolean): Report {
+function makeNew(cat: Category, media: Attachment[] = [{ type: "photo", src: "/img/water.jpg" }]): Report {
   return {
     id: NEW_ID, cat,
     title: cat === "water" ? "Water leak on 80 Feet Rd" : `${CATEGORIES[cat].label} on 80 Feet Rd`,
     place: "80 Feet Rd, near Sony World Jn.", ward: "Ward 151 · Koramangala",
     photo: "/img/water.jpg", stage: 1,
     statusLine: "An engineer will be assigned soon.",
-    expected: "Mon, 28 Sep", reportedAgo: "just now", meToo: 3,
+    expected: "Mon, 28 Sep", reportedAgo: "just now", meToo: 0,
     timeline: [
       { when: "Just now", kind: "letter", title: "Letter sent", body: "A formal letter went to the Ward 151 office and was logged on Sahaaya." },
-      { when: "Today · 9:38am", kind: "you", title: "Reported", body: "You reported a water leak on 80 Feet Rd. 3 neighbours reported it today too, so we added your report to theirs.", media: voice ? [{ type: "photo", src: "/img/water.jpg" }, { type: "voice", dur: "0:08" }] : [{ type: "photo", src: "/img/water.jpg" }] },
+      { when: "Today · 9:38am", kind: "you", title: "Reported", body: `You reported a ${CATEGORIES[cat].label.toLowerCase()} on 80 Feet Rd, with ${media.length} ${media.length === 1 ? "photo" : "photos and videos"}.`, media },
     ],
   };
 }
@@ -51,7 +51,7 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
   useEffect(() => { onScreen?.(screen); }, [screen, onScreen]);
   useEffect(() => { if (!toast) return; const x = setTimeout(() => setToast(null), 2600); return () => clearTimeout(x); }, [toast]);
 
-  const ensureNew = useCallback(() => setReports((rs) => rs.some((r) => r.id === NEW_ID) ? rs : [makeNew("water", true), ...rs]), []);
+  const ensureNew = useCallback(() => setReports((rs) => rs.some((r) => r.id === NEW_ID) ? rs : [makeNew("water"), ...rs]), []);
 
   useEffect(() => {
     if (!jump) return;
@@ -80,7 +80,7 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
           onReport={(m) => { setMode(m ?? "photo"); setFlow("capture"); }}
           onOpen={(id) => setDetailId(id)} />
       )}
-      {screen === "nearby" && <Nearby lang={lang} onVerified={() => setVerified(true)} extraMeToo={newReport ? { n2: 1 } : {}} />}
+      {screen === "nearby" && <Nearby lang={lang} onVerified={() => setVerified(true)} extraMeToo={{}} />}
       {screen === "detail" && detail && (
         <Detail report={detail} lang={lang} autoRead={prefs.readAloud} onBack={() => setDetailId(null)} onLetter={() => setLetterFor(detail.id)} onVerified={() => setVerified(true)}
           onConfirm={() => {
@@ -104,7 +104,7 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
       )}
 
       {flow === "capture" && <div className="modal-screen"><Capture initialMode={mode} onClose={() => setFlow(null)} onCaptured={(m) => { setMode(m); setFlow("confirm"); }} /></div>}
-      {flow === "confirm" && <div className="modal-screen"><Confirm mode={mode} lang={lang} onBack={() => setFlow("capture")} onSend={(cat, voice) => { setReports((rs) => [makeNew(cat, voice), ...rs.filter((r) => r.id !== NEW_ID)]); setFlow("sending"); }} /></div>}
+      {flow === "confirm" && <div className="modal-screen"><Confirm mode={mode} lang={lang} onBack={() => setFlow("capture")} onSend={(cat, media) => { setReports((rs) => [makeNew(cat, media), ...rs.filter((r) => r.id !== NEW_ID)]); setFlow("sending"); }} /></div>}
       {flow === "sending" && <div className="modal-screen"><Sending onDone={() => { ensureNew(); setFlow("success"); }} /></div>}
       {flow === "success" && newReport && (
         <div className="modal-screen"><Success report={newReport} onLetter={() => setLetterFor(NEW_ID)} onDone={() => { setFlow(null); setDetailId(null); setTab("home"); }} onTrack={() => { setFlow(null); setDetailId(NEW_ID); }} /></div>
