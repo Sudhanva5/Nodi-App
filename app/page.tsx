@@ -4,7 +4,7 @@ import NodiApp, { ScreenKey } from "@/components/NodiApp";
 
 type TaskKey = "report" | "progress" | "nearby" | "settings";
 const TASKS: { k: TaskKey; title: string; how: string }[] = [
-  { k: "report", title: "Report a problem", how: "Tap Report a problem, take the photo, add a video with +, write or say a note, then Send to GBA." },
+  { k: "report", title: "Report a problem", how: "Tap the camera on Home, take the photo, add a video with +, write or say a note, then Send to GBA." },
   { k: "progress", title: "Check the progress", how: "Open the pothole under 'Check if it's fixed'. Scroll through the proof, GBA's post and the timeline." },
   { k: "nearby", title: "Explore Nearby", how: "Open Nearby, tap any photo on the map, then switch to Official updates." },
   { k: "settings", title: "Accessibility and personal settings", how: "Tap your photo on Home. Try Light mode, Kannada or bigger text." },
