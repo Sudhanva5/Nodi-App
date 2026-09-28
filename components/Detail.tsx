@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ChevronLeft, Share, Volume2, Square, FileText, User, Users, Check, RotateCcw, Camera, AlertTriangle, MapPin } from "lucide-react";
+import { ChevronLeft, Share, Volume2, Square, FileText, Check, RotateCcw, Camera, AlertTriangle, MapPin } from "lucide-react";
 import { Report, STAGES, OFFICIAL_POSTS } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
 import { StatusBar, StageBar, Verified, useSpeak, Tweet } from "./ui";
 
-const FACES = ["#E8A87C", "#85CDCA", "#C38D9E", "#41B3A3", "#E27D60"];
 
 export default function Detail({ report, lang, autoRead, onBack, onConfirm, onReopen, onLetter, onVerified }: {
   report: Report; lang: Lang; autoRead?: boolean; onBack: () => void; onConfirm: () => void; onReopen: () => void; onLetter: () => void; onVerified: () => void;
@@ -71,32 +70,20 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
 
         {hasProof && (
           <section className="xpost">
-            <div className="xp-label"><span>GBA&apos;s post on Twitter</span><span className="xp-match"><MapPin size={11} /> 18 m from your report</span></div>
+            <div className="xp-label"><span>GBA&apos;s post on Twitter</span></div>
             <Tweet d={{ name: post.name, handle: post.handle, avatar: "/img/gba-logo.png", text: post.text, photo: post.photo, time: "11:42 AM · Sep 27, 2026", likes: 212, replies: 14, url: "https://x.com/GBA_office" }} />
           </section>
         )}
 
         <section>
-          <h2 className="sectitle">{t("What happened so far")}</h2>
+          <h2 className="tl-heading">{t("What happened so far")}</h2>
           <ol className="timeline">
             {report.timeline.map((e, i) => (
               <li key={i} className={"tl-" + e.kind + (i === 0 ? " latest" : "")}>
-                <span className="tl-dot">{iconFor(e.kind)}</span>
+                <span className="tl-dot" />
                 <div className="tl-body">
-                  <div className="tl-title">{e.title}{e.kind === "assigned" && <Verified size={14} onClick={onVerified} />}</div>
-                  {e.body && (
-                    <div className="tl-meta">
-                      {e.org && <img src="/img/bscc-logo.png" alt="" className="tl-org" />}
-                      <span>{e.body}</span>
-                    </div>
-                  )}
                   <div className="tl-time">{e.when}</div>
-                  {e.avatars && (
-                    <div className="tl-faces">
-                      {FACES.slice(0, Math.min(5, e.avatars)).map((c, k) => <i key={k} style={{ background: c }} />)}
-                      {e.avatars > 5 && <b>+{e.avatars - 5}</b>}
-                    </div>
-                  )}
+                  <p className="tl-text">{e.title}</p>
                   {e.thumb && <img src={e.thumb} alt="" className="tl-thumb" />}
                   {e.kind === "letter" && <button className="tl-link" onClick={onLetter}><FileText size={13} /> View letter</button>}
                 </div>
@@ -123,17 +110,6 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
   );
 }
 
-function iconFor(k: string) {
-  const p = { size: 13, strokeWidth: 2.6 };
-  switch (k) {
-    case "you": return <User {...p} />;
-    case "letter": return <FileText {...p} />;
-    case "assigned": return <User {...p} />;
-    case "reopen": return <RotateCcw {...p} />;
-    case "neighbours": return <Users {...p} />;
-    default: return <Check {...p} />;
-  }
-}
 
 export function VerifiedSheet({ onClose }: { onClose: () => void }) {
   return (

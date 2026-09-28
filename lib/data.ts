@@ -63,11 +63,10 @@ export const INITIAL_REPORTS: Report[] = [
     meToo: 14,
     engineer: "S. Nagaraj, Asst. Engineer",
     timeline: [
-      { when: "Today, 11:42 AM", kind: "proof", title: "Work done", body: "Photo from GBA on Twitter", thumb: "/img/fixed.jpg" },
-      { when: "Fri, 25 Sep, 4:10 PM", kind: "assigned", title: "Assigned to S. Nagaraj", body: "Asst. Engineer, Ward 151", org: true },
-      { when: "Thu, 24 Sep, 9:05 AM", kind: "letter", title: "Formal letter sent", body: "Ref GBA/W151/2026/4471" },
-      { when: "Thu, 24 Sep, 8:52 AM", kind: "neighbours", title: "14 neighbours supported", avatars: 14 },
-      { when: "Thu, 24 Sep, 8:51 AM", kind: "you", title: "You reported this", thumb: "/img/pothole.jpg" },
+      { when: "Today · 11:42am", kind: "proof", title: "According to GBA's post on Twitter, the pothole has been filled. We matched the post to your report by its location.", thumb: "/img/fixed.jpg" },
+      { when: "Fri, 25 Sep · 4:10pm", kind: "assigned", title: "S. Nagaraj, Assistant Engineer for Ward 151, was asked to fix it by Sat, 26 Sep." },
+      { when: "Thu, 24 Sep · 9:05am", kind: "letter", title: "A formal letter went to the Ward 151 office and was logged on Sahaaya." },
+      { when: "Thu, 24 Sep · 8:51am", kind: "you", title: "You reported a pothole at 5th Cross, Koramangala 8th Block.", thumb: "/img/pothole.jpg" },
     ],
   },
   {
@@ -84,9 +83,9 @@ export const INITIAL_REPORTS: Report[] = [
     meToo: 6,
     engineer: "R. Kavitha, Electrical AE",
     timeline: [
-      { when: "Sat, 26 Sep, 10:20 AM", kind: "assigned", title: "Assigned to R. Kavitha", body: "Electrical Asst. Engineer, Ward 151", org: true },
-      { when: "Fri, 25 Sep, 7:40 PM", kind: "letter", title: "Formal letter sent", body: "Ref GBA/W151/2026/4502" },
-      { when: "Fri, 25 Sep, 7:31 PM", kind: "you", title: "You reported this", thumb: "/img/streetlight.jpg" },
+      { when: "Sat, 26 Sep · 10:20am", kind: "assigned", title: "R. Kavitha, Electrical Assistant Engineer for Ward 151, was asked to fix it by Mon, 28 Sep." },
+      { when: "Fri, 25 Sep · 7:40pm", kind: "letter", title: "A formal letter went to the Ward 151 electrical section." },
+      { when: "Fri, 25 Sep · 7:31pm", kind: "you", title: "You reported a streetlight that isn't working on 17th Main, Koramangala 6th Block.", thumb: "/img/streetlight.jpg" },
     ],
   },
   {
@@ -103,10 +102,10 @@ export const INITIAL_REPORTS: Report[] = [
     meToo: 22,
     engineer: "SWM team, Ward 151",
     timeline: [
-      { when: "Mon, 21 Sep, 8:02 AM", kind: "fixed", title: "You confirmed it's fixed" },
-      { when: "Sun, 20 Sep, 6:15 PM", kind: "proof", title: "Cleared by the waste team", org: true },
-      { when: "Sat, 19 Sep, 7:00 PM", kind: "letter", title: "Formal letter sent", body: "Ref GBA/W151/2026/4213" },
-      { when: "Sat, 19 Sep, 6:48 PM", kind: "you", title: "You reported this", thumb: "/img/garbage.jpg" },
+      { when: "Mon, 21 Sep · 8:02am", kind: "fixed", title: "You confirmed the spot is clean. The complaint is closed." },
+      { when: "Sun, 20 Sep · 6:15pm", kind: "proof", title: "The Solid Waste team for Ward 151 cleared the garbage and shared a photo." },
+      { when: "Sat, 19 Sep · 7:00pm", kind: "letter", title: "A formal letter went to the Ward 151 office." },
+      { when: "Sat, 19 Sep · 6:48pm", kind: "you", title: "You reported a garbage dump at 1st Cross, Koramangala 6th Block.", thumb: "/img/garbage.jpg" },
     ],
   },
 ];
