@@ -637,7 +637,7 @@ figure { margin: 0; }
   --t1: #13131B; --t2: rgba(19,19,27,.68); --t3: rgba(19,19,27,.48); --t4: rgba(19,19,27,.26);
   --yellow-text: #A96A00; --yellow-soft: rgba(255,183,57,.18);
   --sheet: #F4F4F7; --glass: rgba(255,255,255,.8); --glass-strong: rgba(250,250,252,.94);
-  --hero-a: #FFFFFF; --hero-b: #FFFFFF; --fade: rgba(244,244,247,.92); --mf: rgba(19,19,27,.11);
+  --hero-a: #FFFFFF; --hero-b: #FFFFFF; --fade: rgba(244,244,247,.92); --mf: rgba(19,19,27,.2);
   --green: #16925A; --amber: #C47A00; --red: #D63A2E;
   color-scheme: light;
 }
