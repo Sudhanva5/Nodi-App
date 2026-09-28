@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ChevronLeft, Share, Volume2, Square, FileText, Check, RotateCcw, Camera, AlertTriangle, MapPin } from "lucide-react";
+import { ChevronLeft, Share, Volume2, Square, FileText, Check, RotateCcw, Camera, AlertTriangle, MapPin, Play } from "lucide-react";
 import { Report, STAGES, OFFICIAL_POSTS } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
 import { StatusBar, StageBar, Verified, useSpeak, Tweet } from "./ui";
@@ -18,7 +18,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
   const needsCheck = report.stage === 3 && !report.reopened;
   const headline = report.reopened
     ? "Reopened and sent back to GBA."
-    : report.stage === 4 ? "Fixed. You confirmed it." : report.stage === 3 ? "GBA has marked this as done." : report.stage === 2 ? "An engineer is on it." : "Your ward office has the letter.";
+    : report.stage === 4 ? "The issue is resolved." : report.stage === 3 ? "GBA has marked this as done." : report.stage === 2 ? "An engineer is on it." : "Your ward office has the letter.";
   const listen = () => speak(`${report.title}. ${headline} ${report.statusLine}`);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (autoRead) listen(); }, []);
@@ -28,6 +28,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
       <div className="d-hero">
         <img src={view === "after" && report.after ? report.after : report.photo} alt="" key={view} className="fadein" />
         <div className="d-hero-shade" />
+        <div className="pblur" aria-hidden><i /><i /><i /><i /><i /></div>
         <StatusBar dark />
         <div className="d-nav">
           <button className="glassbtn" onClick={onBack} aria-label="Back"><ChevronLeft size={24} /></button>
@@ -76,15 +77,28 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
         )}
 
         <section>
-          <h2 className="tl-heading">{t("What happened so far")}</h2>
+          <h2 className="tl-heading">{lang === "kn" ? "ಟೈಮ್‌ಲೈನ್" : "Timeline"}</h2>
           <ol className="timeline">
             {report.timeline.map((e, i) => (
               <li key={i} className={"tl-" + e.kind + (i === 0 ? " latest" : "")}>
                 <span className="tl-dot" />
                 <div className="tl-body">
                   <div className="tl-time">{e.when}</div>
-                  <p className="tl-text">{e.title}</p>
+                  <div className="tl-stage">{e.title}</div>
+                  {e.body && <p className="tl-text">{e.body}</p>}
                   {e.thumb && <img src={e.thumb} alt="" className="tl-thumb" />}
+                  {e.media && (
+                    <div className="tl-media">
+                      {e.media.map((m, k) => m.type === "voice" ? (
+                        <span key={k} className="tl-voice"><Play size={12} fill="currentColor" /><i className="tl-wave">{Array.from({ length: 14 }).map((_, j) => <b key={j} style={{ height: 4 + ((j * 7) % 12) }} />)}</i>{m.dur}</span>
+                      ) : (
+                        <span key={k} className={"tl-mthumb" + (m.type === "video" ? " vid" : "")}>
+                          <img src={m.src} alt="" />
+                          {m.type === "video" && <><span className="tl-play"><Play size={12} fill="currentColor" /></span><em>{m.dur}</em></>}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   {e.kind === "letter" && <button className="tl-link" onClick={onLetter}><FileText size={13} /> View letter</button>}
                 </div>
               </li>

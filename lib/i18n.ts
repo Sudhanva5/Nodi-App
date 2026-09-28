@@ -20,7 +20,7 @@ const KN: Record<string, string> = {
   "Support": "ಬೆಂಬಲ",
   "GBA says the work is done.": "ಕೆಲಸ ಮುಗಿದಿದೆ ಎಂದು GBA ಹೇಳುತ್ತದೆ.",
   "Every report reaches your ward office as a formal letter.": "ಪ್ರತಿ ದೂರು ನಿಮ್ಮ ವಾರ್ಡ್ ಕಚೇರಿಗೆ ಅಧಿಕೃತ ಪತ್ರವಾಗಿ ತಲುಪುತ್ತದೆ.",
-  "What happened so far": "ಇಲ್ಲಿಯವರೆಗೆ ಏನಾಯಿತು",
+  "Timeline": "ಟೈಮ್‌ಲೈನ್",
   "Before": "ಮೊದಲು",
   "After": "ನಂತರ",
 };

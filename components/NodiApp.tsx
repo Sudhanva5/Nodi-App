@@ -24,9 +24,8 @@ function makeNew(cat: Category, voice: boolean): Report {
     statusLine: "An engineer will be assigned soon.",
     expected: "Mon, 28 Sep", reportedAgo: "just now", meToo: 3,
     timeline: [
-      { when: "Just now", kind: "letter", title: "A formal letter went to the Ward 151 office and was logged on Sahaaya." },
-      { when: "Today · 9:38am", kind: "neighbours", title: "3 neighbours reported the same leak today, so we added your report to theirs. GBA now sees one complaint from 4 people." },
-      { when: "Today · 9:38am", kind: "you", title: voice ? "You reported a water leak on 80 Feet Rd, with a voice note in Kannada." : "You reported a water leak on 80 Feet Rd.", thumb: "/img/water.jpg" },
+      { when: "Just now", kind: "letter", title: "Letter sent", body: "A formal letter went to the Ward 151 office and was logged on Sahaaya." },
+      { when: "Today · 9:38am", kind: "you", title: "Reported", body: "You reported a water leak on 80 Feet Rd. 3 neighbours reported it today too, so we added your report to theirs.", media: voice ? [{ type: "photo", src: "/img/water.jpg" }, { type: "voice", dur: "0:08" }] : [{ type: "photo", src: "/img/water.jpg" }] },
     ],
   };
 }
@@ -85,11 +84,11 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
       {screen === "detail" && detail && (
         <Detail report={detail} lang={lang} autoRead={prefs.readAloud} onBack={() => setDetailId(null)} onLetter={() => setLetterFor(detail.id)} onVerified={() => setVerified(true)}
           onConfirm={() => {
-            update(detail.id, (r) => ({ ...r, stage: 4, statusLine: "Closed by you. 14 neighbours were told it's fixed.", timeline: [{ when: "Just now", kind: "fixed", title: "You confirmed it's fixed. The complaint is closed." }, ...r.timeline] }));
+            update(detail.id, (r) => ({ ...r, stage: 4, statusLine: "", timeline: [{ when: "Just now", kind: "fixed", title: "Fixed", body: "You confirmed it's fixed, so the complaint is closed." }, ...r.timeline] }));
             setToast("Thank you. Complaint closed.");
           }}
           onReopen={() => {
-            update(detail.id, (r) => ({ ...r, stage: 2, reopened: true, expected: "Tue, 29 Sep", statusLine: "New deadline: Tue, 29 Sep.", timeline: [{ when: "Just now", kind: "reopen", title: "You said it isn't fixed. We reopened the complaint and sent it back to GBA with a new deadline of Tue, 29 Sep." }, ...r.timeline] }));
+            update(detail.id, (r) => ({ ...r, stage: 2, reopened: true, expected: "Tue, 29 Sep", statusLine: "New deadline: Tue, 29 Sep.", timeline: [{ when: "Just now", kind: "reopen", title: "Reopened", body: "You said it isn't fixed, so we sent it back to GBA with a new deadline of Tue, 29 Sep." }, ...r.timeline] }));
             setToast("Reopened and sent back to GBA");
           }} />
       )}

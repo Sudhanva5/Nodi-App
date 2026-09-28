@@ -25,6 +25,7 @@ export type TimelineItem = {
   body?: string;
   kind: "you" | "letter" | "assigned" | "proof" | "fixed" | "reopen" | "neighbours";
   thumb?: string;
+  media?: { type: "photo" | "video" | "voice"; src?: string; dur?: string }[];
   avatars?: number;
   org?: boolean;
 };
@@ -63,10 +64,10 @@ export const INITIAL_REPORTS: Report[] = [
     meToo: 14,
     engineer: "S. Nagaraj, Asst. Engineer",
     timeline: [
-      { when: "Today · 11:42am", kind: "proof", title: "According to GBA's post on Twitter, the pothole has been filled. We matched the post to your report by its location.", thumb: "/img/fixed.jpg" },
-      { when: "Fri, 25 Sep · 4:10pm", kind: "assigned", title: "S. Nagaraj, Assistant Engineer for Ward 151, was asked to fix it by Sat, 26 Sep." },
-      { when: "Thu, 24 Sep · 9:05am", kind: "letter", title: "A formal letter went to the Ward 151 office and was logged on Sahaaya." },
-      { when: "Thu, 24 Sep · 8:51am", kind: "you", title: "You reported a pothole at 5th Cross, Koramangala 8th Block.", thumb: "/img/pothole.jpg" },
+      { when: "Today · 11:42am", kind: "proof", title: "Work done", body: "GBA posted on Twitter that the pothole has been filled. We matched the post to your report by its location.", thumb: "/img/fixed.jpg" },
+      { when: "Fri, 25 Sep · 4:10pm", kind: "assigned", title: "Assigned", body: "S. Nagaraj, Assistant Engineer for Ward 151, was asked to fix it by Sat, 26 Sep." },
+      { when: "Thu, 24 Sep · 9:05am", kind: "letter", title: "Letter sent", body: "A formal letter went to the Ward 151 office and was logged on Sahaaya." },
+      { when: "Thu, 24 Sep · 8:51am", kind: "you", title: "Reported", body: "You reported a pothole at 5th Cross, Koramangala 8th Block.", media: [{ type: "photo", src: "/img/pothole.jpg" }, { type: "video", src: "/img/pothole.jpg", dur: "0:12" }] },
     ],
   },
   {
@@ -83,9 +84,9 @@ export const INITIAL_REPORTS: Report[] = [
     meToo: 6,
     engineer: "R. Kavitha, Electrical AE",
     timeline: [
-      { when: "Sat, 26 Sep · 10:20am", kind: "assigned", title: "R. Kavitha, Electrical Assistant Engineer for Ward 151, was asked to fix it by Mon, 28 Sep." },
-      { when: "Fri, 25 Sep · 7:40pm", kind: "letter", title: "A formal letter went to the Ward 151 electrical section." },
-      { when: "Fri, 25 Sep · 7:31pm", kind: "you", title: "You reported a streetlight that isn't working on 17th Main, Koramangala 6th Block.", thumb: "/img/streetlight.jpg" },
+      { when: "Sat, 26 Sep · 10:20am", kind: "assigned", title: "Assigned", body: "R. Kavitha, Electrical Assistant Engineer for Ward 151, was asked to fix it by Mon, 28 Sep." },
+      { when: "Fri, 25 Sep · 7:40pm", kind: "letter", title: "Letter sent", body: "A formal letter went to the Ward 151 electrical section." },
+      { when: "Fri, 25 Sep · 7:31pm", kind: "you", title: "Reported", body: "You reported a streetlight that isn't working on 17th Main, Koramangala 6th Block.", media: [{ type: "photo", src: "/img/streetlight.jpg" }] },
     ],
   },
   {
@@ -96,16 +97,16 @@ export const INITIAL_REPORTS: Report[] = [
     ward: "Ward 151 · Koramangala",
     photo: "/img/garbage.jpg",
     stage: 4,
-    statusLine: "You confirmed this is fixed. Cleared in 1 day.",
+    statusLine: "",
     expected: "Sun, 20 Sep",
     reportedAgo: "8 days ago",
     meToo: 22,
     engineer: "SWM team, Ward 151",
     timeline: [
-      { when: "Mon, 21 Sep · 8:02am", kind: "fixed", title: "You confirmed the spot is clean. The complaint is closed." },
-      { when: "Sun, 20 Sep · 6:15pm", kind: "proof", title: "The Solid Waste team for Ward 151 cleared the garbage and shared a photo." },
-      { when: "Sat, 19 Sep · 7:00pm", kind: "letter", title: "A formal letter went to the Ward 151 office." },
-      { when: "Sat, 19 Sep · 6:48pm", kind: "you", title: "You reported a garbage dump at 1st Cross, Koramangala 6th Block.", thumb: "/img/garbage.jpg" },
+      { when: "Mon, 21 Sep · 8:02am", kind: "fixed", title: "Fixed", body: "You confirmed the spot is clean, so the complaint is closed." },
+      { when: "Sun, 20 Sep · 6:15pm", kind: "proof", title: "Work done", body: "The Solid Waste team for Ward 151 cleared the garbage and shared a photo." },
+      { when: "Sat, 19 Sep · 7:00pm", kind: "letter", title: "Letter sent", body: "A formal letter went to the Ward 151 office." },
+      { when: "Sat, 19 Sep · 6:48pm", kind: "you", title: "Reported", body: "You reported a garbage dump at 1st Cross, Koramangala 6th Block.", media: [{ type: "photo", src: "/img/garbage.jpg" }, { type: "video", src: "/img/garbage.jpg", dur: "0:08" }] },
     ],
   },
 ];
