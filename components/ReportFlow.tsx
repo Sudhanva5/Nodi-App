@@ -241,7 +241,6 @@ export function Success({ report, onTrack, onDone, onLetter }: { report: Report;
       <StatusBar />
       <div className="succ-body">
         <div className="succ-check"><span className="ring" /><Check size={40} strokeWidth={2.6} /></div>
-        <div className="overline">Complaint sent</div>
         <h1>GBA has it.</h1>
         <p className="succ-sub">GBA aims to fix water leaks within <b>1 day</b>, so expect it by <b>{report.expected}</b>.</p>
         <div className="ticket">

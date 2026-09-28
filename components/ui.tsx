@@ -78,6 +78,10 @@ export function Sheet({ detent, onDetent, children, dark, heights = { low: 150, 
 }) {
   const [drag, setDrag] = useState<number | null>(null);
   const start = useRef<{ y: number; h: number } | null>(null);
+  useEffect(() => {
+    const h = (e: Event) => { const d = (e as CustomEvent).detail; if (d === "low" || d === "mid" || d === "high") onDetent(d); };
+    window.addEventListener("nodi-sheet", h); return () => window.removeEventListener("nodi-sheet", h);
+  }, [onDetent]);
   const h = drag ?? heights[detent];
   const onDown = (e: React.PointerEvent) => { start.current = { y: e.clientY, h: heights[detent] }; (e.target as HTMLElement).setPointerCapture(e.pointerId); };
   const onMove = (e: React.PointerEvent) => { if (!start.current) return; setDrag(Math.max(110, Math.min(720, start.current.h + (start.current.y - e.clientY)))); };

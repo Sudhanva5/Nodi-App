@@ -6,6 +6,7 @@ type Step =
   | { tap: string; text?: string; nth?: number; wait?: number }
   | { scroll: string; to: number | "end"; wait?: number }
   | { type: string; value: string; wait?: number }
+  | { sheet: "low" | "mid" | "high"; wait?: number }
   | { wait: number };
 
 /* Scripted flows. Each runs on the real app, then the app remounts and the loop starts again. */
@@ -40,12 +41,14 @@ const FLOWS: Record<string, Step[]> = {
     { tap: ".tabpill button", nth: 1, wait: 3200 },
     { tap: ".ppin", nth: 0, wait: 1800 },
     { scroll: ".incident", to: "end", wait: 1600 },
-    { tap: ".inc-close", wait: 800 },
-    { tap: ".grabber-zone", wait: 1000 },
-    { scroll: ".sheet-body", to: 360, wait: 1300 },
-    { scroll: ".sheet-body", to: 0, wait: 600 },
+    { tap: ".inc-close", wait: 900 },
+    { sheet: "high", wait: 1400 },
+    { scroll: ".sheet-body", to: 420, wait: 1500 },
+    { scroll: ".sheet-body", to: 900, wait: 1500 },
+    { scroll: ".sheet-body", to: 0, wait: 900 },
     { tap: ".segctl button", text: "Official", wait: 1200 },
-    { scroll: ".sheet-body", to: 520, wait: 1800 },
+    { scroll: ".sheet-body", to: 560, wait: 1700 },
+    { scroll: ".sheet-body", to: 1200, wait: 1700 },
   ],
   a11y: [
     { wait: 1200 },
@@ -93,6 +96,9 @@ export default function DemoPlayer({ flow, frame }: { flow: string; frame: boole
         } else if ("scroll" in st) {
           const el = find(st.scroll);
           if (el) el.scrollTo({ top: st.to === "end" ? el.scrollHeight : st.to, behavior: "smooth" });
+        } else if ("sheet" in st) {
+          const g = find(".grabber-zone"); if (g) showTap(g);
+          window.dispatchEvent(new CustomEvent("nodi-sheet", { detail: st.sheet }));
         } else if ("type" in st) {
           const el = find(st.type) as HTMLTextAreaElement | null;
           if (el) {

@@ -2,17 +2,24 @@
 
 Snap it. Send it. See it fixed.
 
-## Run
+- `/` interactive prototype with a 4-step checklist
+- `/case-study` the case study, with live looping clips of the prototype
+- `/demo/report`, `/demo/track`, `/demo/nearby`, `/demo/a11y` the looping clips on their own
+
+## Run locally
 ```
 npm install
 npm run dev        # http://localhost:3456
 ```
-- `/` interactive iPhone prototype + design rationale panel (jump buttons per screen)
-- `/case-study` full write-up: users, assumptions, flow, decisions, MVP vs future, metrics
-- `CASE_STUDY.md` same write-up as markdown · `SPEC.md` product spec
 
-## Screens
-1. Home / My reports  2. Report (camera, one confirm sheet, trust loader, sent)  3. Track (proof, citizen confirm, reopen)  4. Nearby live map
+## Deploy on Railway
+1. Railway dashboard → New Project → Deploy from GitHub repo → `Sudhanva5/Nodi-App`.
+2. Railway reads `railway.json`: it builds with `npm ci && npm run build` and starts with `npm run start` (binds to Railway's `$PORT`).
+3. Settings → Networking → Generate Domain. Share:
+   - Prototype: `https://<your-domain>/`
+   - Case study: `https://<your-domain>/case-study`
+
+No environment variables are needed. Node 20+ (see `.nvmrc`).
 
 ## macOS note
 If Gatekeeper blocks `next-swc.darwin-arm64.node` after `npm install`:

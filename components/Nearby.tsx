@@ -12,7 +12,7 @@ type Filter = "all" | Category;
 const FILTERS: { k: Filter; label: string }[] = [
   { k: "all", label: "All" }, { k: "pothole", label: "Potholes" }, { k: "garbage", label: "Garbage" }, { k: "streetlight", label: "Lights" }, { k: "water", label: "Water" }, { k: "drain", label: "Drains" }, { k: "tree", label: "Trees" }, { k: "footpath", label: "Footpaths" },
 ];
-const HEIGHTS = { low: 170, mid: 340, high: 660 };
+const HEIGHTS = { low: 170, mid: 340, high: 740 };
 
 export default function Nearby({ lang }: { lang: Lang; onVerified?: () => void; extraMeToo?: Record<string, number> }) {
   const [filter, setFilter] = useState<Filter>("all");
