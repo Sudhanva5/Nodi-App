@@ -3,18 +3,34 @@ import { ChevronRight, ShieldCheck } from "lucide-react";
 import { Report, CATEGORIES, Ward } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
 import { useEffect, useState } from "react";
-import { CatIcon, StageBar, StatusDot, StatusBar, FlipText } from "./ui";
+import { CatIcon, StageBar, StatusDot, StatusBar } from "./ui";
 
 const FLIP_EN = ["on the road?", "with streetlights?", "with water?", "on footpaths?"];
 const HERO_IMGS = ["/img/pothole2.jpg", "/img/streetlight.jpg", "/img/water.jpg", "/img/footpath.jpg"];
 
+function useLetterCycle(count: number, hold = 2600) {
+  const [idx, setIdx] = useState(0);
+  const [phase, setPhase] = useState<"in" | "out">("in");
+  useEffect(() => {
+    let alive = true; const timers: ReturnType<typeof setTimeout>[] = [];
+    const cycle = () => {
+      timers.push(setTimeout(() => { if (!alive) return; setPhase("out");
+        timers.push(setTimeout(() => { if (!alive) return; setIdx((i) => (i + 1) % count); setPhase("in"); cycle(); }, 560));
+      }, hold));
+    };
+    cycle();
+    return () => { alive = false; timers.forEach(clearTimeout); };
+  }, [count, hold]);
+  return { idx, phase };
+}
+
 /** Splits into graphemes (safe for Kannada) and fades each one in or out with a stagger. */
-function Letters({ text, phase }: { text: string; phase: "in" | "out" }) {
+function Letters({ text, phase, className = "" }: { text: string; phase: "in" | "out"; className?: string }) {
   const seg = typeof Intl !== "undefined" && "Segmenter" in Intl
     ? Array.from(new (Intl as unknown as { Segmenter: new (l: string, o: { granularity: string }) => { segment: (s: string) => Iterable<{ segment: string }> } }).Segmenter("kn", { granularity: "grapheme" }).segment(text), (x) => x.segment)
     : Array.from(text);
   return (
-    <span className={"letters " + phase} key={text + phase} aria-label={text}>
+    <span className={"letters " + phase + " " + className} key={text + phase} aria-label={text}>
       {seg.map((ch, i) => <span key={i} aria-hidden style={{ animationDelay: `${i * 22}ms` }}>{ch === " " ? "\u00a0" : ch}</span>)}
     </span>
   );
@@ -29,18 +45,8 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
 }) {
   const t = tr(lang);
   const kn = lang === "kn";
-  const [idx, setIdx] = useState(0);
-  const [phase, setPhase] = useState<"in" | "out">("in");
-  useEffect(() => {
-    let alive = true; const timers: ReturnType<typeof setTimeout>[] = [];
-    const cycle = () => {
-      timers.push(setTimeout(() => { if (!alive) return; setPhase("out");
-        timers.push(setTimeout(() => { if (!alive) return; setIdx((i) => (i + 1) % FLIP_EN.length); setPhase("in"); cycle(); }, 520));
-      }, 2600));
-    };
-    cycle();
-    return () => { alive = false; timers.forEach(clearTimeout); };
-  }, []);
+  const { idx, phase } = useLetterCycle(FLIP_EN.length, 2600);
+  const impact = useLetterCycle(IMPACT_EN.length, 2800);
   const needsCheck = reports.filter((r) => r.stage === 3 && !r.reopened);
   const others = reports.filter((r) => !(r.stage === 3 && !r.reopened));
   return (
@@ -122,7 +128,7 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
 
         <footer className="manifesto">
           <h2 className="mf-big">{kn ? <>ಬೆಂಗಳೂರನ್ನು<br />ಮತ್ತೆ<br />ಅದ್ಭುತಗೊಳಿಸೋಣ.</> : <>Let&apos;s make<br />Bengaluru<br />great again.</>}</h2>
-          <p className="mf-sub">{kn ? "2026 ರಲ್ಲಿ ಆರಂಭವಾದಾಗಿನಿಂದ, " : "Since launch in 2026, "}<FlipText items={kn ? IMPACT_KN : IMPACT_EN} interval={2600} className="mf-flip" /></p>
+          <p className="mf-sub">{kn ? "2026 ರಲ್ಲಿ ಆರಂಭವಾದಾಗಿನಿಂದ, " : "Since launch in 2026, "}<Letters text={(kn ? IMPACT_KN : IMPACT_EN)[impact.idx]} phase={impact.phase} className="mf-flip" /></p>
         </footer>
         <div style={{ height: 120 }} />
       </div>

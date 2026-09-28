@@ -12,7 +12,8 @@ type Step =
 const FLOWS: Record<string, Step[]> = {
   report: [
     { wait: 1400 },
-    { tap: ".hero .primary", wait: 1300 },
+    { wait: 2200 },
+    { tap: ".vfhero", wait: 1300 },
     { tap: ".shutter", wait: 2300 },
     { tap: ".att-add", wait: 900 },
     { tap: ".addopts button", text: "Record a video", wait: 900 },

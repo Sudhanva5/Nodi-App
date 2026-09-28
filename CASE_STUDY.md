@@ -40,7 +40,7 @@ Verbatim Play Store reviews:
 
 ## How Nodi works
 
-**1. Report a problem with one button.** Tap Report a problem, take a photo or video. Nodi fills in the type, location and ward. Add more with +, and write or speak a note. The Nodi team sends a formal letter to the ward office on your behalf.
+**1. The home screen is the camera.** The top of Home looks like a viewfinder. The prompt changes letter by letter (road, streetlights, water, footpaths) and the photo behind it changes too. Tap anywhere to open the camera and take a photo or video. Nodi fills in the type, location and ward. Add more with +, and write or speak a note. The Nodi team sends a formal letter to the ward office on your behalf.
 
 **2. See exactly where your complaint is.** The current step, the engineer assigned, a timeline, and your photos and videos. GBA's Twitter post appears inside the complaint; open it on Twitter to reply. Only you can close it. Tap No and it goes back to GBA with a new deadline.
 
@@ -51,7 +51,7 @@ Verbatim Play Store reviews:
 - A formal letter for every report.
 - GBA's own posts as proof.
 - Only the resident closes a complaint.
-- A running count on the home screen: "Since launch in 2026, 21,780 potholes filled." These numbers are placeholders, and a hypothesis that visible results bring people back.
+- A running count on the home screen: "Since launch in 2026, 21,780 potholes filled", cycling through streetlights, garbage and water leaks. These numbers are placeholders, and a hypothesis that visible results bring people back.
 
 ## Nearby
 

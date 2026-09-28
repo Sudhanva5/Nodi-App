@@ -109,8 +109,9 @@ export default function CaseStudy() {
             <h2 className={s.chapter}>How Nodi works</h2>
             <div className={s.split}>
               <div>
-                <h3>1. Report a problem with one button</h3>
-                <p>The home screen has one job. You tap Report a problem, the camera opens, and you take a photo or video.</p>
+                <h3>1. The home screen is the camera</h3>
+                <p>The top of the home screen looks like a camera viewfinder. The prompt changes letter by letter, from &quot;See a problem on the road?&quot; to streetlights, water and footpaths, and the photo behind it changes with it. So people know what counts as a problem before they tap.</p>
+                <p>Tap anywhere on it and the camera opens. The yellow shutter is the only yellow on the page, so it&apos;s clear what to press.</p>
                 <p>Nodi fills in the rest: the type of problem, the exact location and the ward. You can add more photos or videos with the + button, and write or speak a note in any language.</p>
                 <p>When you send it, the Nodi team writes a formal letter to the ward office on your behalf. You can open and read the letter from the app.</p>
               </div>
@@ -142,7 +143,7 @@ export default function CaseStudy() {
               <li><b>A formal letter for every report.</b> It turns a tap into an official record with a reference number.</li>
               <li><b>GBA&apos;s own posts as proof.</b> The work is shown the way GBA announced it, not the way we describe it.</li>
               <li><b>Only the resident closes a complaint.</b> This fixes the biggest complaint about Sahaaya.</li>
-              <li><b>A running count on the home screen.</b> &quot;Since launch in 2026, 21,780 potholes filled.&quot; These numbers are placeholders for the prototype. They&apos;re a hypothesis that visible results bring people back.</li>
+              <li><b>A running count on the home screen.</b> &quot;Since launch in 2026, 21,780 potholes filled&quot;, cycling through streetlights, garbage and water leaks. These numbers are placeholders for the prototype. They&apos;re a hypothesis that visible results bring people back.</li>
             </ul>
           </section>
 
