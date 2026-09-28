@@ -32,7 +32,7 @@ const NOTES: Record<ScreenKey, { n: string; title: string; why: string[] }> = {
   detail: { n: "03", title: "Track · Proof, then you confirm", why: [
     "A plain-language headline tells you the status, and a Listen button reads it aloud.",
     "The before and after photos, plus a matched post from verified @GBA_office on X, are the official proof.",
-    "'Is it actually fixed?' If the answer is no, the complaint reopens and goes to the senior engineer with a new deadline.",
+    "'Is it actually fixed?' If the answer is no, the complaint reopens and goes back to GBA with a new deadline.",
     "The timeline names real people (the engineer) and has verified badges you can tap for an explanation.",
   ] },
   nearby: { n: "04", title: "Nearby · Citizen-style live map", why: [

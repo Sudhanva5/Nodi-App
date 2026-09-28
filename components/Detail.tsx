@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ChevronLeft, Share, Volume2, Square, Phone, MessageCircle, FileText, User, Users, Check, RotateCcw, Camera, AlertTriangle, BadgeCheck } from "lucide-react";
+import { ChevronLeft, Share, Volume2, Square, FileText, User, Users, Check, RotateCcw, Camera, AlertTriangle, BadgeCheck, ArrowUpRight, Heart, MessageCircle, Repeat2 } from "lucide-react";
 import { Report, STAGES, CATEGORIES, OFFICIAL_POSTS } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
 import { StatusBar, StageBar, StatusPill, Verified, useSpeak, CatBadge } from "./ui";
@@ -15,7 +15,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
   const post = OFFICIAL_POSTS[0];
   const needsCheck = report.stage === 3 && !report.reopened;
   const headline = report.reopened
-    ? "Reopened. We escalated it to the senior engineer."
+    ? "Reopened and sent back to GBA."
     : report.stage === 4 ? "Fixed. You confirmed it." : report.stage === 3 ? "GBA has marked this as done." : report.stage === 2 ? "An engineer is on it." : "Your ward office has the letter.";
 
   const listen = () => speak(`${report.title}. ${headline} ${report.statusLine}`);
@@ -23,7 +23,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
   useEffect(() => { if (autoRead) listen(); }, []);
 
   return (
-    <div className="screen detail">
+    <div className="screen detail enter">
       <div className="d-hero">
         <img src={view === "after" && report.after ? report.after : report.photo} alt="" key={view} className="fadein" />
         <div className="d-hero-shade" />
@@ -48,11 +48,10 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
       <div className="scroll d-scroll">
         <section className={"statuscard" + (report.reopened ? " warn" : report.stage === 4 ? " done" : "")}>
           <div className="sc-top">
-            <StatusPill stage={report.stage} reopened={report.reopened} lang={lang} />
-            <button className={"listen" + (speaking ? " on" : "")} onClick={listen}>{speaking ? <Square size={14} fill="currentColor" /> : <Volume2 size={17} strokeWidth={2.4} />} {speaking ? "Stop" : t("Listen")}</button>
+            <h2 className="sc-head">{headline}</h2>
+            <button className={"listen" + (speaking ? " on" : "")} onClick={listen} aria-label={speaking ? "Stop reading" : t("Listen")}>{speaking ? <Square size={13} fill="currentColor" /> : <Volume2 size={17} />}</button>
           </div>
-          <h2 className="sc-head">{headline}</h2>
-          <p className="sc-line">{report.statusLine}</p>
+          {report.statusLine && <p className="sc-line">{report.statusLine}</p>}
           <StageBar stage={report.stage} reopened={report.reopened} />
           <div className="sc-steps">{STAGES.map((s, i) => <span key={s.en} className={i <= report.stage ? "on" : ""}>{s[lang]}</span>)}</div>
         </section>
@@ -60,7 +59,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
         {needsCheck && (
           <section className="confirmbox">
             <h3>{t("Is it actually fixed?")}</h3>
-            <p>Only you can close this complaint. If it isn't fixed, we'll reopen it and send it to the senior engineer.</p>
+            <p>Only you can close this complaint. If it isn't fixed, we'll reopen it and send it back to GBA.</p>
             <div className="cb-btns">
               <button className="yes" onClick={onConfirm}><Check size={22} strokeWidth={3} /> {t("Yes, it's fixed")}</button>
               <button className="no" onClick={() => setAskNo(true)}><AlertTriangle size={20} strokeWidth={2.5} /> {t("No, still there")}</button>
@@ -70,16 +69,19 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
 
         {report.stage >= 3 && report.cat === "pothole" && (
           <section className="xpost">
-            <div className="xp-label"><BadgeCheck size={14} /> GBA's post on X</div>
-            <div className="xp-card">
+            <div className="xp-label"><BadgeCheck size={14} /> GBA's post on Twitter</div>
+            <div className="xp-card tweet">
               <div className="xp-head">
                 <span className="xp-av"><img src="/img/gba-av.svg" alt="" /></span>
-                <div className="xp-who"><b>{post.name} <Verified size={15} onClick={onVerified} /></b><span>{post.handle} · {post.time}</span></div>
+                <div className="xp-who"><b>{post.name} <Verified size={15} onClick={onVerified} /></b><span>{post.handle}</span></div>
                 <span className="xp-x">𝕏</span>
               </div>
               <p>{post.text}</p>
               <img src={post.photo} alt="" className="xp-img" />
-              <div className="xp-foot"><span>18 m from your report</span><span>Posted today, 11:42 AM</span></div>
+              <div className="tw-time">11:42 AM · 27 Sep 2026</div>
+              <div className="tw-stats"><span><Heart size={14} /> 212</span><span><Repeat2 size={15} /> 38</span><span><MessageCircle size={14} /> 14</span></div>
+              <div className="xp-foot"><span>18 m from your report</span><span>Posted after work was assigned</span></div>
+              <a className="tw-open" href="https://x.com/GBA_office" target="_blank" rel="noreferrer">Open on Twitter <ArrowUpRight size={14} /></a>
             </div>
           </section>
         )}
@@ -101,11 +103,6 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
           </ol>
         </section>
 
-        <section className="helprow">
-          <button><Phone size={19} strokeWidth={2.4} /><span>Call 1533</span></button>
-          <button><MessageCircle size={19} strokeWidth={2.4} /><span>Share on WhatsApp</span></button>
-          <button onClick={onLetter}><FileText size={19} strokeWidth={2.4} /><span>Letter</span></button>
-        </section>
         <div style={{ height: 40 }} />
       </div>
 
@@ -115,7 +112,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
             <span className="grabber" />
             <div className="as-ic"><RotateCcw size={28} strokeWidth={2.4} /></div>
             <h3>Sorry about that. We'll reopen it.</h3>
-            <p>We'll send it to the Asst. Executive Engineer with a new deadline and ask 2 neighbours to check it too. A fresh photo helps.</p>
+            <p>We'll send it back to GBA with a new deadline and ask 2 neighbours to check it too. A fresh photo helps.</p>
             <button className="primary" onClick={() => { setAskNo(false); onReopen(); }}><Camera size={20} /> Add photo and reopen</button>
             <button className="textbtn" onClick={() => { setAskNo(false); onReopen(); }}>Reopen without photo</button>
           </div>

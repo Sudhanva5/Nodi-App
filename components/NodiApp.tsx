@@ -89,8 +89,8 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
             setToast("Thank you. Complaint closed.");
           }}
           onReopen={() => {
-            update(detail.id, (r) => ({ ...r, stage: 2, reopened: true, expected: "Tue, 29 Sep", statusLine: "Sent to the Asst. Executive Engineer with a new deadline of Tue, 29 Sep. We've asked 2 neighbours to check it too.", timeline: [{ when: "Today, 12:05 PM", kind: "reopen", title: "Reopened and escalated", body: "You said it's not fixed. Sent to M. Prakash, Asst. Executive Engineer, with a new deadline." }, ...r.timeline] }));
-            setToast("Reopened and escalated");
+            update(detail.id, (r) => ({ ...r, stage: 2, reopened: true, expected: "Tue, 29 Sep", statusLine: "We sent it back to GBA with a new deadline of Tue, 29 Sep. We've asked 2 neighbours to check it too.", timeline: [{ when: "Today, 12:05 PM", kind: "reopen", title: "Reopened and sent back to GBA", body: "You said it isn't fixed, so we sent it back to GBA with a new deadline." }, ...r.timeline] }));
+            setToast("Reopened and sent back to GBA");
           }} />
       )}
 
