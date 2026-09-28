@@ -3,11 +3,11 @@ import { useCallback, useEffect, useState } from "react";
 import NodiApp, { ScreenKey } from "@/components/NodiApp";
 
 type TaskKey = "report" | "progress" | "nearby" | "settings";
-const TASKS: { k: TaskKey; title: string; how: string }[] = [
-  { k: "report", title: "Report a problem", how: "Tap the camera on Home, take the photo, add a video with +, write or say a note, then Send to GBA." },
-  { k: "progress", title: "Check the progress", how: "Open the pothole under 'Check if it's fixed'. Scroll through the proof, GBA's post and the timeline." },
-  { k: "nearby", title: "Explore Nearby", how: "Open Nearby, tap any photo on the map, then switch to Official updates." },
-  { k: "settings", title: "Accessibility and personal settings", how: "Tap your photo on Home. Try Light mode, Kannada or bigger text." },
+const TASKS: { k: TaskKey; title: string }[] = [
+  { k: "report", title: "Report a problem" },
+  { k: "progress", title: "Check its progress" },
+  { k: "nearby", title: "Explore Nearby" },
+  { k: "settings", title: "Try accessibility settings" },
 ];
 
 export default function Page() {
@@ -24,23 +24,19 @@ export default function Page() {
   return (
     <main className="stage">
       <aside className="checklist">
-        <div className="cl-brand"><img src="/img/logo.png" alt="" /><div><h1>Nodi</h1><span>Interactive prototype</span></div></div>
-        <p className="cl-lead">Try these four things. Each one ticks itself off when you do it.</p>
-        <div className="cl-progress"><span style={{ width: `${(count / 4) * 100}%` }} /></div>
-        <div className="cl-count">{count} of 4 done</div>
+        <div className="cl-brand"><img src="/img/logo.png" alt="" /><div><h1>Nodi</h1><span>Prototype</span></div></div>
+        <p className="cl-lead">Try these</p>
         <ol className="cl-list">
-          {TASKS.map((t, i) => (
+          {TASKS.map((t) => (
             <li key={t.k} className={done[t.k] ? "done" : ""}>
-              <button className="cl-box" role="checkbox" aria-checked={done[t.k]} onClick={() => setDone((d) => ({ ...d, [t.k]: !d[t.k] }))}>
+              <button className="cl-box" role="checkbox" aria-checked={done[t.k]} aria-label={t.title} onClick={() => setDone((d) => ({ ...d, [t.k]: !d[t.k] }))}>
                 <svg viewBox="0 0 16 16" width="12" height="12"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </button>
-              <div>
-                <b><span className="cl-n">{i + 1}.</span> {t.title}</b>
-                <p>{t.how}</p>
-              </div>
+              <b>{t.title}</b>
             </li>
           ))}
         </ol>
+        <div className="cl-count">{count}/4</div>
       </aside>
       <div className="device-wrap">
         <div className="device">
