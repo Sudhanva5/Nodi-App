@@ -147,7 +147,6 @@ export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang
                 <textarea value={note} onChange={(e) => setNote(e.target.value)} rows={3} placeholder="Write it here, or hold the mic and say it. Any language." />
               )}
               <div className="nb-foot">
-                <span className="nb-hint">{rec === "done" ? "Voice note added and typed out for you" : "Kannada, English, Hindi or Tamil"}</span>
                 <button className={"nb-mic" + (rec === "rec" ? " on" : "")} onPointerDown={micDown} onPointerUp={micUp} onPointerLeave={micUp} aria-label="Hold to speak"><Mic size={18} /></button>
               </div>
             </div>

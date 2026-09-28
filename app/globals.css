@@ -943,3 +943,4 @@ figure { margin: 0; }
 .confirm .privacy svg { margin-top: 0; }
 .confirm .privacy { display: block; }
 .confirm .privacy svg { display: inline-block; vertical-align: -2px; margin: 0 4px 0 0; }
+.nb-foot { justify-content: flex-end; }
