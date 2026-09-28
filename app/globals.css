@@ -1168,3 +1168,19 @@ html:has(.demo), body:has(.demo) { background: transparent !important; overflow:
 .cl-list b { font-size: 15px; font-weight: 500; }
 .cl-box { margin-top: 0; }
 .cl-count { margin-top: 14px; font-size: 12.5px; color: var(--t3); }
+
+/* =========================================================
+   v20 · Dark mode lifted from near-black to dark grey
+   ========================================================= */
+:root {
+  --bg: #161618; --s1: #1F1F22; --s2: #28282C; --s3: #333338;
+  --sheet: #1B1B1E; --glass: rgba(44, 44, 48, .72); --glass-strong: rgba(28, 28, 31, .92);
+  --hero-a: #222226; --hero-b: #1B1B1E; --fade: rgba(22, 22, 24, .88);
+}
+html, body { background: #161618; }
+.stage { background: radial-gradient(900px 520px at 72% 40%, rgba(255,183,57,.05), transparent 65%), #161618; }
+.confirm { background: var(--bg); }
+.sending { background: #161618; }
+.leaflet-host, .leaflet-container { background: #161618 !important; }
+.nodi.light .leaflet-host, .nodi.light .leaflet-container { background: #EDEDF1 !important; }
+.device-screen { background: var(--bg); }

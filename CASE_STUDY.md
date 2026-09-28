@@ -8,11 +8,9 @@ Prototype: `/` · Case study: `/case-study`
 
 **What is Nodi?** Nodi (ನೋಡಿ, "look" in Kannada) is a free initiative by Namma Yatri. It is a helper app for Sahaaya, the official complaint app from the city. You spot a problem, send a photo, and Nodi takes it to the right ward office and follows it until it's fixed.
 
-Nodi does not replace Sahaaya. Every report still lands in the official system. Nodi adds what Sahaaya is missing: a fast way to report, a clear view of progress, and proof that work actually happened.
+## The problem statement
 
 **What is Sahaaya?** BBMP launched Sahaaya in 2016 and upgraded it to Sahaaya 2.0 in 2020 ([Indian Express](https://indianexpress.com/article/cities/bangalore/bengaluru-complain-glitches-sahaya-2-app-7653849)). In 2025 the Greater Bengaluru Authority (GBA) replaced BBMP, and the app now sits inside Namma Bengaluru.
-
-## The problem statement
 
 People do report problems. The app just doesn't tell them what happened next, and complaints often get closed without any work being done. The Namma Bengaluru (Sahaaya 2.0) app is rated about 2.1★ on Google Play.
 
@@ -29,6 +27,8 @@ People do report problems. The app just doesn't tell them what happened next, an
 > "I have not seen any visible update since registering an issue about the road condition...there is no timeline shared, no status update." (sharath shanker, 23 Jun 2026)
 
 > "it fails to identify location on the map automatically and complaints raised here not addressed. They simply delete the records as well." (Tathagata Saha, 14 Sep 2026)
+
+**Where Nodi fits.** Nodi does not replace Sahaaya. Every report still lands in the official system. Nodi adds what Sahaaya is missing: a fast way to report, a clear view of progress, and proof that work actually happened.
 
 **So, the brief for Nodi:** make reporting take seconds, show every step of the fix, and only close a complaint when the person who reported it says it's done.
 

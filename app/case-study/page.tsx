@@ -38,13 +38,13 @@ const PROTOTYPE = "/";
 export default function CaseStudy() {
   return (
     <div className={s.page}>
-      <header className={s.hero}>
+      <header className={s.hero} role="img" aria-label="Three screens of the Nodi app: tracking a streetlight, the home screen and the Nearby map">
         <div className={s.heroText}>
           <div className={s.eyebrow}>Namma Yatri · Product design assignment</div>
           <h1>Introducing Nodi: frictionless civic complaints for Bengaluru</h1>
           <a className={s.cta} href={PROTOTYPE} target="_blank" rel="noreferrer">Open the prototype ↗</a>
         </div>
-        <img src="/img/cs-hero.jpg" alt="Three screens of the Nodi app: tracking a pothole, the home screen and the Nearby map" className={s.heroImg} />
+        <div className={s.heroArt} aria-hidden />
       </header>
 
       <div className={s.meta}>
@@ -62,13 +62,12 @@ export default function CaseStudy() {
             <h2 className={s.chapter}>Background</h2>
             <h3>What is Nodi?</h3>
             <p>Nodi (ನೋಡಿ, &quot;look&quot; in Kannada) is a free initiative by Namma Yatri. It is a helper app for Sahaaya, the official complaint app from the city. You spot a problem, send a photo, and Nodi takes it to the right ward office and follows it until it&apos;s fixed.</p>
-            <p>Nodi does not replace Sahaaya. Every report still lands in the official system. Nodi adds what Sahaaya is missing: a fast way to report, a clear view of progress, and proof that work actually happened.</p>
-            <h3>What is Sahaaya?</h3>
-            <p>BBMP launched Sahaaya in 2016 and upgraded it to Sahaaya 2.0 in 2020. In 2025 the Greater Bengaluru Authority (GBA) replaced BBMP, and the app now sits inside Namma Bengaluru. People still call it &quot;the BBMP app&quot;.</p>
           </section>
 
           <section id="problem" className={s.section}>
             <h2 className={s.chapter}>The problem statement</h2>
+            <h3>What is Sahaaya?</h3>
+            <p>BBMP launched Sahaaya in 2016 and upgraded it to Sahaaya 2.0 in 2020. In 2025 the Greater Bengaluru Authority (GBA) replaced BBMP, and the app now sits inside Namma Bengaluru. People still call it &quot;the BBMP app&quot;.</p>
             <p>People do report problems. The app just doesn&apos;t tell them what happened next, and complaints often get closed without any work being done.</p>
             <div className={s.stat}><b>2.1★</b><span>Namma Bengaluru (Sahaaya 2.0) on Google Play</span></div>
             <h3>What the news says</h3>
@@ -88,6 +87,8 @@ export default function CaseStudy() {
               ))}
             </div>
             <p className={s.caption}>1-star reviews from the Namma Bengaluru (Sahaaya 2.0) listing on Google Play, June to September 2026.</p>
+            <h3>Where Nodi fits</h3>
+            <p>Nodi does not replace Sahaaya. Every report still lands in the official system. Nodi adds what Sahaaya is missing: a fast way to report, a clear view of progress, and proof that work actually happened.</p>
             <div className={s.callout}>
               <b>So, the brief for Nodi:</b> make reporting take seconds, show every step of the fix, and only close a complaint when the person who reported it says it&apos;s done.
             </div>
