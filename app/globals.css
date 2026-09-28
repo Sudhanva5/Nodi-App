@@ -909,3 +909,33 @@ figure { margin: 0; }
 .addopts button { position: relative; display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 0 14px; font-size: calc(var(--k) * 16px); font-weight: 500; text-align: left; }
 .addopts button + button::before { content: ""; position: absolute; top: 0; left: 62px; right: 0; height: 1px; background: var(--line); }
 .addopts button span { width: 36px; height: 36px; border-radius: 10px; background: var(--s2); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px var(--line) inset; }
+
+/* v13 · confirm as a details page (no cards) */
+.cs-scroll { padding: 24px 20px 8px; }
+.cs-title, .cs-sub { margin-left: 0; margin-right: 0; }
+.cs-sub { margin-bottom: 8px; }
+.dsec { padding: 16px 0 18px; border-top: 1px solid var(--line); }
+.dsec:first-of-type { border-top: 0; padding-top: 8px; }
+.dsec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
+.dsec-head b { font-size: calc(var(--k) * 16px); font-weight: 600; letter-spacing: -.015em; }
+.dsec-head span { font-size: calc(var(--k) * 12.5px); color: var(--t3); }
+.drow { position: relative; display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 0; text-align: left; }
+.drow + .drow::before { content: ""; position: absolute; top: 0; left: 50px; right: 0; height: 1px; background: var(--line); }
+.drow-act { color: var(--yellow-text); font-weight: 600; font-size: calc(var(--k) * 14.5px); }
+.drow .field-val { font-size: calc(var(--k) * 16.5px); }
+.att-add { flex-shrink: 0; width: 72px; height: 72px; border-radius: 12px; border: 1.5px dashed var(--line2); color: var(--t2); display: flex; align-items: center; justify-content: center; transition: background .15s, color .15s; }
+.att-add:active { background: var(--s2); color: var(--t1); }
+.notebox { border-bottom: 1px solid var(--line2); padding-bottom: 10px; transition: border-color .2s; }
+.notebox:focus-within { border-bottom-color: var(--yellow); }
+.notebox textarea { width: 100%; resize: none; border: 0; outline: 0; background: transparent; color: var(--t1); font: inherit; font-size: calc(var(--k) * 16px); line-height: 1.45; padding: 0; min-height: 70px; }
+.notebox textarea::placeholder { color: var(--t3); }
+.nb-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; }
+.nb-hint { font-size: calc(var(--k) * 12.5px); color: var(--t3); }
+.nb-mic { width: 44px; height: 44px; border-radius: 50%; background: var(--s2); color: var(--t1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 0 0 1px var(--line) inset; touch-action: none; user-select: none; transition: transform .15s, background .15s; }
+.nb-mic.on { background: var(--red); color: #fff; transform: scale(1.12); box-shadow: 0 0 0 8px rgba(255,107,94,.16); }
+.notebox.rec { border-bottom-color: var(--red); }
+.nb-rec { display: flex; align-items: center; gap: 10px; min-height: 70px; font-size: 14px; color: var(--t1); }
+.nb-rect { color: var(--t2); font-size: 13px; font-variant-numeric: tabular-nums; }
+.privacy { margin: 18px 0 4px; }
+.confirm-media { height: 250px; }
+.scan { padding-bottom: 40px; }

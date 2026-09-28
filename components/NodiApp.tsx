@@ -15,7 +15,7 @@ type Flow = null | "capture" | "confirm" | "sending" | "success";
 
 const NEW_ID = "NODI-24611";
 
-function makeNew(cat: Category, media: Attachment[] = [{ type: "photo", src: "/img/water.jpg" }]): Report {
+function makeNew(cat: Category, media: Attachment[] = [{ type: "photo", src: "/img/water.jpg" }], note = ""): Report {
   return {
     id: NEW_ID, cat,
     title: cat === "water" ? "Water leak on 80 Feet Rd" : `${CATEGORIES[cat].label} on 80 Feet Rd`,
@@ -25,7 +25,7 @@ function makeNew(cat: Category, media: Attachment[] = [{ type: "photo", src: "/i
     expected: "Mon, 28 Sep", reportedAgo: "just now", meToo: 0,
     timeline: [
       { when: "Just now", kind: "letter", title: "Letter sent", body: "A formal letter went to the Ward 151 office and was logged on Sahaaya." },
-      { when: "Today · 9:38am", kind: "you", title: "Reported", body: `You reported a ${CATEGORIES[cat].label.toLowerCase()} on 80 Feet Rd, with ${media.length} ${media.length === 1 ? "photo" : "photos and videos"}.`, media },
+      { when: "Today · 9:38am", kind: "you", title: "Reported", body: `You reported a ${CATEGORIES[cat].label.toLowerCase()} on 80 Feet Rd.${note ? ` "${note}"` : ""}`, media },
     ],
   };
 }
@@ -104,7 +104,7 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
       )}
 
       {flow === "capture" && <div className="modal-screen"><Capture initialMode={mode} onClose={() => setFlow(null)} onCaptured={(m) => { setMode(m); setFlow("confirm"); }} /></div>}
-      {flow === "confirm" && <div className="modal-screen"><Confirm mode={mode} lang={lang} onBack={() => setFlow("capture")} onSend={(cat, media) => { setReports((rs) => [makeNew(cat, media), ...rs.filter((r) => r.id !== NEW_ID)]); setFlow("sending"); }} /></div>}
+      {flow === "confirm" && <div className="modal-screen"><Confirm mode={mode} lang={lang} onBack={() => setFlow("capture")} onSend={(cat, media, note) => { setReports((rs) => [makeNew(cat, media, note), ...rs.filter((r) => r.id !== NEW_ID)]); setFlow("sending"); }} /></div>}
       {flow === "sending" && <div className="modal-screen"><Sending onDone={() => { ensureNew(); setFlow("success"); }} /></div>}
       {flow === "success" && newReport && (
         <div className="modal-screen"><Success report={newReport} onLetter={() => setLetterFor(NEW_ID)} onDone={() => { setFlow(null); setDetailId(null); setTab("home"); }} onTrack={() => { setFlow(null); setDetailId(NEW_ID); }} /></div>
