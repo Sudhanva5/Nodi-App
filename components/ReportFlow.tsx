@@ -35,7 +35,6 @@ export function Capture({ initialMode, onClose, onCaptured }: { initialMode: Mod
 
       <div className="cap-top">
         <button className="glassbtn" onClick={onClose} aria-label="Close"><X size={22} /></button>
-        <span className="safe-pill">Only if it's safe to stop</span>
         <button className="glassbtn" aria-label="Flash"><Zap size={20} /></button>
       </div>
 

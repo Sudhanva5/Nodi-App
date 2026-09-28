@@ -9,7 +9,6 @@ export const NOTES: Record<ScreenKey, { n: string; title: string; why: string[] 
   ] },
   capture: { n: "02a", title: "Report · Camera first", why: [
     "The app opens straight into the camera, so there's no form or category to pick first. Photo and video use the same controls as the iOS Camera app.",
-    "'Only if it's safe to stop' reminds drivers and riders to report safely.",
   ] },
   confirm: { n: "02b", title: "Report · One confirm page", why: [
     "The AI and GPS fill in the category, location and ward. The user just checks and sends, so there's no step-by-step wizard.",
