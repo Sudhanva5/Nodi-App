@@ -4,10 +4,10 @@ import NodiApp, { ScreenKey } from "@/components/NodiApp";
 
 const NOTES: Record<ScreenKey, { n: string; title: string; why: string[] }> = {
   home: { n: "01", title: "Home · My reports", why: [
-    "One job above the fold: a big yellow 'Report a problem' button. Voice and video sit right under it for people who don't want to take a photo.",
-    "'Needs your check' comes first. Only the citizen can close a complaint, which fixes Sahaaya's fake 'Resolved' problem.",
-    "Every row answers 'where is it now and when will it be done' with a 5-step bar and a date.",
-    "The Aa and ಕ buttons stay one tap away for bigger text and Kannada, with no digging in settings.",
+    "One job above the fold: 'See a problem' flips through road, streetlights, water and footpaths, with a single 'Report a problem' button under it. The yellow camera button in the dock does the same thing from anywhere.",
+    "'Needs your check' comes first, with a pulsing dot. Only the citizen can close a complaint, which fixes Sahaaya's fake 'Resolved' problem.",
+    "The report cards are compact, and each one shows its status, due date and a thin 5-step progress bar.",
+    "Tapping the profile photo opens your ward, a link to your ward on Sahaaya, and accessibility settings: language, bigger text, read aloud and reduce motion.",
   ] },
   capture: { n: "02a", title: "Report · Camera first", why: [
     "The app opens straight into the camera, so there's no form or category to pick first. Photo, video and voice use the same controls as the iOS Camera app.",

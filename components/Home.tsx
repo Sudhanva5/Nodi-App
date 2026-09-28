@@ -1,17 +1,16 @@
 "use client";
-import { Camera, ChevronRight, ShieldCheck, Type } from "lucide-react";
-import { Report, CATEGORIES } from "@/lib/data";
+import { Camera, ChevronRight, ShieldCheck } from "lucide-react";
+import { Report, CATEGORIES, Ward } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
-import { CatIcon, StageBar, StatusDot, StatusBar, NyMark, FlipText } from "./ui";
+import { CatIcon, StageBar, StatusDot, StatusBar, FlipText } from "./ui";
 
 const FLIP_EN = ["on the road?", "with streetlights?", "with water?", "on footpaths?"];
 const FLIP_KN = ["ರಸ್ತೆಯಲ್ಲಿ", "ಬೀದಿ ದೀಪದಲ್ಲಿ", "ನೀರಿನಲ್ಲಿ", "ಫುಟ್‌ಪಾತ್‌ನಲ್ಲಿ"];
 const IMPACT_EN = ["12,045 streetlights fixed", "8,310 garbage dumps cleared", "21,780 potholes filled", "3,402 water leaks stopped"];
 const IMPACT_KN = ["12,045 ಬೀದಿ ದೀಪಗಳು ಸರಿ", "8,310 ಕಸದ ರಾಶಿ ತೆರವು", "21,780 ರಸ್ತೆ ಗುಂಡಿ ಮುಚ್ಚಲಾಗಿದೆ", "3,402 ನೀರು ಸೋರಿಕೆ ನಿಂತಿದೆ"];
 
-export default function Home({ reports, lang, big, onToggleBig, onToggleLang, onReport, onOpen }: {
-  reports: Report[]; lang: Lang; big: boolean;
-  onToggleBig: () => void; onToggleLang: () => void;
+export default function Home({ reports, lang, ward, onProfile, onReport, onOpen }: {
+  reports: Report[]; lang: Lang; ward: Ward; onProfile: () => void;
   onReport: (mode?: "photo" | "video" | "voice") => void; onOpen: (id: string) => void;
 }) {
   const t = tr(lang);
@@ -24,13 +23,12 @@ export default function Home({ reports, lang, big, onToggleBig, onToggleLang, on
       <div className="scroll">
         <header className="home-head">
           <div className="hh-text">
-            <div className="overline">Koramangala · Ward 151</div>
+            <div className="overline">{kn ? ward.kn : ward.name}{ward.id === "151" ? " · Ward 151" : ""}</div>
             <h1 className="hh-title">{t("Namaskara")}, Ramesh</h1>
           </div>
-          <div className="headbtns">
-            <button className={"iconbtn" + (big ? " on" : "")} onClick={onToggleBig} aria-label="Bigger text"><Type size={17} /></button>
-            <button className={"iconbtn lang" + (kn ? " on" : "")} onClick={onToggleLang} aria-label="Switch language">{kn ? "EN" : "ಕ"}</button>
-          </div>
+          <button className="avatarbtn" onClick={onProfile} aria-label="Profile and settings">
+            <img src="/img/ramesh.jpg" alt="" />
+          </button>
         </header>
 
         <section className="hero">
@@ -76,17 +74,14 @@ export default function Home({ reports, lang, big, onToggleBig, onToggleLang, on
               <button key={r.id} className="rcard" onClick={() => onOpen(r.id)}>
                 <div className="rcard-photo">
                   <img src={r.photo} alt="" />
-                  <span className="glasschip"><CatIcon cat={r.cat} size={14} /> {kn ? CATEGORIES[r.cat].kn : CATEGORIES[r.cat].label}</span>
-                  <span className="glasschip right mono">{r.id}</span>
+                  <span className="photo-ic" aria-label={CATEGORIES[r.cat].label}><CatIcon cat={r.cat} size={13} /></span>
                 </div>
                 <div className="rcard-body">
-                  <div className="rcard-top">
-                    <div className="rtitle">{r.title}</div>
-                    <StatusDot stage={r.stage} reopened={r.reopened} lang={lang} />
-                  </div>
-                  <div className="rplace"><b>{r.stage === 4 ? (kn ? "ನೀವು ಮುಚ್ಚಿದ್ದೀರಿ" : "Closed by you") : `${kn ? "ನಿರೀಕ್ಷಿತ" : "Due"} ${r.expected}`}</b> · {r.place}</div>
+                  <div className="rtitle">{r.title}</div>
+                  <div className="rplace"><StatusDot stage={r.stage} reopened={r.reopened} lang={lang} /><span>{r.stage === 4 ? (kn ? "ನೀವು ಮುಚ್ಚಿದ್ದೀರಿ" : "Closed by you") : `${kn ? "ನಿರೀಕ್ಷಿತ" : "Due"} ${r.expected}`}</span></div>
                   <StageBar stage={r.stage} reopened={r.reopened} compact />
                 </div>
+                <ChevronRight size={16} className="rchev" />
               </button>
             ))}
           </div>
@@ -97,7 +92,6 @@ export default function Home({ reports, lang, big, onToggleBig, onToggleLang, on
         <footer className="manifesto">
           <h2 className="mf-big">{kn ? <>ಬೆಂಗಳೂರನ್ನು<br />ಮತ್ತೆ<br />ಅದ್ಭುತಗೊಳಿಸೋಣ.</> : <>Let&apos;s make<br />Bengaluru<br />great again.</>}</h2>
           <p className="mf-sub">{kn ? "ಆರಂಭದಿಂದ, " : "Since launch, "}<FlipText items={kn ? IMPACT_KN : IMPACT_EN} interval={2600} className="mf-flip" /></p>
-          <p className="mf-by"><NyMark size={10} /> {kn ? "ನಮ್ಮ ಯಾತ್ರಿ ಉಪಕ್ರಮ" : "An initiative from Namma Yatri"}</p>
         </footer>
         <div style={{ height: 120 }} />
       </div>

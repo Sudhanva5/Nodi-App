@@ -154,3 +154,13 @@ export const OFFICIAL_POSTS = [
     matched: 3,
   },
 ];
+
+export type Ward = { id: string; name: string; kn: string; corp: string; open: number };
+export const WARDS: Ward[] = [
+  { id: "151", name: "Koramangala", kn: "ಕೋರಮಂಗಲ", corp: "Bengaluru South City Corporation", open: 128 },
+  { id: "jn", name: "Jayanagar", kn: "ಜಯನಗರ", corp: "Bengaluru South City Corporation", open: 94 },
+  { id: "hsr", name: "HSR Layout", kn: "ಎಚ್‌ಎಸ್‌ಆರ್ ಲೇಔಟ್", corp: "Bengaluru South City Corporation", open: 141 },
+  { id: "in", name: "Indiranagar", kn: "ಇಂದಿರಾನಗರ", corp: "Bengaluru East City Corporation", open: 87 },
+  { id: "wf", name: "Whitefield", kn: "ವೈಟ್‌ಫೀಲ್ಡ್", corp: "Bengaluru East City Corporation", open: 203 },
+  { id: "ml", name: "Malleshwaram", kn: "ಮಲ್ಲೇಶ್ವರಂ", corp: "Bengaluru West City Corporation", open: 62 },
+];

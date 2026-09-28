@@ -1,11 +1,12 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { Home as HomeIc, Camera, Map } from "lucide-react";
-import { INITIAL_REPORTS, Report, Category, CATEGORIES } from "@/lib/data";
+import { INITIAL_REPORTS, Report, Category, CATEGORIES, WARDS, Ward } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
 import Home from "./Home";
 import Detail, { VerifiedSheet } from "./Detail";
 import Nearby from "./Nearby";
+import Profile, { Prefs } from "./Profile";
 import { Capture, Confirm, Sending, Success, Letter } from "./ReportFlow";
 
 export type ScreenKey = "home" | "capture" | "confirm" | "sending" | "success" | "detail" | "nearby";
@@ -36,8 +37,10 @@ export default function NodiApp({ jump, onScreen }: { jump?: { key: ScreenKey; n
   const [mode, setMode] = useState<Mode>("photo");
   const [detailId, setDetailId] = useState<string | null>(null);
   const [reports, setReports] = useState<Report[]>(INITIAL_REPORTS);
-  const [lang, setLang] = useState<Lang>("en");
-  const [big, setBig] = useState(false);
+  const [prefs, setPrefs] = useState<Prefs>({ big: false, lang: "en", readAloud: false, calm: false, whatsapp: true });
+  const [ward, setWard] = useState<Ward>(WARDS[0]);
+  const [profile, setProfile] = useState(false);
+  const { lang, big } = prefs;
   const [letterFor, setLetterFor] = useState<string | null>(null);
   const [verified, setVerified] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
@@ -51,7 +54,7 @@ export default function NodiApp({ jump, onScreen }: { jump?: { key: ScreenKey; n
 
   useEffect(() => {
     if (!jump) return;
-    setLetterFor(null); setVerified(false);
+    setLetterFor(null); setVerified(false); setProfile(false);
     switch (jump.key) {
       case "home": setFlow(null); setDetailId(null); setTab("home"); break;
       case "nearby": setFlow(null); setDetailId(null); setTab("nearby"); break;
@@ -70,17 +73,15 @@ export default function NodiApp({ jump, onScreen }: { jump?: { key: ScreenKey; n
   const newReport = reports.find((r) => r.id === NEW_ID);
 
   return (
-    <div className={"nodi" + (big ? " big" : "")} lang={lang === "kn" ? "kn" : "en"}>
+    <div className={"nodi" + (big ? " big" : "") + (prefs.calm ? " calm" : "")} lang={lang === "kn" ? "kn" : "en"}>
       {screen === "home" && (
-        <Home reports={reports} lang={lang} big={big}
-          onToggleBig={() => { setBig((b) => !b); setToast(!big ? "Bigger text on" : "Normal text"); }}
-          onToggleLang={() => setLang((l) => (l === "en" ? "kn" : "en"))}
+        <Home reports={reports} lang={lang} ward={ward} onProfile={() => setProfile(true)}
           onReport={(m) => { setMode(m ?? "photo"); setFlow("capture"); }}
           onOpen={(id) => setDetailId(id)} />
       )}
       {screen === "nearby" && <Nearby lang={lang} onVerified={() => setVerified(true)} extraMeToo={newReport ? { n2: 1 } : {}} />}
       {screen === "detail" && detail && (
-        <Detail report={detail} lang={lang} onBack={() => setDetailId(null)} onLetter={() => setLetterFor(detail.id)} onVerified={() => setVerified(true)}
+        <Detail report={detail} lang={lang} autoRead={prefs.readAloud} onBack={() => setDetailId(null)} onLetter={() => setLetterFor(detail.id)} onVerified={() => setVerified(true)}
           onConfirm={() => {
             update(detail.id, (r) => ({ ...r, stage: 4, statusLine: "Closed by you. 14 neighbours were told it's fixed.", timeline: [{ when: "Today, 12:05 PM", kind: "fixed", title: "You confirmed it is fixed", body: "Closed. 14 neighbours were told." }, ...r.timeline] }));
             setToast("Thank you. Complaint closed.");
@@ -110,6 +111,7 @@ export default function NodiApp({ jump, onScreen }: { jump?: { key: ScreenKey; n
 
       {letterFor && <Letter report={reports.find((r) => r.id === letterFor)!} onClose={() => setLetterFor(null)} />}
       {verified && <VerifiedSheet onClose={() => setVerified(false)} />}
+      {profile && <Profile ward={ward} onWard={(w) => { setWard(w); setToast(`Ward set to ${w.name}`); }} prefs={prefs} setPrefs={setPrefs} onClose={() => setProfile(false)} />}
       {toast && <div className="toast">{toast}</div>}
       <div className="homeind" />
     </div>

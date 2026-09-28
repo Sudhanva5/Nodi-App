@@ -1,12 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, Share, Volume2, Square, Phone, MessageCircle, FileText, User, Users, Check, RotateCcw, Camera, AlertTriangle, BadgeCheck } from "lucide-react";
 import { Report, STAGES, CATEGORIES, OFFICIAL_POSTS } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
 import { StatusBar, StageBar, StatusPill, Verified, useSpeak, CatBadge } from "./ui";
 
-export default function Detail({ report, lang, onBack, onConfirm, onReopen, onLetter, onVerified }: {
-  report: Report; lang: Lang; onBack: () => void; onConfirm: () => void; onReopen: () => void; onLetter: () => void; onVerified: () => void;
+export default function Detail({ report, lang, autoRead, onBack, onConfirm, onReopen, onLetter, onVerified }: {
+  report: Report; lang: Lang; autoRead?: boolean; onBack: () => void; onConfirm: () => void; onReopen: () => void; onLetter: () => void; onVerified: () => void;
 }) {
   const t = tr(lang);
   const [view, setView] = useState<"before" | "after">(report.after && report.stage >= 3 ? "after" : "before");
@@ -19,6 +19,8 @@ export default function Detail({ report, lang, onBack, onConfirm, onReopen, onLe
     : report.stage === 4 ? "Fixed. You confirmed it." : report.stage === 3 ? "GBA has marked this as done." : report.stage === 2 ? "An engineer is on it." : "Your ward office has the letter.";
 
   const listen = () => speak(`${report.title}. ${headline} ${report.statusLine}`);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { if (autoRead) listen(); }, []);
 
   return (
     <div className="screen detail">
