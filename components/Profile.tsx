@@ -20,7 +20,7 @@ export default function Profile({ ward, onWard, prefs, setPrefs, onClose }: {
   const [view, setView] = useState<"main" | "ward">("main");
   const [q, setQ] = useState("");
   const kn = prefs.lang === "kn";
-  const set = (k: keyof Prefs, v: Prefs[keyof Prefs]) => setPrefs({ ...prefs, [k]: v });
+  const set = (k: keyof Prefs, v: Prefs[keyof Prefs]) => { setPrefs({ ...prefs, [k]: v }); window.dispatchEvent(new CustomEvent("nodi", { detail: "setting" })); };
 
   return (
     <div className="modal-scrim profile-scrim" onClick={onClose}>
@@ -45,7 +45,7 @@ export default function Profile({ ward, onWard, prefs, setPrefs, onClose }: {
               <div className="pf-stats">
                 <div><b>12</b><span>{kn ? "ನೀವು ದೂರಿತ್ತದ್ದು" : "Reported"}</span></div>
                 <div><b>9</b><span>{kn ? "ಸರಿಯಾದದ್ದು" : "Fixed"}</span></div>
-                <div><b>41</b><span>{kn ? "ಬೆಂಬಲಿಸಿದ್ದು" : "Supported"}</span></div>
+                <div><b>3</b><span>{kn ? "ಬಾಕಿ" : "Open"}</span></div>
               </div>
             </div>
 

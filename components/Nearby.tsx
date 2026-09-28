@@ -23,7 +23,7 @@ export default function Nearby({ lang }: { lang: Lang; onVerified?: () => void; 
   const [recenter, setRecenter] = useState(0);
 
   const issues = useMemo(() => NEARBY.filter((i) => filter === "all" || i.cat === filter), [filter]);
-  const openIssue = (i: NearbyIssue) => { setSel(i.id); setOpen(i); };
+  const openIssue = (i: NearbyIssue) => { setSel(i.id); setOpen(i); window.dispatchEvent(new CustomEvent("nodi", { detail: "incident" })); };
 
   return (
     <div className="screen nearby">
@@ -49,7 +49,7 @@ export default function Nearby({ lang }: { lang: Lang; onVerified?: () => void; 
         </div>
         <div className="segctl">
           <button className={tab === "reports" ? "on" : ""} onClick={() => setTab("reports")}>Reported · {issues.length}</button>
-          <button className={tab === "official" ? "on" : ""} onClick={() => setTab("official")}>Official updates</button>
+          <button className={tab === "official" ? "on" : ""} onClick={() => { setTab("official"); window.dispatchEvent(new CustomEvent("nodi", { detail: "official" })); }}>Official updates</button>
         </div>
 
         {tab === "reports" ? (

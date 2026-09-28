@@ -93,7 +93,7 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
 
         <footer className="manifesto">
           <h2 className="mf-big">{kn ? <>ಬೆಂಗಳೂರನ್ನು<br />ಮತ್ತೆ<br />ಅದ್ಭುತಗೊಳಿಸೋಣ.</> : <>Let&apos;s make<br />Bengaluru<br />great again.</>}</h2>
-          <p className="mf-sub">{kn ? "ಆರಂಭದಿಂದ, " : "Since launch, "}<FlipText items={kn ? IMPACT_KN : IMPACT_EN} interval={2600} className="mf-flip" /></p>
+          <p className="mf-sub">{kn ? "2026 ರಲ್ಲಿ ಆರಂಭವಾದಾಗಿನಿಂದ, " : "Since launch in 2026, "}<FlipText items={kn ? IMPACT_KN : IMPACT_EN} interval={2600} className="mf-flip" /></p>
         </footer>
         <div style={{ height: 120 }} />
       </div>

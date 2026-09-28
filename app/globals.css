@@ -1013,3 +1013,38 @@ figure { margin: 0; }
 .ppin.sel { box-shadow: 0 0 0 2px #fff, 0 10px 26px rgba(0,0,0,.6); }
 .ppin.check .ppin-ic { color: var(--amber); box-shadow: 0 0 0 1.5px var(--amber); }
 .stage.solo { gap: 0; }
+
+/* =========================================================
+   Demo clips (/demo/[flow]) embedded in the case study
+   ========================================================= */
+html:has(.demo), body:has(.demo) { background: transparent !important; overflow: hidden; }
+.demo { width: 417px; height: 876px; pointer-events: none; }
+.demo .device { box-shadow: 0 0 0 1px #000, inset 0 0 0 1.5px rgba(255,255,255,.12); }
+.demo:not(.framed) .device { background: none; padding: 0; width: 393px; height: 852px; box-shadow: none; }
+.demo:not(.framed) .island { display: none; }
+.demo .device-wrap { transform: none !important; margin: 0 !important; }
+.tapdot { position: absolute; z-index: 999; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: rgba(255,255,255,.35); box-shadow: 0 0 0 2px rgba(255,255,255,.8); opacity: 0; pointer-events: none; }
+.tapdot.go { animation: tap .55s ease-out; }
+@keyframes tap { 0% { opacity: 0; transform: scale(.6); } 25% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.5); } }
+@media (max-width: 900px) { .demo .device { width: 417px; height: 876px; border-radius: 68px; padding: 12px; } .demo .device-screen { width: 393px; height: 852px; border-radius: 56px; } .demo .island { display: block; } }
+
+/* Prototype checklist (left of the phone) */
+.checklist { width: 340px; flex-shrink: 0; }
+.cl-brand { display: flex; align-items: center; gap: 12px; }
+.cl-brand img { width: 48px; height: 48px; border-radius: 12px; box-shadow: 0 0 0 1px var(--line2); }
+.cl-brand h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+.cl-brand span { font-size: 13px; color: var(--t3); }
+.cl-lead { margin: 22px 0 16px; font-size: 15px; line-height: 1.5; color: var(--t2); }
+.cl-progress { height: 4px; border-radius: 2px; background: var(--s3); overflow: hidden; }
+.cl-progress span { display: block; height: 100%; background: var(--yellow); transition: width .5s var(--ease); }
+.cl-count { margin-top: 8px; font-size: 12.5px; color: var(--t3); font-variant-numeric: tabular-nums; }
+.cl-list { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.cl-list li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; border-radius: 14px; background: var(--s1); box-shadow: 0 0 0 1px var(--line) inset; transition: background .2s; }
+.cl-list li.done { background: rgba(255,183,57,.06); box-shadow: 0 0 0 1px rgba(255,183,57,.28) inset; }
+.cl-box { flex-shrink: 0; width: 22px; height: 22px; margin-top: 1px; border-radius: 7px; box-shadow: 0 0 0 1.5px var(--line2) inset; color: transparent; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+.cl-list li.done .cl-box { background: var(--yellow); color: var(--ink); box-shadow: none; }
+.cl-list b { display: block; font-size: 15px; font-weight: 600; letter-spacing: -.015em; }
+.cl-n { color: var(--t3); font-weight: 500; }
+.cl-list li.done b { color: var(--t2); text-decoration: line-through; text-decoration-color: var(--t4); }
+.cl-list p { margin: 4px 0 0; font-size: 13px; line-height: 1.5; color: var(--t3); }
+@media (max-width: 900px) { .checklist { display: none; } }
