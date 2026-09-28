@@ -48,7 +48,7 @@ export default function Nearby({ lang, onVerified, extraMeToo }: { lang: Lang; o
           <div className="sc-cell"><b>128</b><span>open now</span></div>
           <div className="sc-trend"><TrendingUp size={14} /> Ward 151 is <b>14 pts</b> better than the city average this month</div>
         </div>
-        <div className="seg dark">
+        <div className="segctl">
           <button className={tab === "issues" ? "on" : ""} onClick={() => setTab("issues")}>Near you · {issues.length}</button>
           <button className={tab === "official" ? "on" : ""} onClick={() => setTab("official")}>Official updates</button>
         </div>

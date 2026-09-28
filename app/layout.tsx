@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Noto_Sans_Kannada } from "next/font/google";
+import { Inter, Anek_Kannada } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const kannada = Noto_Sans_Kannada({ subsets: ["kannada"], weight: ["400", "500", "600", "700"], variable: "--font-kn", display: "swap" });
+const kannada = Anek_Kannada({ subsets: ["kannada", "latin"], variable: "--font-kn", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Nodi · Snap it. Send it. See it fixed.",

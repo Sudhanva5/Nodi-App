@@ -92,11 +92,13 @@ export default function NodiApp({ jump, onScreen }: { jump?: { key: ScreenKey; n
       )}
 
       {(screen === "home" || screen === "nearby") && (
-        <nav className={"tabbar" + (screen === "nearby" ? " dark" : "")}>
-          <button className={screen === "home" ? "on" : ""} onClick={() => setTab("home")}><HomeIc size={25} strokeWidth={2.2} /><span>{t("Home")}</span></button>
-          <button className="tab-report" onClick={() => { setMode("photo"); setFlow("capture"); }} aria-label="Report a problem"><span><Camera size={27} strokeWidth={2.4} /></span><em>{t("Report")}</em></button>
-          <button className={screen === "nearby" ? "on" : ""} onClick={() => setTab("nearby")}><Map size={25} strokeWidth={2.2} /><span>{t("Nearby")}</span></button>
-        </nav>
+        <div className="dock">
+          <nav className="tabpill" aria-label="Tabs">
+            <button className={screen === "home" ? "on" : ""} onClick={() => setTab("home")}><HomeIc size={22} /><span>{t("Home")}</span></button>
+            <button className={screen === "nearby" ? "on" : ""} onClick={() => setTab("nearby")}><Map size={22} /><span>{t("Nearby")}</span></button>
+          </nav>
+          <button className="fab" onClick={() => { setMode("photo"); setFlow("capture"); }} aria-label={t("Report a problem")}><Camera size={24} /></button>
+        </div>
       )}
 
       {flow === "capture" && <div className="modal-screen"><Capture initialMode={mode} onClose={() => setFlow(null)} onCaptured={(m) => { setMode(m); setFlow("confirm"); }} /></div>}

@@ -116,6 +116,20 @@ export function useSpeak() {
   return { speak, speaking };
 }
 
+/** Vertical flip between phrases (hero headline, impact counter). */
+export function FlipText({ items, interval = 2200, className }: { items: string[]; interval?: number; className?: string }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI((x) => (x + 1) % items.length), interval);
+    return () => clearInterval(t);
+  }, [items.length, interval]);
+  return (
+    <span className={"flip " + (className ?? "")} aria-live="polite">
+      <span key={i} className="flip-in">{items[i % items.length]}</span>
+    </span>
+  );
+}
+
 export function NyMark({ size = 14 }: { size?: number }) {
   // Namma Yatri style mark: yellow rounded square with black "ny"
   return (
