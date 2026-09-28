@@ -50,6 +50,7 @@ const JUMPS: { k: ScreenKey; label: string }[] = [
 export default function Page() {
   const [jump, setJump] = useState<{ key: ScreenKey; n: number }>();
   const [cur, setCur] = useState<ScreenKey>("home");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const onScreen = useCallback((k: ScreenKey) => setCur(k), []);
   const note = NOTES[cur];
   return (
@@ -64,6 +65,10 @@ export default function Page() {
           {JUMPS.map((j) => (
             <button key={j.k} className={cur === j.k || (j.k === "capture" && cur === "sending") ? "on" : ""} onClick={() => setJump({ key: j.k, n: Date.now() })}>{j.label}</button>
           ))}
+        </div>
+        <div className="p-theme">
+          <button className={theme === "dark" ? "on" : ""} onClick={() => setTheme("dark")}>Dark</button>
+          <button className={theme === "light" ? "on" : ""} onClick={() => setTheme("light")}>Light</button>
         </div>
         <div className="p-note" key={cur}>
           <span className="p-n">{note.n}</span>
@@ -84,7 +89,7 @@ export default function Page() {
       <div className="device-wrap">
         <div className="device">
           <div className="island" />
-          <div className="device-screen"><NodiApp jump={jump} onScreen={onScreen} /></div>
+          <div className="device-screen"><NodiApp jump={jump} onScreen={onScreen} theme={theme} onTheme={setTheme} /></div>
         </div>
       </div>
     </main>

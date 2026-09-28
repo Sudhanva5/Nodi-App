@@ -66,7 +66,7 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
 
         <section className="block">
           <div className="blockhead">
-            <h2 className="title">{t("My reports")}</h2>
+            <h2 className="title">{t("My reports")} <span className="count">{others.length}</span></h2>
             <button className="viewall">{kn ? "ಎಲ್ಲಾ ನೋಡಿ" : "View all"} <ChevronRight size={15} /></button>
           </div>
           <div className="stack">

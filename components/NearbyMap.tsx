@@ -35,7 +35,7 @@ export default function NearbyMap({ issues, selected, onSelect }: { issues: Near
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, className: "darktiles" }).addTo(m);
     // you are here
     L.marker([12.9345, 77.6226], { icon: L.divIcon({ className: "", html: '<div class="me-dot"><span></span></div>', iconSize: [22, 22], iconAnchor: [11, 11] }) }).addTo(m);
-    L.circle([12.9345, 77.6226], { radius: 600, color: "#FCC32C", weight: 1, opacity: 0.25, fillColor: "#FCC32C", fillOpacity: 0.03, dashArray: "2 6" }).addTo(m);
+    L.circle([12.9345, 77.6226], { radius: 600, color: "#FFB739", weight: 1, opacity: 0.25, fillColor: "#FFB739", fillOpacity: 0.03, dashArray: "2 6" }).addTo(m);
     layer.current = L.layerGroup().addTo(m);
     map.current = m;
     setTimeout(() => m.invalidateSize(), 80);

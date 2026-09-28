@@ -31,13 +31,15 @@ function makeNew(cat: Category, voice: boolean): Report {
   };
 }
 
-export default function NodiApp({ jump, onScreen }: { jump?: { key: ScreenKey; n: number }; onScreen?: (k: ScreenKey) => void }) {
+export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { key: ScreenKey; n: number }; onScreen?: (k: ScreenKey) => void; theme?: "dark" | "light"; onTheme?: (t: "dark" | "light") => void }) {
   const [tab, setTab] = useState<"home" | "nearby">("home");
   const [flow, setFlow] = useState<Flow>(null);
   const [mode, setMode] = useState<Mode>("photo");
   const [detailId, setDetailId] = useState<string | null>(null);
   const [reports, setReports] = useState<Report[]>(INITIAL_REPORTS);
-  const [prefs, setPrefs] = useState<Prefs>({ big: false, lang: "en", readAloud: false, calm: false, whatsapp: true });
+  const [prefsState, setPrefsState] = useState<Prefs>({ big: false, lang: "en", readAloud: false, calm: false, whatsapp: true, theme: "dark" });
+  const prefs: Prefs = theme ? { ...prefsState, theme } : prefsState;
+  const setPrefs = (p: Prefs) => { setPrefsState(p); if (p.theme !== prefs.theme) onTheme?.(p.theme); };
   const [ward, setWard] = useState<Ward>(WARDS[0]);
   const [profile, setProfile] = useState(false);
   const { lang, big } = prefs;
@@ -73,7 +75,7 @@ export default function NodiApp({ jump, onScreen }: { jump?: { key: ScreenKey; n
   const newReport = reports.find((r) => r.id === NEW_ID);
 
   return (
-    <div className={"nodi" + (big ? " big" : "") + (prefs.calm ? " calm" : "")} lang={lang === "kn" ? "kn" : "en"}>
+    <div className={"nodi" + (big ? " big" : "") + (prefs.calm ? " calm" : "") + (prefs.theme === "light" ? " light" : "")} lang={lang === "kn" ? "kn" : "en"}>
       {screen === "home" && (
         <Home reports={reports} lang={lang} ward={ward} onProfile={() => setProfile(true)}
           onReport={(m) => { setMode(m ?? "photo"); setFlow("capture"); }}

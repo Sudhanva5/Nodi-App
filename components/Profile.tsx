@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { Camera, ChevronRight, ChevronLeft, Check, ArrowUpRight, Type, Languages, Volume2, Sparkles, MessageCircle, MapPin, Search } from "lucide-react";
+import { Camera, ChevronRight, ChevronLeft, Check, ArrowUpRight, Type, Languages, Volume2, Sparkles, MessageCircle, MapPin, Search, SunMoon } from "lucide-react";
 import { Ward, WARDS } from "@/lib/data";
 import { Lang } from "@/lib/i18n";
 
-export type Prefs = { big: boolean; lang: Lang; readAloud: boolean; calm: boolean; whatsapp: boolean };
+export type Prefs = { big: boolean; lang: Lang; readAloud: boolean; calm: boolean; whatsapp: boolean; theme: "dark" | "light" };
 
 function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
@@ -71,6 +71,14 @@ export default function Profile({ ward, onWard, prefs, setPrefs, onClose }: {
                 <div className="pf-seg">
                   <button className={!kn ? "on" : ""} onClick={() => set("lang", "en")}>English</button>
                   <button className={kn ? "on" : ""} onClick={() => set("lang", "kn")}>ಕನ್ನಡ</button>
+                </div>
+              </div>
+              <div className="pf-row">
+                <span className="pf-ic"><SunMoon size={17} /></span>
+                <span className="pf-main"><b>{kn ? "ನೋಟ" : "Appearance"}</b></span>
+                <div className="pf-seg">
+                  <button className={prefs.theme === "light" ? "on" : ""} onClick={() => set("theme", "light")}>{kn ? "ಬೆಳಕು" : "Light"}</button>
+                  <button className={prefs.theme === "dark" ? "on" : ""} onClick={() => set("theme", "dark")}>{kn ? "ಕತ್ತಲು" : "Dark"}</button>
                 </div>
               </div>
               <div className="pf-row">

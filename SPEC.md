@@ -3,7 +3,7 @@
 **Name:** Nodi (ನೋಡಿ, Kannada for "look"). You look, you snap, and the city has to look too.
 **Tagline:** Snap it. Send it. See it fixed.
 **Maker:** A Namma Yatri (Moving Tech) product. Open, citizen-first, Kannada + English.
-**Brand:** Namma Yatri yellow #FCC32C on ink #111111. Logo = yellow map pin with an eye cut-out. iOS HIG: SF Pro (system font), grouped backgrounds #F2F2F7, 44pt min targets, sheets with detents, tab bar.
+**Brand:** Namma Yatri yellow #FFB739 on ink #111111. Logo = yellow map pin with an eye cut-out. iOS HIG: SF Pro (system font), grouped backgrounds #F2F2F7, 44pt min targets, sheets with detents, tab bar.
 **Authority:** Greater Bengaluru Authority (GBA, formerly BBMP; BBMP dissolved Sep 2025, now 5 city corporations). Users still say "BBMP", so voice/search accepts both. Demo ward: Ward 151 Koramangala, Bengaluru South City Corporation. Real X handle for official proof: @GBA_office. Helpline 1533.
 
 ## Research signals (cite in case study)

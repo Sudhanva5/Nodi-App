@@ -141,7 +141,7 @@ export function GbaSeal({ size = 22 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" aria-label="GBA">
       <circle cx="20" cy="20" r="19.25" fill="#161616" stroke="rgba(255,255,255,.18)" strokeWidth="1.5" />
-      <circle cx="20" cy="20" r="15" fill="none" stroke="#FCC32C" strokeOpacity=".7" strokeWidth="1" strokeDasharray="1.4 1.8" />
+      <circle cx="20" cy="20" r="15" fill="none" stroke="#FFB739" strokeOpacity=".7" strokeWidth="1" strokeDasharray="1.4 1.8" />
       <text x="20" y="23.8" textAnchor="middle" fontSize="10.5" fontWeight="700" letterSpacing=".5" fill="#F5F5F5" fontFamily="Inter, system-ui">GBA</text>
     </svg>
   );
