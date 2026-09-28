@@ -1007,3 +1007,8 @@ figure { margin: 0; }
 .recenter.hide { opacity: 0; pointer-events: none; }
 .recenter { transition: bottom .4s var(--ease), opacity .2s; }
 .leaflet-container .leaflet-marker-pane .ppin img { width: 100% !important; height: 100% !important; max-width: none; padding: 0; border-radius: 12px; object-fit: cover; }
+/* photo pins: no coloured frame, status lives on the icon badge */
+.ppin, .ppin.check, .ppin.done { padding: 0; background: #13131B; border-radius: 12px; box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 6px 18px rgba(0,0,0,.55); }
+.leaflet-container .leaflet-marker-pane .ppin img { border-radius: 12px; }
+.ppin.sel { box-shadow: 0 0 0 2px #fff, 0 10px 26px rgba(0,0,0,.6); }
+.ppin.check .ppin-ic { color: var(--amber); box-shadow: 0 0 0 1.5px var(--amber); }
