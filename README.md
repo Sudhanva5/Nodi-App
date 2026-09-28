@@ -14,7 +14,7 @@ npm run dev        # http://localhost:3456
 
 ## Deploy on Railway
 1. Railway dashboard → New Project → Deploy from GitHub repo → `Sudhanva5/Nodi-App`.
-2. Railway reads `railway.json`: it builds with `npm ci && npm run build` and starts with `npm run start` (binds to Railway's `$PORT`).
+2. Railway reads `railway.json`: it installs dependencies, builds with `npm run build` and starts with `npm run start` (binds to Railway's `$PORT`).
 3. Settings → Networking → Generate Domain. Share:
    - Prototype: `https://<your-domain>/`
    - Case study: `https://<your-domain>/case-study`
