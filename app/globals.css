@@ -1229,3 +1229,8 @@ html, body { background: #161618; }
 .rs-foot { padding: 12px 20px 34px; animation: fadeup .5s .45s var(--ease) both; }
 .rs-burst i { animation-name: burst3; transform: rotate(var(--r)) translateY(0); margin-top: -6px; }
 @keyframes burst3 { 0% { opacity: 0; transform: rotate(var(--r)) translateY(-30px) scaleY(.4); } 25% { opacity: 1; } 100% { opacity: 0; transform: rotate(var(--r)) translateY(-78px) scaleY(1); } }
+
+/* no orphaned last words */
+.nodi p, .nodi .rs-sub, .nodi .cs-sub, .nodi .sc-line, .nodi .tl-text, .nodi .succ-sub, .nodi .rep-desc, .nodi .inc-desc, .nodi .hero-sub, .nodi .vfh-cta { text-wrap: pretty; }
+.nodi h1, .nodi h2, .nodi h3, .nodi .sc-head, .nodi .rep-title, .nodi .cc-title { text-wrap: balance; }
+.rs-sub { text-wrap: balance !important; max-width: 300px; }
