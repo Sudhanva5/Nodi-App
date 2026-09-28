@@ -1012,3 +1012,4 @@ figure { margin: 0; }
 .leaflet-container .leaflet-marker-pane .ppin img { border-radius: 12px; }
 .ppin.sel { box-shadow: 0 0 0 2px #fff, 0 10px 26px rgba(0,0,0,.6); }
 .ppin.check .ppin-ic { color: var(--amber); box-shadow: 0 0 0 1.5px var(--amber); }
+.stage.solo { gap: 0; }
