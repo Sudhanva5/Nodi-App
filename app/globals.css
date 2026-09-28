@@ -1006,3 +1006,4 @@ figure { margin: 0; }
 .nodi.light .ppin-ic, .nodi.light .ipin { background: #13131B; }
 .recenter.hide { opacity: 0; pointer-events: none; }
 .recenter { transition: bottom .4s var(--ease), opacity .2s; }
+.leaflet-container .leaflet-marker-pane .ppin img { width: 100% !important; height: 100% !important; max-width: none; padding: 0; border-radius: 12px; object-fit: cover; }
