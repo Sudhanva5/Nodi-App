@@ -1,5 +1,5 @@
 "use client";
-import { Camera, ChevronRight, ShieldCheck } from "lucide-react";
+import { ChevronRight, ShieldCheck } from "lucide-react";
 import { Report, CATEGORIES, Ward } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
 import { CatIcon, StageBar, StatusDot, StatusBar, FlipText } from "./ui";
@@ -31,17 +31,20 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
           </button>
         </header>
 
-        <section className="hero">
-          <div className="hero-glow" />
-          <h2 className="hero-q">
-            {kn ? (<><FlipText items={FLIP_KN} className="accent" /><br />ಸಮಸ್ಯೆ ಕಾಣಿಸಿತೇ?</>)
-                : (<>See a problem<br /><FlipText items={FLIP_EN} className="accent" /></>)}
-          </h2>
-          <p className="hero-sub">{kn ? "ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಕಳುಹಿಸಿ. ನಾವು ಅದನ್ನು ನಿಮ್ಮ ವಾರ್ಡ್ ಕಚೇರಿಗೆ ತಲುಪಿಸಿ, ಸರಿಯಾಗುವವರೆಗೆ ಬೆನ್ನಟ್ಟುತ್ತೇವೆ." : "Send a photo or video. We'll take it to your ward office and keep chasing it."}</p>
-          <button className="primary" onClick={() => onReport("photo")}>
-            <Camera size={19} /> {t("Report a problem")}
-          </button>
-        </section>
+        <button className="vfhero" onClick={() => onReport("photo")} aria-label={t("Report a problem")}>
+          <img src="/img/pothole2.jpg" alt="" className="vfh-img" />
+          <span className="vfh-shade" />
+          <span className="vfh-brackets"><i /><i /><i /><i /></span>
+          <span className="vfh-live"><i />{kn ? "ಕ್ಯಾಮೆರಾ" : "Camera"}</span>
+          <span className="vfh-q">
+            {kn ? (<><FlipText items={FLIP_KN} className="vfh-flip" /><br />ಸಮಸ್ಯೆ ಕಾಣಿಸಿತೇ?</>)
+                : (<>See a problem<br /><FlipText items={FLIP_EN} className="vfh-flip" /></>)}
+          </span>
+          <span className="vfh-bottom">
+            <span className="vfh-shutter"><span /></span>
+            <span className="vfh-cta">{kn ? "ಫೋಟೋ ತೆಗೆದು GBA ಗೆ ಕಳುಹಿಸಿ" : "Tap to snap it. We'll take it to GBA."}</span>
+          </span>
+        </button>
 
         {needsCheck.length > 0 && (
           <section className="block">

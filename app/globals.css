@@ -1066,3 +1066,34 @@ html:has(.demo), body:has(.demo) { background: transparent !important; overflow:
 /* v16 · type scale down ~7% (iOS default size); Bigger text still scales up */
 .nodi { --k: .93; }
 .nodi.big { --k: 1.1; }
+
+/* =========================================================
+   v17 · Hero is the camera (viewfinder), smaller greeting
+   ========================================================= */
+.hh-title { font-size: calc(var(--k) * 17px); font-weight: 600; letter-spacing: -.015em; color: var(--t1); }
+.home-head .overline { font-size: calc(var(--k) * 11px); }
+.vfhero { position: relative; display: block; width: calc(100% - 32px); height: 316px; margin: 16px 16px 0; border-radius: 24px; overflow: hidden; text-align: left; color: #fff; background: #000; box-shadow: 0 0 0 1px var(--line), 0 18px 40px rgba(0,0,0,.35); transition: transform .15s; }
+.vfhero:active { transform: scale(.985); }
+.vfh-img { position: absolute; inset: -8px; width: calc(100% + 16px); height: calc(100% + 16px); object-fit: cover; filter: blur(1.5px) saturate(.85) brightness(.8); animation: kenburns 12s ease-in-out infinite alternate; }
+.vfh-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 38%, rgba(0,0,0,.2) 60%, rgba(0,0,0,.78) 100%); }
+.vfh-brackets { position: absolute; inset: 18px; pointer-events: none; }
+.vfh-brackets i { position: absolute; width: 26px; height: 26px; border: 2px solid rgba(255,255,255,.9); }
+.vfh-brackets i:nth-child(1) { left: 0; top: 0; border-right: 0; border-bottom: 0; border-radius: 9px 0 0 0; }
+.vfh-brackets i:nth-child(2) { right: 0; top: 0; border-left: 0; border-bottom: 0; border-radius: 0 9px 0 0; }
+.vfh-brackets i:nth-child(3) { left: 0; bottom: 0; border-right: 0; border-top: 0; border-radius: 0 0 0 9px; }
+.vfh-brackets i:nth-child(4) { right: 0; bottom: 0; border-left: 0; border-top: 0; border-radius: 0 0 9px 0; }
+.vfh-live { position: absolute; top: 30px; right: 32px; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+.vfh-live i { width: 7px; height: 7px; border-radius: 50%; background: #FF453A; animation: blink 1.4s infinite; }
+.vfh-q { position: absolute; left: 34px; right: 34px; top: 34px; font-size: calc(var(--k) * 27px); line-height: 1.14; font-weight: 700; letter-spacing: -.03em; text-shadow: 0 2px 16px rgba(0,0,0,.35); }
+.vfh-flip { color: rgba(255,255,255,.72); }
+.vfh-bottom { position: absolute; left: 0; right: 0; bottom: 30px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.vfh-shutter { width: 70px; height: 70px; border-radius: 50%; border: 4px solid #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(0,0,0,.35); }
+.vfh-shutter span { width: 54px; height: 54px; border-radius: 50%; background: var(--yellow); transition: transform .15s; }
+.vfhero:active .vfh-shutter span { transform: scale(.9); }
+.vfh-cta { font-size: calc(var(--k) * 13.5px); font-weight: 500; color: rgba(255,255,255,.85); }
+/* The camera FAB goes neutral on Home, so the shutter is the only yellow there */
+.nodi:has(.home) .fab { background: var(--s2); color: var(--t1); box-shadow: 0 0 0 1px var(--line2) inset, 0 10px 26px rgba(0,0,0,.35); }
+.nodi.light:has(.home) .fab { background: #fff; box-shadow: 0 0 0 1px var(--line) inset, 0 10px 26px rgba(19,19,27,.12); }
+.nodi.light .vfhero { box-shadow: 0 18px 40px rgba(19,19,27,.18); }
+.vfh-q { top: 58px; }
+.vfh-live { top: 32px; right: 36px; }
