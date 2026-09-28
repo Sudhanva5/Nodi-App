@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { Search, ThumbsUp, Clock, TrendingUp, BadgeCheck } from "lucide-react";
 import { NEARBY, OFFICIAL_POSTS, Category, CATEGORIES, NearbyIssue } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
-import { StatusBar, Sheet, CatIcon, StatusPill, Verified } from "./ui";
+import { StatusBar, Sheet, CatIcon, StatusPill, Tweet } from "./ui";
 
 const NearbyMap = dynamic(() => import("./NearbyMap"), { ssr: false, loading: () => <div className="leaflet-host" /> });
 
@@ -61,15 +61,9 @@ export default function Nearby({ lang, onVerified, extraMeToo }: { lang: Lang; o
         ) : (
           <div className="nb-list">
             {OFFICIAL_POSTS.map((p) => (
-              <div key={p.id} className="xp-card dark">
-                <div className="xp-head">
-                  <span className="xp-av"><img src="/img/gba-av.svg" alt="" /></span>
-                  <div className="xp-who"><b>{p.name} <Verified size={15} onClick={onVerified} /></b><span>{p.handle} · {p.time}</span></div>
-                  <span className="xp-x">𝕏</span>
-                </div>
-                <p>{p.text}</p>
-                {p.photo && <img src={p.photo} alt="" className="xp-img" />}
-                <div className="xp-foot"><span><BadgeCheck size={13} /> Linked to {p.matched} complaint{p.matched > 1 ? "s" : ""}. Waiting for the reporter{p.matched > 1 ? "s" : ""} to confirm</span></div>
+              <div key={p.id} className="nb-tweet">
+                <Tweet d={{ name: p.name, handle: p.handle, avatar: "/img/gba-logo.png", text: p.text, photo: p.photo || undefined, time: p.time === "1h" ? "11:42 AM · Sep 27, 2026" : "7:10 AM · Sep 27, 2026", likes: p.matched * 70 + 2, replies: p.matched * 4, url: "https://x.com/GBA_office" }} />
+                <div className="nb-tweet-foot"><BadgeCheck size={13} /> Linked to {p.matched} complaint{p.matched > 1 ? "s" : ""}. Waiting for the reporter{p.matched > 1 ? "s" : ""} to confirm</div>
               </div>
             ))}
           </div>

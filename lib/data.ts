@@ -24,6 +24,9 @@ export type TimelineItem = {
   title: string;
   body?: string;
   kind: "you" | "letter" | "assigned" | "proof" | "fixed" | "reopen" | "neighbours";
+  thumb?: string;
+  avatars?: number;
+  org?: boolean;
 };
 
 export type Report = {
@@ -60,11 +63,11 @@ export const INITIAL_REPORTS: Report[] = [
     meToo: 14,
     engineer: "S. Nagaraj, Asst. Engineer",
     timeline: [
-      { when: "Today, 11:42 AM", kind: "proof", title: "Work done", body: "GBA posted a photo of the finished repair on Twitter. We matched it to your complaint by location and time." },
-      { when: "Fri, 25 Sep · 4:10 PM", kind: "assigned", title: "Assigned to S. Nagaraj", body: "Asst. Engineer, Ward 151. Expected fix by Sat, 26 Sep." },
-      { when: "Thu, 24 Sep · 9:05 AM", kind: "letter", title: "Formal letter sent", body: "Emailed to the Ward 151 office and logged on Sahaaya. Ref GBA/W151/2026/4471." },
-      { when: "Thu, 24 Sep · 8:52 AM", kind: "neighbours", title: "14 neighbours supported this", body: "The more people support a complaint, the higher it goes on the ward's list." },
-      { when: "Thu, 24 Sep · 8:51 AM", kind: "you", title: "You reported this", body: "Photo and location sent." },
+      { when: "Today, 11:42 AM", kind: "proof", title: "Work done", body: "Photo from GBA on Twitter", thumb: "/img/fixed.jpg" },
+      { when: "Fri, 25 Sep, 4:10 PM", kind: "assigned", title: "Assigned to S. Nagaraj", body: "Asst. Engineer, Ward 151", org: true },
+      { when: "Thu, 24 Sep, 9:05 AM", kind: "letter", title: "Formal letter sent", body: "Ref GBA/W151/2026/4471" },
+      { when: "Thu, 24 Sep, 8:52 AM", kind: "neighbours", title: "14 neighbours supported", avatars: 14 },
+      { when: "Thu, 24 Sep, 8:51 AM", kind: "you", title: "You reported this", thumb: "/img/pothole.jpg" },
     ],
   },
   {
@@ -81,9 +84,9 @@ export const INITIAL_REPORTS: Report[] = [
     meToo: 6,
     engineer: "R. Kavitha, Electrical AE",
     timeline: [
-      { when: "Sat, 26 Sep · 10:20 AM", kind: "assigned", title: "Assigned to R. Kavitha", body: "Electrical Asst. Engineer, Ward 151. Expected fix by Mon, 28 Sep." },
-      { when: "Fri, 25 Sep · 7:40 PM", kind: "letter", title: "Formal letter sent", body: "Emailed to the Ward 151 electrical section. Ref GBA/W151/2026/4502." },
-      { when: "Fri, 25 Sep · 7:31 PM", kind: "you", title: "You reported this", body: "Photo and location sent." },
+      { when: "Sat, 26 Sep, 10:20 AM", kind: "assigned", title: "Assigned to R. Kavitha", body: "Electrical Asst. Engineer, Ward 151", org: true },
+      { when: "Fri, 25 Sep, 7:40 PM", kind: "letter", title: "Formal letter sent", body: "Ref GBA/W151/2026/4502" },
+      { when: "Fri, 25 Sep, 7:31 PM", kind: "you", title: "You reported this", thumb: "/img/streetlight.jpg" },
     ],
   },
   {
@@ -100,10 +103,10 @@ export const INITIAL_REPORTS: Report[] = [
     meToo: 22,
     engineer: "SWM team, Ward 151",
     timeline: [
-      { when: "Mon, 21 Sep · 8:02 AM", kind: "fixed", title: "You confirmed it is fixed", body: "Closed. 22 neighbours were told." },
-      { when: "Sun, 20 Sep · 6:15 PM", kind: "proof", title: "Work done", body: "Cleared by the Solid Waste team. Photo proof attached." },
-      { when: "Sat, 19 Sep · 7:00 PM", kind: "letter", title: "Formal letter sent", body: "Ref GBA/W151/2026/4213." },
-      { when: "Sat, 19 Sep · 6:48 PM", kind: "you", title: "You reported this", body: "Photo and location sent." },
+      { when: "Mon, 21 Sep, 8:02 AM", kind: "fixed", title: "You confirmed it's fixed" },
+      { when: "Sun, 20 Sep, 6:15 PM", kind: "proof", title: "Cleared by the waste team", org: true },
+      { when: "Sat, 19 Sep, 7:00 PM", kind: "letter", title: "Formal letter sent", body: "Ref GBA/W151/2026/4213" },
+      { when: "Sat, 19 Sep, 6:48 PM", kind: "you", title: "You reported this", thumb: "/img/garbage.jpg" },
     ],
   },
 ];

@@ -21,12 +21,12 @@ function makeNew(cat: Category, voice: boolean): Report {
     title: cat === "water" ? "Water leak on 80 Feet Rd" : `${CATEGORIES[cat].label} on 80 Feet Rd`,
     place: "80 Feet Rd, near Sony World Jn.", ward: "Ward 151 · Koramangala",
     photo: "/img/water.jpg", stage: 1,
-    statusLine: "Your ward office has the formal letter. An engineer will be assigned soon.",
+    statusLine: "An engineer will be assigned soon.",
     expected: "Mon, 28 Sep", reportedAgo: "just now", meToo: 3,
     timeline: [
-      { when: "Today, 9:39 AM", kind: "letter", title: "Formal letter sent", body: "Emailed to the Ward 151 office and logged on Sahaaya. Ref GBA/W151/2026/4611." },
-      { when: "Today, 9:38 AM", kind: "neighbours", title: "Added to 3 neighbours' report", body: "They reported the same problem today, so it's now one complaint from 4 people." },
-      { when: "Today, 9:38 AM", kind: "you", title: "You reported this", body: voice ? "Photo, location and a Kannada voice note sent." : "Photo and location sent." },
+      { when: "Today, 9:39 AM", kind: "letter", title: "Formal letter sent", body: "Ref GBA/W151/2026/4611" },
+      { when: "Today, 9:38 AM", kind: "neighbours", title: "Joined 3 neighbours' report", avatars: 3 },
+      { when: "Today, 9:38 AM", kind: "you", title: voice ? "You reported this, with a voice note" : "You reported this", thumb: "/img/water.jpg" },
     ],
   };
 }
@@ -85,11 +85,11 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
       {screen === "detail" && detail && (
         <Detail report={detail} lang={lang} autoRead={prefs.readAloud} onBack={() => setDetailId(null)} onLetter={() => setLetterFor(detail.id)} onVerified={() => setVerified(true)}
           onConfirm={() => {
-            update(detail.id, (r) => ({ ...r, stage: 4, statusLine: "Closed by you. 14 neighbours were told it's fixed.", timeline: [{ when: "Today, 12:05 PM", kind: "fixed", title: "You confirmed it is fixed", body: "Closed. 14 neighbours were told." }, ...r.timeline] }));
+            update(detail.id, (r) => ({ ...r, stage: 4, statusLine: "Closed by you. 14 neighbours were told it's fixed.", timeline: [{ when: "Today, 12:05 PM", kind: "fixed", title: "You confirmed it's fixed" }, ...r.timeline] }));
             setToast("Thank you. Complaint closed.");
           }}
           onReopen={() => {
-            update(detail.id, (r) => ({ ...r, stage: 2, reopened: true, expected: "Tue, 29 Sep", statusLine: "We sent it back to GBA with a new deadline of Tue, 29 Sep. We've asked 2 neighbours to check it too.", timeline: [{ when: "Today, 12:05 PM", kind: "reopen", title: "Reopened and sent back to GBA", body: "You said it isn't fixed, so we sent it back to GBA with a new deadline." }, ...r.timeline] }));
+            update(detail.id, (r) => ({ ...r, stage: 2, reopened: true, expected: "Tue, 29 Sep", statusLine: "New deadline: Tue, 29 Sep.", timeline: [{ when: "Today, 12:05 PM", kind: "reopen", title: "Reopened, sent back to GBA", body: "New deadline Tue, 29 Sep" }, ...r.timeline] }));
             setToast("Reopened and sent back to GBA");
           }} />
       )}

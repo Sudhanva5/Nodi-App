@@ -138,11 +138,40 @@ export function NyMark({ size = 14 }: { size?: number }) {
 }
 
 export function GbaSeal({ size = 22 }: { size?: number }) {
+  return <img src="/img/gba-logo.png" alt="Greater Bengaluru Authority" width={size} height={size} className="gbalogo" style={{ width: size, height: size }} />;
+}
+
+/* ---------- Twitter / X embed, matched to the official embed ---------- */
+const XLogo = ({ size = 18 }: { size?: number }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} aria-label="X"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+);
+const GovCheck = () => (
+  <svg viewBox="0 0 22 22" width={17} height={17} aria-label="Verified government account" className="tw-badge"><path fill="#829AAB" d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z" /></svg>
+);
+
+export type TweetData = { name: string; handle: string; avatar: string; text: string; photo?: string; time: string; likes: number; replies: number; url: string };
+
+export function Tweet({ d, cta = "Open on Twitter" }: { d: TweetData; cta?: string }) {
+  const parts = d.text.split(/(#\w+|@\w+)/g);
   return (
-    <svg width={size} height={size} viewBox="0 0 40 40" aria-label="GBA">
-      <circle cx="20" cy="20" r="19.25" fill="#161616" stroke="rgba(255,255,255,.18)" strokeWidth="1.5" />
-      <circle cx="20" cy="20" r="15" fill="none" stroke="#FFB739" strokeOpacity=".7" strokeWidth="1" strokeDasharray="1.4 1.8" />
-      <text x="20" y="23.8" textAnchor="middle" fontSize="10.5" fontWeight="700" letterSpacing=".5" fill="#F5F5F5" fontFamily="Inter, system-ui">GBA</text>
-    </svg>
+    <div className="tw">
+      <div className="tw-head">
+        <img src={d.avatar} alt="" className="tw-av" />
+        <div className="tw-names">
+          <span className="tw-name">{d.name}<GovCheck /></span>
+          <span className="tw-handle">{d.handle} · <a href={d.url} target="_blank" rel="noreferrer">Follow</a></span>
+        </div>
+        <a className="tw-x" href={d.url} target="_blank" rel="noreferrer"><XLogo /></a>
+      </div>
+      <p className="tw-text">{parts.map((p, i) => (p.startsWith("#") || p.startsWith("@") ? <span key={i} className="tw-link">{p}</span> : p))}</p>
+      {d.photo && <img src={d.photo} alt="" className="tw-media" />}
+      <div className="tw-time">{d.time}</div>
+      <div className="tw-actions">
+        <span className="tw-like"><svg viewBox="0 0 24 24" width="19" height="19"><path fill="#F91880" d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z" /></svg>{d.likes}</span>
+        <span><svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z" /></svg>Reply</span>
+        <span><svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M18.36 5.64c-1.95-1.96-5.11-1.96-7.07 0L9.88 7.05 8.46 5.64l1.42-1.42c2.73-2.73 7.16-2.73 9.9 0 2.73 2.74 2.73 7.17 0 9.9l-1.42 1.42-1.41-1.42 1.41-1.41c1.96-1.96 1.96-5.12 0-7.07zm-2.12 3.53l-7.07 7.07-1.41-1.41 7.07-7.07 1.41 1.41zm-12.02.71l1.42-1.42 1.41 1.42-1.41 1.41c-1.96 1.96-1.96 5.12 0 7.07 1.95 1.96 5.11 1.96 7.07 0l1.41-1.41 1.42 1.41-1.42 1.42c-2.73 2.73-7.16 2.73-9.9 0-2.73-2.74-2.73-7.17 0-9.9z" /></svg>Copy link</span>
+      </div>
+      <a className="tw-cta" href={d.url} target="_blank" rel="noreferrer">{cta}</a>
+    </div>
   );
 }

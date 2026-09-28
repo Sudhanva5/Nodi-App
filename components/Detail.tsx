@@ -1,15 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ChevronLeft, Share, Volume2, Square, FileText, User, Users, Check, RotateCcw, Camera, AlertTriangle, BadgeCheck, ArrowUpRight, Heart, MessageCircle, Repeat2 } from "lucide-react";
-import { Report, STAGES, CATEGORIES, OFFICIAL_POSTS } from "@/lib/data";
+import { ChevronLeft, Share, Volume2, Square, FileText, User, Users, Check, RotateCcw, Camera, AlertTriangle, MapPin } from "lucide-react";
+import { Report, STAGES, OFFICIAL_POSTS } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
-import { StatusBar, StageBar, StatusPill, Verified, useSpeak, CatBadge } from "./ui";
+import { StatusBar, StageBar, Verified, useSpeak, Tweet } from "./ui";
+
+const FACES = ["#E8A87C", "#85CDCA", "#C38D9E", "#41B3A3", "#E27D60"];
 
 export default function Detail({ report, lang, autoRead, onBack, onConfirm, onReopen, onLetter, onVerified }: {
   report: Report; lang: Lang; autoRead?: boolean; onBack: () => void; onConfirm: () => void; onReopen: () => void; onLetter: () => void; onVerified: () => void;
 }) {
   const t = tr(lang);
-  const [view, setView] = useState<"before" | "after">(report.after && report.stage >= 3 ? "after" : "before");
+  const hasProof = !!report.after;
+  const [view, setView] = useState<"before" | "after">(hasProof ? "after" : "before");
   const [askNo, setAskNo] = useState(false);
   const { speak, speaking } = useSpeak();
   const post = OFFICIAL_POSTS[0];
@@ -17,7 +20,6 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
   const headline = report.reopened
     ? "Reopened and sent back to GBA."
     : report.stage === 4 ? "Fixed. You confirmed it." : report.stage === 3 ? "GBA has marked this as done." : report.stage === 2 ? "An engineer is on it." : "Your ward office has the letter.";
-
   const listen = () => speak(`${report.title}. ${headline} ${report.statusLine}`);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (autoRead) listen(); }, []);
@@ -29,10 +31,10 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
         <div className="d-hero-shade" />
         <StatusBar dark />
         <div className="d-nav">
-          <button className="glassbtn" onClick={onBack} aria-label="Back"><ChevronLeft size={24} strokeWidth={2.6} /></button>
-          <button className="glassbtn" aria-label="Share"><Share size={19} strokeWidth={2.4} /></button>
+          <button className="glassbtn" onClick={onBack} aria-label="Back"><ChevronLeft size={24} /></button>
+          <button className="glassbtn" aria-label="Share"><Share size={19} /></button>
         </div>
-        {report.after && report.stage >= 3 && (
+        {hasProof && (
           <div className="ba-seg">
             <button className={view === "before" ? "on" : ""} onClick={() => setView("before")}>{t("Before")}</button>
             <button className={view === "after" ? "on" : ""} onClick={() => setView("after")}>{t("After")}</button>
@@ -41,7 +43,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
         <div className="d-hero-cap">
           <span className="d-id mono">{report.id}</span>
           <h1>{report.title}</h1>
-          <div className="d-place">{report.place} · {report.reportedAgo}</div>
+          <div className="d-place"><MapPin size={12} /> {report.place}</div>
         </div>
       </div>
 
@@ -59,30 +61,18 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
         {needsCheck && (
           <section className="confirmbox">
             <h3>{t("Is it actually fixed?")}</h3>
-            <p>Only you can close this complaint. If it isn't fixed, we'll reopen it and send it back to GBA.</p>
+            <p>Only you can close this. If it isn&apos;t fixed, it goes back to GBA.</p>
             <div className="cb-btns">
-              <button className="yes" onClick={onConfirm}><Check size={22} strokeWidth={3} /> {t("Yes, it's fixed")}</button>
-              <button className="no" onClick={() => setAskNo(true)}><AlertTriangle size={20} strokeWidth={2.5} /> {t("No, still there")}</button>
+              <button className="yes" onClick={onConfirm}><Check size={20} /> {t("Yes, it's fixed")}</button>
+              <button className="no" onClick={() => setAskNo(true)}><AlertTriangle size={18} /> {t("No, still there")}</button>
             </div>
           </section>
         )}
 
-        {report.stage >= 3 && report.cat === "pothole" && (
+        {hasProof && (
           <section className="xpost">
-            <div className="xp-label"><BadgeCheck size={14} /> GBA's post on Twitter</div>
-            <div className="xp-card tweet">
-              <div className="xp-head">
-                <span className="xp-av"><img src="/img/gba-av.svg" alt="" /></span>
-                <div className="xp-who"><b>{post.name} <Verified size={15} onClick={onVerified} /></b><span>{post.handle}</span></div>
-                <span className="xp-x">𝕏</span>
-              </div>
-              <p>{post.text}</p>
-              <img src={post.photo} alt="" className="xp-img" />
-              <div className="tw-time">11:42 AM · 27 Sep 2026</div>
-              <div className="tw-stats"><span><Heart size={14} /> 212</span><span><Repeat2 size={15} /> 38</span><span><MessageCircle size={14} /> 14</span></div>
-              <div className="xp-foot"><span>18 m from your report</span><span>Posted after work was assigned</span></div>
-              <a className="tw-open" href="https://x.com/GBA_office" target="_blank" rel="noreferrer">Open on Twitter <ArrowUpRight size={14} /></a>
-            </div>
+            <div className="xp-label"><span>GBA&apos;s post on Twitter</span><span className="xp-match"><MapPin size={11} /> 18 m from your report</span></div>
+            <Tweet d={{ name: post.name, handle: post.handle, avatar: "/img/gba-logo.png", text: post.text, photo: post.photo, time: "11:42 AM · Sep 27, 2026", likes: 212, replies: 14, url: "https://x.com/GBA_office" }} />
           </section>
         )}
 
@@ -93,16 +83,27 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
               <li key={i} className={"tl-" + e.kind + (i === 0 ? " latest" : "")}>
                 <span className="tl-dot">{iconFor(e.kind)}</span>
                 <div className="tl-body">
-                  <div className="tl-title">{e.title}{(e.kind === "assigned" || e.kind === "proof") && <Verified size={14} onClick={onVerified} />}</div>
-                  {e.body && <div className="tl-text">{e.body}</div>}
-                  {e.kind === "letter" && <button className="tl-link" onClick={onLetter}><FileText size={14} /> View letter</button>}
-                  <div className="tl-when">{e.when}</div>
+                  <div className="tl-title">{e.title}{e.kind === "assigned" && <Verified size={14} onClick={onVerified} />}</div>
+                  {e.body && (
+                    <div className="tl-meta">
+                      {e.org && <img src="/img/bscc-logo.png" alt="" className="tl-org" />}
+                      <span>{e.body}</span>
+                    </div>
+                  )}
+                  <div className="tl-time">{e.when}</div>
+                  {e.avatars && (
+                    <div className="tl-faces">
+                      {FACES.slice(0, Math.min(5, e.avatars)).map((c, k) => <i key={k} style={{ background: c }} />)}
+                      {e.avatars > 5 && <b>+{e.avatars - 5}</b>}
+                    </div>
+                  )}
+                  {e.thumb && <img src={e.thumb} alt="" className="tl-thumb" />}
+                  {e.kind === "letter" && <button className="tl-link" onClick={onLetter}><FileText size={13} /> View letter</button>}
                 </div>
               </li>
             ))}
           </ol>
         </section>
-
         <div style={{ height: 40 }} />
       </div>
 
@@ -110,10 +111,10 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
         <div className="modal-scrim" onClick={() => setAskNo(false)}>
           <div className="alertsheet" onClick={(e) => e.stopPropagation()}>
             <span className="grabber" />
-            <div className="as-ic"><RotateCcw size={28} strokeWidth={2.4} /></div>
-            <h3>Sorry about that. We'll reopen it.</h3>
-            <p>We'll send it back to GBA with a new deadline and ask 2 neighbours to check it too. A fresh photo helps.</p>
-            <button className="primary" onClick={() => { setAskNo(false); onReopen(); }}><Camera size={20} /> Add photo and reopen</button>
+            <div className="as-ic"><RotateCcw size={26} /></div>
+            <h3>Sorry about that. We&apos;ll reopen it.</h3>
+            <p>It goes back to GBA with a new deadline. A fresh photo helps.</p>
+            <button className="primary" onClick={() => { setAskNo(false); onReopen(); }}><Camera size={19} /> Add photo and reopen</button>
             <button className="textbtn" onClick={() => { setAskNo(false); onReopen(); }}>Reopen without photo</button>
           </div>
         </div>
@@ -123,13 +124,11 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
 }
 
 function iconFor(k: string) {
-  const p = { size: 14, strokeWidth: 3 };
+  const p = { size: 13, strokeWidth: 2.6 };
   switch (k) {
     case "you": return <User {...p} />;
     case "letter": return <FileText {...p} />;
     case "assigned": return <User {...p} />;
-    case "proof": return <Check {...p} />;
-    case "fixed": return <Check {...p} />;
     case "reopen": return <RotateCcw {...p} />;
     case "neighbours": return <Users {...p} />;
     default: return <Check {...p} />;
@@ -141,10 +140,9 @@ export function VerifiedSheet({ onClose }: { onClose: () => void }) {
     <div className="modal-scrim" onClick={onClose}>
       <div className="alertsheet" onClick={(e) => e.stopPropagation()}>
         <span className="grabber" />
-        <div className="as-ic gov"><Verified size={40} /></div>
-        <h3>Verified government account</h3>
-        <p>This badge means the person or account works for the Greater Bengaluru Authority. We check every official against GBA's staff list and its X account before we show their updates.</p>
-        <p className="fine">Updates without this badge are from other citizens.</p>
+        <div className="as-ic gov"><img src="/img/gba-logo.png" alt="" className="gbalogo" style={{ width: 44, height: 44 }} /></div>
+        <h3>Verified GBA official</h3>
+        <p>This person works for the Greater Bengaluru Authority. We check every official against GBA&apos;s staff list before we show their updates.</p>
         <button className="primary" onClick={onClose}>Got it</button>
       </div>
     </div>
