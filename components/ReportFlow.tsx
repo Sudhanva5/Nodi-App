@@ -112,15 +112,15 @@ export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang
 
           <div className="group tight">
             <button className="field" onClick={() => setPicker(true)} disabled={scanning}>
-              <span className="field-ic"><CatBadge cat={cat} size={40} /></span>
+              <span className="field-ic"><CatBadge cat={cat} size={40} accent={!scanning} /></span>
               <span className="field-main">
                 <span className="field-label">What is it</span>
-                <span className={"field-val" + (scanning ? " skel" : "")}>{scanning ? "\u00a0" : (lang === "kn" ? CATEGORIES[cat].kn : CATEGORIES[cat].label)}{!scanning && cat === "water" && <span className="ai-tag"><Sparkles size={11} /> Auto</span>}</span>
+                <span className={"field-val" + (scanning ? " skel" : "")}>{scanning ? "\u00a0" : (lang === "kn" ? CATEGORIES[cat].kn : CATEGORIES[cat].label)}{!scanning && cat === "water" && <span className="ai-tag"><Sparkles size={10} /> Auto-detected</span>}</span>
               </span>
               <span className="field-act">Change</span>
             </button>
             <div className="field">
-              <span className="field-ic"><span className="catbadge" style={{ width: 40, height: 40, background: "#007AFF1f", color: "#007AFF" }}><MapPin size={20} strokeWidth={2.4} /></span></span>
+              <span className="field-ic"><span className="catbadge" style={{ width: 40, height: 40 }}><MapPin size={20} strokeWidth={1.9} /></span></span>
               <span className="field-main">
                 <span className="field-label">Where · GPS ±5 m</span>
                 <span className="field-val">80 Feet Rd, Sony World Jn.</span>
@@ -132,7 +132,7 @@ export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang
 
           {!scanning && (
             <div className="dupe">
-              <div className="avatars"><i style={{ background: "#FFB74D" }}>A</i><i style={{ background: "#81C784" }}>S</i><i style={{ background: "#64B5F6" }}>K</i></div>
+              <div className="avatars"><i>A</i><i>S</i><i>K</i></div>
               <div><b>3 neighbours reported this today.</b> We'll add you to the same complaint so it moves up faster.</div>
             </div>
           )}
@@ -175,9 +175,9 @@ export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang
             <div className="catgrid">
               {(Object.keys(CATEGORIES) as Category[]).map((c) => (
                 <button key={c} className={"catcell" + (c === cat ? " on" : "")} onClick={() => { setCat(c); setPicker(false); }}>
-                  <span className="catcell-ic" style={{ background: CATEGORIES[c].color }}><CatIcon cat={c} size={24} color="#111" /></span>
+                  <span className="catcell-ic"><CatIcon cat={c} size={22} /></span>
                   <span>{lang === "kn" ? CATEGORIES[c].kn : CATEGORIES[c].label}</span>
-                  {c === cat && <Check size={16} className="cc-check" strokeWidth={3} />}
+                  {c === cat && <Check size={16} className="cc-check" strokeWidth={2.6} />}
                 </button>
               ))}
             </div>
@@ -202,7 +202,9 @@ export function Sending({ onDone }: { onDone: () => void }) {
       <StatusBar dark />
       <div className="send-center">
         <div className="send-logo"><img src="/img/logo.png" alt="Nodi" /><span className="ring" /><span className="ring r2" /></div>
+        <div className="overline">NODI-24611</div>
         <h2>Sending your complaint</h2>
+        <div className="send-progress"><span style={{ width: `${Math.min(100, (step / 3) * 100)}%` }} /></div>
         <ul className="send-steps">
           {steps.map((s, i) => (
             <li key={s} className={i < step ? "done" : i === step ? "now" : ""}>
@@ -230,8 +232,9 @@ export function Success({ report, onTrack, onDone, onLetter }: { report: Report;
     <div className="screen success">
       <StatusBar />
       <div className="succ-body">
-        <div className="succ-check"><Check size={46} strokeWidth={3.2} /></div>
-        <h1>Sent. GBA has it.</h1>
+        <div className="succ-check"><span className="ring" /><Check size={40} strokeWidth={2.6} /></div>
+        <div className="overline">Complaint sent</div>
+        <h1>GBA has it.</h1>
         <p className="succ-sub">Water leaks are usually fixed within <b>1 day</b>. Expected by <b>{report.expected}</b>.</p>
         <div className="ticket">
           <div className="ticket-row"><span>Complaint no.</span><b className="mono">{report.id}</b></div>
@@ -239,11 +242,11 @@ export function Success({ report, onTrack, onDone, onLetter }: { report: Report;
           <div className="ticket-row"><span>Neighbours with you</span><b>4 people</b></div>
         </div>
         <button className="lettercard" onClick={onLetter}>
-          <span className="lc-ic"><FileText size={22} strokeWidth={2.2} /></span>
+          <span className="lc-ic"><FileText size={20} strokeWidth={1.9} /></span>
           <span className="lc-main"><b>Formal letter sent</b><span>Signed copy, with your photo and location</span></span>
           <ChevronRight size={18} />
         </button>
-        <div className="wa-row"><MessageCircle size={18} strokeWidth={2.4} /> Updates on WhatsApp · +91 98xxx x4521</div>
+        <div className="wa-row"><MessageCircle size={16} strokeWidth={2} /> Updates on WhatsApp · +91 98xxx x4521</div>
       </div>
       <div className="succ-foot">
         <button className="primary" onClick={onTrack}>Track my complaint</button>

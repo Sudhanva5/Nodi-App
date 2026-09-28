@@ -16,7 +16,7 @@ export default function Detail({ report, lang, onBack, onConfirm, onReopen, onLe
   const needsCheck = report.stage === 3 && !report.reopened;
   const headline = report.reopened
     ? "Reopened. We escalated it to the senior engineer."
-    : report.stage === 4 ? "Fixed. You confirmed it." : report.stage === 3 ? "Work done. Please check." : report.stage === 2 ? "An engineer is on it." : "Your ward office has the letter.";
+    : report.stage === 4 ? "Fixed. You confirmed it." : report.stage === 3 ? "GBA has marked this as done." : report.stage === 2 ? "An engineer is on it." : "Your ward office has the letter.";
 
   const listen = () => speak(`${report.title}. ${headline} ${report.statusLine}`);
 
@@ -68,7 +68,7 @@ export default function Detail({ report, lang, onBack, onConfirm, onReopen, onLe
 
         {report.stage >= 3 && report.cat === "pothole" && (
           <section className="xpost">
-            <div className="xp-label"><BadgeCheck size={14} /> Official proof · pulled from X · matched to your complaint</div>
+            <div className="xp-label"><BadgeCheck size={14} /> Official proof from X</div>
             <div className="xp-card">
               <div className="xp-head">
                 <span className="xp-av"><img src="/img/gba-av.svg" alt="" /></span>

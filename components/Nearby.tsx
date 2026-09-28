@@ -35,7 +35,7 @@ export default function Nearby({ lang, onVerified, extraMeToo }: { lang: Lang; o
         <div className="chips">
           {FILTERS.map((f) => (
             <button key={f.k} className={"chip" + (filter === f.k ? " on" : "")} onClick={() => setFilter(f.k)}>
-              {f.k !== "all" && <span className="chip-dot" style={{ background: CATEGORIES[f.k as Category].color }} />}{f.label}
+              {f.k !== "all" && <CatIcon cat={f.k as Category} size={14} />}{f.label}
             </button>
           ))}
         </div>
@@ -80,17 +80,16 @@ export default function Nearby({ lang, onVerified, extraMeToo }: { lang: Lang; o
 }
 
 function IssueRow({ i, lang, sel, mine, onSel, onMeToo, t }: { i: NearbyIssue; lang: Lang; sel: boolean; mine: boolean; onSel: () => void; onMeToo: () => void; t: (s: string) => string }) {
-  const c = CATEGORIES[i.cat].color;
   return (
     <div className={"nbrow" + (sel ? " sel" : "")} onClick={onSel}>
-      <div className="nb-thumb"><img src={i.photo} alt="" /><span className="nb-cat" style={{ background: c }}><CatIcon cat={i.cat} size={13} color="#111" /></span></div>
+      <div className="nb-thumb"><img src={i.photo} alt="" /><span className="nb-cat"><CatIcon cat={i.cat} size={12} /></span></div>
       <div className="nb-main">
         <div className="nb-title">{i.title}</div>
         <div className="nb-sub">{i.place} · {i.dist}</div>
         <div className="nb-meta"><StatusPill stage={i.stage} lang={lang} /><span><Clock size={12} /> {i.ago}</span></div>
       </div>
       <button className={"metoo" + (mine ? " on" : "")} onClick={(e) => { e.stopPropagation(); onMeToo(); }} aria-pressed={mine}>
-        <ThumbsUp size={17} strokeWidth={2.4} fill={mine ? "currentColor" : "none"} />
+        <ThumbsUp size={16} strokeWidth={2} fill={mine ? "currentColor" : "none"} />
         <b>{i.meToo}</b>
         <span>{t("Me too")}</span>
       </button>

@@ -1,8 +1,8 @@
 "use client";
-import { Camera, ChevronRight, Mic, Video, ShieldCheck, Type, MapPin } from "lucide-react";
+import { Camera, ChevronRight, Mic, Video, ShieldCheck, Type } from "lucide-react";
 import { Report, CATEGORIES } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
-import { CatBadge, StageBar, StatusPill, StatusBar, NyMark } from "./ui";
+import { CatBadge, StageBar, StatusDot, StatusBar, NyMark } from "./ui";
 
 export default function Home({ reports, lang, big, onToggleBig, onToggleLang, onReport, onOpen }: {
   reports: Report[]; lang: Lang; big: boolean;
@@ -17,79 +17,83 @@ export default function Home({ reports, lang, big, onToggleBig, onToggleLang, on
       <StatusBar />
       <div className="scroll">
         <header className="home-head">
-          <div className="brandrow">
-            <img src="/img/logo.png" alt="" className="applogo" />
-            <div>
-              <div className="eyebrow"><MapPin size={12} strokeWidth={2.6} /> Koramangala · Ward 151</div>
-              <h1 className="largetitle">{t("Namaskara")}, Ramesh</h1>
-            </div>
+          <div>
+            <div className="overline">Koramangala · Ward 151</div>
+            <h1 className="display">{t("Namaskara")}, Ramesh</h1>
           </div>
           <div className="headbtns">
-            <button className={"roundbtn" + (big ? " on" : "")} onClick={onToggleBig} aria-label="Bigger text"><Type size={18} strokeWidth={2.4} /></button>
-            <button className={"roundbtn lang" + (lang === "kn" ? " on" : "")} onClick={onToggleLang} aria-label="Switch language">{lang === "kn" ? "EN" : "ಕ"}</button>
+            <button className={"iconbtn" + (big ? " on" : "")} onClick={onToggleBig} aria-label="Bigger text"><Type size={17} strokeWidth={2} /></button>
+            <button className={"iconbtn lang" + (lang === "kn" ? " on" : "")} onClick={onToggleLang} aria-label="Switch language">{lang === "kn" ? "EN" : "ಕ"}</button>
           </div>
         </header>
 
         <section className="hero">
-          <div className="hero-q">{t("See a problem on the road?")}</div>
-          <button className="bigcta" onClick={() => onReport("photo")}>
-            <span className="bigcta-ic"><Camera size={26} strokeWidth={2.4} /></span>
-            <span>{t("Report a problem")}</span>
+          <div className="hero-glow" />
+          <h2 className="hero-q">{t("See a problem on the road?")}</h2>
+          <p className="hero-sub">{t("Photo, video or just speak. Takes 20 seconds.")}</p>
+          <button className="primary hero-cta" onClick={() => onReport("photo")}>
+            <Camera size={20} strokeWidth={2.2} /> {t("Report a problem")}
           </button>
           <div className="hero-alt">
-            <button onClick={() => onReport("voice")}><Mic size={17} strokeWidth={2.4} /> {lang === "kn" ? "ಮಾತನಾಡಿ" : "Just speak"}</button>
-            <button onClick={() => onReport("video")}><Video size={17} strokeWidth={2.4} /> {lang === "kn" ? "ವಿಡಿಯೋ" : "Video"}</button>
+            <button onClick={() => onReport("voice")}><Mic size={16} strokeWidth={2} /> {lang === "kn" ? "ಮಾತನಾಡಿ" : "Speak instead"}</button>
+            <span className="vr" />
+            <button onClick={() => onReport("video")}><Video size={16} strokeWidth={2} /> {lang === "kn" ? "ವಿಡಿಯೋ" : "Record video"}</button>
           </div>
-          <p className="hero-sub">{t("Photo, video or just speak. Takes 20 seconds.")}</p>
+        </section>
+
+        <section className="wardstats">
+          <div><b>42</b><span>fixed this month</span></div>
+          <div><b>72<small>%</small></b><span>on time</span></div>
+          <div><b>3.4<small>d</small></b><span>average fix</span></div>
         </section>
 
         {needsCheck.length > 0 && (
-          <section>
-            <h2 className="sectitle"><span className="dot pulse" />{t("Needs your check")}</h2>
+          <section className="block">
+            <div className="blockhead"><span className="overline amber"><span className="live-dot" />{t("Needs your check")}</span></div>
             {needsCheck.map((r) => (
               <button key={r.id} className="checkcard" onClick={() => onOpen(r.id)}>
                 <div className="checkcard-imgs">
-                  <img src={r.photo} alt="Before" />
-                  <img src={r.after} alt="After" />
-                  <span className="ba b">{t("Before")}</span><span className="ba a">{t("After")}</span>
+                  <figure><img src={r.photo} alt="Before" /><figcaption>{t("Before")}</figcaption></figure>
+                  <figure><img src={r.after} alt="After" /><figcaption>{t("After")}</figcaption></figure>
                 </div>
                 <div className="checkcard-body">
-                  <div className="cc-title">{r.title}</div>
-                  <div className="cc-sub">{t("GBA says it's done. Is it?")}</div>
-                  <span className="cc-btn">{t("Check now")} <ChevronRight size={16} strokeWidth={2.6} /></span>
+                  <div>
+                    <div className="cc-title">{r.title}</div>
+                    <div className="cc-sub">{t("GBA says it's done. Is it?")}</div>
+                  </div>
+                  <span className="cc-btn">{t("Check now")}</span>
                 </div>
               </button>
             ))}
           </section>
         )}
 
-        <section>
-          <h2 className="sectitle">{t("My reports")} <span className="count">{others.length}</span></h2>
-          <div className="group">
+        <section className="block">
+          <div className="blockhead"><h2 className="title">{t("My reports")}</h2><span className="count">{others.length}</span></div>
+          <div className="list">
             {others.map((r) => (
               <button key={r.id} className="rrow" onClick={() => onOpen(r.id)}>
-                <div className="rthumb"><img src={r.photo} alt="" /><span className="rthumb-cat"><CatBadge cat={r.cat} size={24} /></span></div>
+                <div className="rthumb"><img src={r.photo} alt="" /></div>
                 <div className="rmain">
-                  <div className="rtop"><span className="rtitle">{r.title}</span></div>
-                  <div className="rplace">{r.place}</div>
-                  <StageBar stage={r.stage} reopened={r.reopened} compact />
-                  <div className="rmeta">
-                    <StatusPill stage={r.stage} reopened={r.reopened} lang={lang} />
-                    <span className="rexp">{r.stage === 4 ? (lang === "kn" ? "ಮುಗಿದಿದೆ" : "Closed by you") : `${t("Expected by")} ${r.expected}`}</span>
+                  <div className="rtitle"><CatBadge cat={r.cat} size={20} /> {r.title}</div>
+                  <div className="rstatus">
+                    <StatusDot stage={r.stage} reopened={r.reopened} lang={lang} />
+                    <span className="rexp">{r.stage === 4 ? (lang === "kn" ? "ನೀವು ಮುಚ್ಚಿದ್ದೀರಿ" : "Closed by you") : `${lang === "kn" ? "ನಿರೀಕ್ಷಿತ" : "Due"} ${r.expected}`}</span>
                   </div>
+                  <StageBar stage={r.stage} reopened={r.reopened} compact />
                 </div>
-                <ChevronRight size={18} className="chev" />
+                <ChevronRight size={18} strokeWidth={2} className="chev" />
               </button>
             ))}
           </div>
         </section>
 
         <div className="trustnote">
-          <ShieldCheck size={18} strokeWidth={2.3} />
+          <ShieldCheck size={18} strokeWidth={1.8} />
           <span>{t("Every report goes as a formal letter to your ward office.")}</span>
         </div>
-        <div className="poweredby"><NyMark size={12} /> A Namma Yatri initiative · Open & free forever</div>
-        <div style={{ height: 110 }} />
+        <div className="poweredby"><NyMark size={11} /> A Namma Yatri initiative · Open & free</div>
+        <div style={{ height: 118 }} />
       </div>
     </div>
   );

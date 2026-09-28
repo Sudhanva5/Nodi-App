@@ -54,7 +54,7 @@ export const INITIAL_REPORTS: Report[] = [
     photo: "/img/pothole.jpg",
     after: "/img/fixed.jpg",
     stage: 3,
-    statusLine: "GBA says the work is done. Please check if it is really fixed.",
+    statusLine: "Next time you pass by, take a look and tell us if it is really fixed.",
     expected: "Sat, 26 Sep",
     reportedAgo: "3 days ago",
     meToo: 14,

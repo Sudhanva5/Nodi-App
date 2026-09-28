@@ -4,7 +4,7 @@ import { Construction, Trash2, Lightbulb, Droplets, Waves, TreePine, CircleHelp 
 import { Category, CATEGORIES, STAGES } from "@/lib/data";
 
 export function CatIcon({ cat, size = 18, color }: { cat: Category; size?: number; color?: string }) {
-  const p = { size, strokeWidth: 2.2, color: color ?? "currentColor" };
+  const p = { size, strokeWidth: 1.9, color: color ?? "currentColor" };
   switch (cat) {
     case "pothole": return <Construction {...p} />;
     case "garbage": return <Trash2 {...p} />;
@@ -16,13 +16,18 @@ export function CatIcon({ cat, size = 18, color }: { cat: Category; size?: numbe
   }
 }
 
-export function CatBadge({ cat, size = 36 }: { cat: Category; size?: number }) {
-  const c = CATEGORIES[cat].color;
+export function CatBadge({ cat, size = 36, accent }: { cat: Category; size?: number; accent?: boolean }) {
   return (
-    <span className="catbadge" style={{ width: size, height: size, background: c + "26", color: c === "#FFD60A" ? "#B38F00" : c }}>
-      <CatIcon cat={cat} size={Math.round(size * 0.5)} />
+    <span className={"catbadge" + (accent ? " accent" : "")} style={{ width: size, height: size }}>
+      <CatIcon cat={cat} size={Math.round(size * 0.52)} />
     </span>
   );
+}
+
+export function StatusDot({ stage, reopened, lang = "en" }: { stage: number; reopened?: boolean; lang?: "en" | "kn" }) {
+  const label = reopened ? (lang === "kn" ? "ಮರು ತೆರೆಯಲಾಗಿದೆ" : "Reopened") : STAGES[stage][lang];
+  const cls = reopened ? "warn" : stage === 4 ? "done" : stage === 3 ? "check" : "prog";
+  return <span className={"sdot-label " + cls}><i />{label}</span>;
 }
 
 export function StatusBar({ dark = false }: { dark?: boolean }) {
@@ -40,7 +45,7 @@ export function StatusBar({ dark = false }: { dark?: boolean }) {
 
 /** Government-style verified check (gold/grey like X "government" badge). */
 export function Verified({ size = 16, onClick, tone = "gov" }: { size?: number; onClick?: () => void; tone?: "gov" | "blue" }) {
-  const fill = tone === "gov" ? "#8E9AA6" : "#1D9BF0";
+  const fill = tone === "gov" ? "#C9A227" : "#1D9BF0";
   return (
     <button className="verified" onClick={(e) => { e.stopPropagation(); onClick?.(); }} aria-label="Verified official account">
       <svg width={size} height={size} viewBox="0 0 24 24">
@@ -61,10 +66,8 @@ export function StageBar({ stage, reopened, compact }: { stage: number; reopened
   );
 }
 
-export function StatusPill({ stage, reopened, lang = "en" }: { stage: number; reopened?: boolean; lang?: "en" | "kn" }) {
-  const label = reopened ? (lang === "kn" ? "ಮರು ತೆರೆಯಲಾಗಿದೆ" : "Reopened") : STAGES[stage][lang];
-  const cls = reopened ? "warn" : stage === 4 ? "done" : stage === 3 ? "check" : "prog";
-  return <span className={"pill " + cls}>{label}</span>;
+export function StatusPill(props: { stage: number; reopened?: boolean; lang?: "en" | "kn" }) {
+  return <StatusDot {...props} />;
 }
 
 type Detent = "low" | "mid" | "high";
@@ -123,9 +126,9 @@ export function NyMark({ size = 14 }: { size?: number }) {
 export function GbaSeal({ size = 22 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" aria-label="GBA">
-      <circle cx="20" cy="20" r="19" fill="#0B3D2E" />
-      <circle cx="20" cy="20" r="15.5" fill="none" stroke="#E9C46A" strokeWidth="1.2" strokeDasharray="1.6 1.6" />
-      <text x="20" y="24" textAnchor="middle" fontSize="11" fontWeight="800" fill="#E9C46A" fontFamily="-apple-system, system-ui">GBA</text>
+      <circle cx="20" cy="20" r="19.25" fill="#161616" stroke="rgba(255,255,255,.18)" strokeWidth="1.5" />
+      <circle cx="20" cy="20" r="15" fill="none" stroke="#FCC32C" strokeOpacity=".7" strokeWidth="1" strokeDasharray="1.4 1.8" />
+      <text x="20" y="23.8" textAnchor="middle" fontSize="10.5" fontWeight="700" letterSpacing=".5" fill="#F5F5F5" fontFamily="Inter, system-ui">GBA</text>
     </svg>
   );
 }
