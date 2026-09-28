@@ -2,9 +2,23 @@
 import { ChevronRight, ShieldCheck } from "lucide-react";
 import { Report, CATEGORIES, Ward } from "@/lib/data";
 import { Lang, tr } from "@/lib/i18n";
+import { useEffect, useState } from "react";
 import { CatIcon, StageBar, StatusDot, StatusBar, FlipText } from "./ui";
 
 const FLIP_EN = ["on the road?", "with streetlights?", "with water?", "on footpaths?"];
+const HERO_IMGS = ["/img/pothole2.jpg", "/img/streetlight.jpg", "/img/water.jpg", "/img/footpath.jpg"];
+
+/** Splits into graphemes (safe for Kannada) and fades each one in or out with a stagger. */
+function Letters({ text, phase }: { text: string; phase: "in" | "out" }) {
+  const seg = typeof Intl !== "undefined" && "Segmenter" in Intl
+    ? Array.from(new (Intl as unknown as { Segmenter: new (l: string, o: { granularity: string }) => { segment: (s: string) => Iterable<{ segment: string }> } }).Segmenter("kn", { granularity: "grapheme" }).segment(text), (x) => x.segment)
+    : Array.from(text);
+  return (
+    <span className={"letters " + phase} key={text + phase} aria-label={text}>
+      {seg.map((ch, i) => <span key={i} aria-hidden style={{ animationDelay: `${i * 22}ms` }}>{ch === " " ? "\u00a0" : ch}</span>)}
+    </span>
+  );
+}
 const FLIP_KN = ["ರಸ್ತೆಯಲ್ಲಿ", "ಬೀದಿ ದೀಪದಲ್ಲಿ", "ನೀರಿನಲ್ಲಿ", "ಫುಟ್‌ಪಾತ್‌ನಲ್ಲಿ"];
 const IMPACT_EN = ["12,045 streetlights fixed", "8,310 garbage dumps cleared", "21,780 potholes filled", "3,402 water leaks stopped"];
 const IMPACT_KN = ["12,045 ಬೀದಿ ದೀಪಗಳು ಸರಿ", "8,310 ಕಸದ ರಾಶಿ ತೆರವು", "21,780 ರಸ್ತೆ ಗುಂಡಿ ಮುಚ್ಚಲಾಗಿದೆ", "3,402 ನೀರು ಸೋರಿಕೆ ನಿಂತಿದೆ"];
@@ -15,6 +29,18 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
 }) {
   const t = tr(lang);
   const kn = lang === "kn";
+  const [idx, setIdx] = useState(0);
+  const [phase, setPhase] = useState<"in" | "out">("in");
+  useEffect(() => {
+    let alive = true; const timers: ReturnType<typeof setTimeout>[] = [];
+    const cycle = () => {
+      timers.push(setTimeout(() => { if (!alive) return; setPhase("out");
+        timers.push(setTimeout(() => { if (!alive) return; setIdx((i) => (i + 1) % FLIP_EN.length); setPhase("in"); cycle(); }, 520));
+      }, 2600));
+    };
+    cycle();
+    return () => { alive = false; timers.forEach(clearTimeout); };
+  }, []);
   const needsCheck = reports.filter((r) => r.stage === 3 && !r.reopened);
   const others = reports.filter((r) => !(r.stage === 3 && !r.reopened));
   return (
@@ -32,13 +58,13 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
         </header>
 
         <button className="vfhero" onClick={() => onReport("photo")} aria-label={t("Report a problem")}>
-          <img src="/img/pothole2.jpg" alt="" className="vfh-img" />
+          {HERO_IMGS.map((src, k) => <img key={src} src={src} alt="" className={"vfh-img" + (k === idx ? " on" : "")} />)}
           <span className="vfh-shade" />
           <span className="vfh-brackets"><i /><i /><i /><i /></span>
           <span className="vfh-live"><i />{kn ? "ಕ್ಯಾಮೆರಾ" : "Camera"}</span>
           <span className="vfh-q">
-            {kn ? (<><FlipText items={FLIP_KN} className="vfh-flip" /><br />ಸಮಸ್ಯೆ ಕಾಣಿಸಿತೇ?</>)
-                : (<>See a problem<br /><FlipText items={FLIP_EN} className="vfh-flip" /></>)}
+            {kn ? (<><Letters text={FLIP_KN[idx]} phase={phase} /><br />ಸಮಸ್ಯೆ ಕಾಣಿಸಿತೇ?</>)
+                : (<>See a problem<br /><Letters text={FLIP_EN[idx]} phase={phase} /></>)}
           </span>
           <span className="vfh-bottom">
             <span className="vfh-shutter"><span /></span>
