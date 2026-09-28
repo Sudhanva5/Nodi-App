@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Anek_Kannada } from "next/font/google";
 import "./globals.css";
+import Analytics from "./providers";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const kannada = Anek_Kannada({ subsets: ["kannada", "latin"], variable: "--font-kn", display: "swap" });
@@ -16,7 +17,10 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, view
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${kannada.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Analytics />
+        {children}
+      </body>
     </html>
   );
 }

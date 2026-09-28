@@ -13,8 +13,13 @@ const TASKS: { k: TaskKey; title: string }[] = [
 export default function Page() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [done, setDone] = useState<Record<TaskKey, boolean>>({ report: false, progress: false, nearby: false, settings: false });
-  const tick = useCallback((k: TaskKey) => setDone((d) => (d[k] ? d : { ...d, [k]: true })), []);
-  const onScreen = useCallback((k: ScreenKey) => { if (k === "success") tick("report"); if (k === "detail") tick("progress"); }, [tick]);
+  const tick = useCallback((k: TaskKey) => setDone((d) => {
+    if (d[k]) return d;
+    const next = { ...d, [k]: true };
+    window.dispatchEvent(new CustomEvent("nodi-task", { detail: { task: k, done_count: Object.values(next).filter(Boolean).length } }));
+    return next;
+  }), []);
+  const onScreen = useCallback((k: ScreenKey) => { window.dispatchEvent(new CustomEvent("nodi-screen", { detail: k })); if (k === "success") tick("report"); if (k === "detail") tick("progress"); }, [tick]);
   useEffect(() => {
     const h = (e: Event) => { const d = (e as CustomEvent).detail; if (d === "incident" || d === "official") tick("nearby"); if (d === "setting") tick("settings"); };
     window.addEventListener("nodi", h); return () => window.removeEventListener("nodi", h);
