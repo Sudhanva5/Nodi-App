@@ -5,7 +5,7 @@ import NodiApp, { ScreenKey } from "@/components/NodiApp";
 const NOTES: Record<ScreenKey, { n: string; title: string; why: string[] }> = {
   home: { n: "01", title: "Home · My reports", why: [
     "One job above the fold: 'See a problem' flips through road, streetlights, water and footpaths, with a single 'Report a problem' button under it. The yellow camera button in the dock does the same thing from anywhere.",
-    "'Needs your check' comes first, with a pulsing dot. Only the citizen can close a complaint, which fixes Sahaaya's fake 'Resolved' problem.",
+    "'Check if it's fixed' comes first, with a pulsing dot. Only the citizen can close a complaint, which fixes Sahaaya's fake 'Resolved' problem.",
     "The report cards are compact, and each one shows its status, due date and a thin 5-step progress bar.",
     "Tapping the profile photo opens your ward, a link to your ward on Sahaaya, and accessibility settings: language, bigger text, read aloud and reduce motion.",
   ] },
@@ -36,9 +36,9 @@ const NOTES: Record<ScreenKey, { n: string; title: string; why: string[] }> = {
     "The timeline names real people (the engineer) and has verified badges you can tap for an explanation.",
   ] },
   nearby: { n: "04", title: "Nearby · Citizen-style live map", why: [
-    "A dark map with glowing pins for each category. The number on a pin shows how many neighbours said 'me too'.",
+    "A dark map with glowing pins for each category. The number on a pin shows how many neighbours support that complaint.",
     "The ward scorecard (fixed on time, average days, open now) holds the authority publicly accountable.",
-    "'Me too' adds your voice without filing a new complaint.",
+    "'Support' adds your name to an existing complaint, so you don't have to file a new one.",
     "The 'Official updates' tab shows verified GBA posts from X, linked to the complaints they close.",
   ] },
 };
@@ -76,7 +76,7 @@ export default function Page() {
             <li>Tap <em>Report a problem</em>, then the shutter, then <em>Send to GBA</em>.</li>
             <li>Open the pothole card, then <em>No, still there</em>.</li>
             <li>Toggle <em>Aa</em> and <em>ಕ</em> on Home.</li>
-            <li>On Nearby, drag the sheet, tap pins, tap <em>Me too</em>.</li>
+            <li>On Nearby, drag the sheet, tap pins, tap <em>Support</em>.</li>
           </ol>
         </div>
         <a className="p-link" href="/case-study">Read the case study: flow, trade-offs, metrics →</a>

@@ -60,10 +60,10 @@ export const INITIAL_REPORTS: Report[] = [
     meToo: 14,
     engineer: "S. Nagaraj, Asst. Engineer",
     timeline: [
-      { when: "Today, 11:42 AM", kind: "proof", title: "Work done", body: "GBA posted a photo of the finished repair on X. We matched it to your complaint using location and time." },
+      { when: "Today, 11:42 AM", kind: "proof", title: "Work done", body: "GBA posted a photo of the finished repair on X. We matched it to your complaint by location and time." },
       { when: "Fri, 25 Sep · 4:10 PM", kind: "assigned", title: "Assigned to S. Nagaraj", body: "Asst. Engineer, Ward 151. Expected fix by Sat, 26 Sep." },
       { when: "Thu, 24 Sep · 9:05 AM", kind: "letter", title: "Formal letter sent", body: "Emailed to the Ward 151 office and logged on Sahaaya. Ref GBA/W151/2026/4471." },
-      { when: "Thu, 24 Sep · 8:52 AM", kind: "neighbours", title: "14 neighbours added their voice", body: "More voices move a complaint up the ward's list." },
+      { when: "Thu, 24 Sep · 8:52 AM", kind: "neighbours", title: "14 neighbours supported this", body: "The more people support a complaint, the higher it goes on the ward's list." },
       { when: "Thu, 24 Sep · 8:51 AM", kind: "you", title: "You reported this", body: "Photo and location sent." },
     ],
   },

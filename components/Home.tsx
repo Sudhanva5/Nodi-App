@@ -37,7 +37,7 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
             {kn ? (<><FlipText items={FLIP_KN} className="accent" /><br />ಸಮಸ್ಯೆ ಕಾಣಿಸಿತೇ?</>)
                 : (<>See a problem<br /><FlipText items={FLIP_EN} className="accent" /></>)}
           </h2>
-          <p className="hero-sub">{kn ? "ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಕಳುಹಿಸಿ, ನಾವು ಸರಿ ಮಾಡಿಸುತ್ತೇವೆ." : "Attach photos or videos, and we'll get them fixed."}</p>
+          <p className="hero-sub">{kn ? "ಫೋಟೋ ಅಥವಾ ವಿಡಿಯೋ ಕಳುಹಿಸಿ. ನಾವು ಅದನ್ನು ನಿಮ್ಮ ವಾರ್ಡ್ ಕಚೇರಿಗೆ ತಲುಪಿಸಿ, ಸರಿಯಾಗುವವರೆಗೆ ಬೆನ್ನಟ್ಟುತ್ತೇವೆ." : "Send a photo or video. We'll take it to your ward office and keep chasing it."}</p>
           <button className="primary" onClick={() => onReport("photo")}>
             <Camera size={19} /> {t("Report a problem")}
           </button>
@@ -45,7 +45,7 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
 
         {needsCheck.length > 0 && (
           <section className="block">
-            <div className="blockhead"><h2 className="title"><span className="pulse-dot" />{t("Needs your check")}</h2></div>
+            <div className="blockhead"><h2 className="title"><span className="pulse-dot" />{t("Check if it's fixed")}</h2></div>
             <div className="stack">
               {needsCheck.map((r) => (
                 <button key={r.id} className="checkcard" onClick={() => onOpen(r.id)}>
@@ -55,8 +55,8 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
                   </div>
                   <div className="checkcard-body">
                     <div className="cc-title">{r.title}</div>
-                    <div className="cc-sub">{t("GBA says it's done. Is it?")}</div>
-                    <span className="btn-secondary">{t("Check now")}</span>
+                    <div className="cc-sub">{t("GBA says the work is done.")}</div>
+                    <span className="btn-secondary">{t("Take a look")}</span>
                   </div>
                 </button>
               ))}
@@ -87,7 +87,7 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
           </div>
         </section>
 
-        <p className="trustline"><ShieldCheck size={12} /> {t("Every report goes as a formal letter to your ward office.")}</p>
+        <p className="trustline"><ShieldCheck size={12} /> {t("Every report reaches your ward office as a formal letter.")}</p>
 
         <footer className="manifesto">
           <h2 className="mf-big">{kn ? <>ಬೆಂಗಳೂರನ್ನು<br />ಮತ್ತೆ<br />ಅದ್ಭುತಗೊಳಿಸೋಣ.</> : <>Let&apos;s make<br />Bengaluru<br />great again.</>}</h2>

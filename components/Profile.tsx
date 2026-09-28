@@ -41,11 +41,11 @@ export default function Profile({ ward, onWard, prefs, setPrefs, onClose }: {
                 <button className="pf-edit" aria-label="Change photo"><Camera size={14} /></button>
               </div>
               <h2>Ramesh K.</h2>
-              <p>+91 98xxx x4521 · {kn ? "ನಮ್ಮ ಯಾತ್ರಿ ಖಾತೆ" : "Namma Yatri account"}</p>
+              <p>+91 98xxx x4521</p>
               <div className="pf-stats">
-                <div><b>12</b><span>{kn ? "ದೂರುಗಳು" : "reported"}</span></div>
-                <div><b>9</b><span>{kn ? "ಸರಿಯಾಗಿದೆ" : "fixed"}</span></div>
-                <div><b>41</b><span>{kn ? "ನನಗೂ" : "me too"}</span></div>
+                <div><b>12</b><span>{kn ? "ನೀವು ದೂರಿತ್ತದ್ದು" : "Reported"}</span></div>
+                <div><b>9</b><span>{kn ? "ಸರಿಯಾದದ್ದು" : "Fixed"}</span></div>
+                <div><b>41</b><span>{kn ? "ಬೆಂಬಲಿಸಿದ್ದು" : "Supported"}</span></div>
               </div>
             </div>
 
@@ -85,7 +85,7 @@ export default function Profile({ ward, onWard, prefs, setPrefs, onClose }: {
               </div>
               <div className="pf-row">
                 <span className="pf-ic"><Sparkles size={17} /></span>
-                <span className="pf-main"><b>{kn ? "ಕಡಿಮೆ ಚಲನೆ" : "Reduce motion"}</b><span>{kn ? "ಅನಿಮೇಶನ್ ನಿಲ್ಲಿಸಿ" : "Stop moving text and effects"}</span></span>
+                <span className="pf-main"><b>{kn ? "ಕಡಿಮೆ ಚಲನೆ" : "Reduce motion"}</b><span>{kn ? "ಅನಿಮೇಶನ್ ನಿಲ್ಲಿಸಿ" : "Turns off animations"}</span></span>
                 <Toggle on={prefs.calm} onChange={(v) => set("calm", v)} label="Reduce motion" />
               </div>
             </div>

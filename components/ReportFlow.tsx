@@ -114,7 +114,7 @@ export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang
             <button className="field" onClick={() => setPicker(true)} disabled={scanning}>
               <span className="field-ic"><CatBadge cat={cat} size={40} accent={!scanning} /></span>
               <span className="field-main">
-                <span className="field-label">What is it</span>
+                <span className="field-label">What is it?</span>
                 <span className={"field-val" + (scanning ? " skel" : "")}>{scanning ? "\u00a0" : (lang === "kn" ? CATEGORIES[cat].kn : CATEGORIES[cat].label)}{!scanning && cat === "water" && <span className="ai-tag"><Sparkles size={10} /> Auto-detected</span>}</span>
               </span>
               <span className="field-act">Change</span>
@@ -122,7 +122,7 @@ export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang
             <div className="field">
               <span className="field-ic"><span className="catbadge" style={{ width: 40, height: 40 }}><MapPin size={20} strokeWidth={1.9} /></span></span>
               <span className="field-main">
-                <span className="field-label">Where · GPS ±5 m</span>
+                <span className="field-label">Where</span>
                 <span className="field-val">80 Feet Rd, Sony World Jn.</span>
                 <span className="field-hint">Koramangala · Ward 151 · South City Corp.</span>
               </span>
@@ -133,7 +133,7 @@ export function Confirm({ mode, lang, onBack, onSend }: { mode: Mode; lang: Lang
           {!scanning && (
             <div className="dupe">
               <div className="avatars"><i>A</i><i>S</i><i>K</i></div>
-              <div><b>3 neighbours reported this today.</b> We'll add you to the same complaint so it moves up faster.</div>
+              <div><b>3 neighbours reported this today.</b> We'll add your report to theirs, so it moves up faster.</div>
             </div>
           )}
 
@@ -235,11 +235,11 @@ export function Success({ report, onTrack, onDone, onLetter }: { report: Report;
         <div className="succ-check"><span className="ring" /><Check size={40} strokeWidth={2.6} /></div>
         <div className="overline">Complaint sent</div>
         <h1>GBA has it.</h1>
-        <p className="succ-sub">Water leaks are usually fixed within <b>1 day</b>. Expected by <b>{report.expected}</b>.</p>
+        <p className="succ-sub">GBA aims to fix water leaks within <b>1 day</b>, so expect it by <b>{report.expected}</b>.</p>
         <div className="ticket">
           <div className="ticket-row"><span>Complaint no.</span><b className="mono">{report.id}</b></div>
           <div className="ticket-row"><span>Sent to</span><b>Asst. Engineer, Ward 151</b></div>
-          <div className="ticket-row"><span>Neighbours with you</span><b>4 people</b></div>
+          <div className="ticket-row"><span>Reported by</span><b>You and 3 neighbours</b></div>
         </div>
         <button className="lettercard" onClick={onLetter}>
           <span className="lc-ic"><FileText size={20} strokeWidth={1.9} /></span>
@@ -270,7 +270,7 @@ export function Letter({ report, onClose }: { report: Report; onClose: () => voi
           <p>I wish to bring to your notice a {CATEGORIES[report.cat].label.toLowerCase()} at the above location, reported today at 9:38 AM. 4 residents have raised the same issue. A geo-tagged photograph and a voice description are attached.</p>
           <p>As per the ward's service standard, this is expected to be resolved within {CATEGORIES[report.cat].sla} day(s). I request you to kindly take action and update the status on the Sahaaya portal.</p>
           <div className="paper-photo"><img src={report.photo} alt="" /><span>12.9349° N, 77.6232° E · 27 Sep 2026, 9:38 AM</span></div>
-          <p>Yours sincerely,<br /><b>Ramesh K.</b> (resident, Ward 151)<br />via Nodi, a Namma Yatri initiative</p>
+          <p>Yours sincerely,<br /><b>Ramesh K.</b> (resident, Ward 151)<br />Sent through the Nodi app</p>
         </div>
       </div>
     </div>

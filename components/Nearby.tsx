@@ -55,6 +55,7 @@ export default function Nearby({ lang, onVerified, extraMeToo }: { lang: Lang; o
 
         {tab === "issues" ? (
           <div className="nb-list">
+            <p className="nb-hint">{lang === "kn" ? "ಇದೇ ಸಮಸ್ಯೆ ನೋಡಿದ್ದೀರಾ? ಬೆಂಬಲ ಒತ್ತಿ, ಅದು ವಾರ್ಡ್ ಪಟ್ಟಿಯಲ್ಲಿ ಮೇಲೆ ಹೋಗುತ್ತದೆ." : "Seen the same problem? Tap Support and it moves up the ward's list."}</p>
             {ordered.map((i) => <IssueRow key={i.id} i={i} lang={lang} sel={i.id === sel} mine={!!mine[i.id]} onSel={() => setSel(i.id)} onMeToo={() => setMine((m) => ({ ...m, [i.id]: !m[i.id] }))} t={t} />)}
           </div>
         ) : (
@@ -68,7 +69,7 @@ export default function Nearby({ lang, onVerified, extraMeToo }: { lang: Lang; o
                 </div>
                 <p>{p.text}</p>
                 {p.photo && <img src={p.photo} alt="" className="xp-img" />}
-                <div className="xp-foot"><span><BadgeCheck size={13} /> Closes {p.matched} Nodi complaint{p.matched > 1 ? "s" : ""}, waiting for citizens to confirm</span></div>
+                <div className="xp-foot"><span><BadgeCheck size={13} /> Linked to {p.matched} complaint{p.matched > 1 ? "s" : ""}. Waiting for the reporter{p.matched > 1 ? "s" : ""} to confirm</span></div>
               </div>
             ))}
           </div>
@@ -91,7 +92,7 @@ function IssueRow({ i, lang, sel, mine, onSel, onMeToo, t }: { i: NearbyIssue; l
       <button className={"metoo" + (mine ? " on" : "")} onClick={(e) => { e.stopPropagation(); onMeToo(); }} aria-pressed={mine}>
         <ThumbsUp size={16} strokeWidth={2} fill={mine ? "currentColor" : "none"} />
         <b>{i.meToo}</b>
-        <span>{t("Me too")}</span>
+        <span>{t("Support")}</span>
       </button>
     </div>
   );

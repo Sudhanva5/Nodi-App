@@ -35,18 +35,18 @@ Rule: only citizens can close a complaint. Silent after 72h + 2 neighbour confir
 1. Home / My reports (active reports with progress + "Needs your confirmation" card, big Report button, Aa big-text + ಕ/EN toggle).
 2. Report: camera → confirm sheet → sending (trust loader) → success.
 3. Report detail / tracking timeline with verified official proof + confirm fixed.
-4. Nearby map (dark Citizen-style map, glowing category pins, filter chips, bottom sheet with nearby issues, "Me too", ward scorecard, official action feed).
+4. Nearby map (dark Citizen-style map, glowing category pins, filter chips, bottom sheet with nearby issues, "Support", ward scorecard, official action feed).
 
 ## Metrics
 - **North star:** citizen-verified resolutions per week.
 - Funnel: camera open → submitted ≥ 80%; median time-to-report < 30 s; AI category accepted without edit ≥ 85%; 60+ users completion parity with <40.
 - Outcome: % resolved within SLA; median days to fix; reopen rate (fake-closure catch) trending down; % closures with official proof ≥ 70%; post-fix CSAT.
-- Trust/engagement: "me too" per issue (dedup), second report within 60 days, WhatsApp update open rate.
+- Trust/engagement: "Support" per issue (dedup), second report within 60 days, WhatsApp update open rate.
 - Business (Namma Yatri): Nodi → NY super-app installs/cross-sell, brand trust/NPS in Bengaluru, cost per complaint vs 1533 call centre, GBA partnership/MoU + open-data dashboard, driver engagement, road-quality data improving ETA/routing.
 - Guardrails: spam/false report %, duplicate tickets created, privacy incidents (faces/plates blurred), authority SLA breach rate.
 
 ## MVP vs future
-MVP: camera-first report (photo/video/voice), AI category + GPS ward routing, dedupe + me too, 5-stage tracker, auto formal letter, WhatsApp/push updates, citizen confirm/reopen, nearby map, Kannada/English, big text, verified official badges, X post matching with human ops in the loop.
+MVP: camera-first report (photo/video/voice), AI category + GPS ward routing, dedupe + support, 5-stage tracker, auto formal letter, WhatsApp/push updates, citizen confirm/reopen, nearby map, Kannada/English, big text, verified official badges, X post matching with human ops in the loop.
 Future: GBA officer console, automated X/Sahaaya sync via APIs, auto escalation ladder (AE→AEE→EE), Namma Yatri driver one-tap/accelerometer pothole detection, ward scorecards, WhatsApp bot + IVR reporting for feature phones, offline queue, RTI letter generator, BESCOM/BWSSB routing, public open-data API.
 
 ## Assumptions & trade-offs

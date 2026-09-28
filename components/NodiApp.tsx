@@ -25,7 +25,7 @@ function makeNew(cat: Category, voice: boolean): Report {
     expected: "Mon, 28 Sep", reportedAgo: "just now", meToo: 3,
     timeline: [
       { when: "Today, 9:39 AM", kind: "letter", title: "Formal letter sent", body: "Emailed to the Ward 151 office and logged on Sahaaya. Ref GBA/W151/2026/4611." },
-      { when: "Today, 9:38 AM", kind: "neighbours", title: "Joined 3 neighbours", body: "Same issue reported today, so it's one stronger complaint." },
+      { when: "Today, 9:38 AM", kind: "neighbours", title: "Added to 3 neighbours' report", body: "They reported the same problem today, so it's now one complaint from 4 people." },
       { when: "Today, 9:38 AM", kind: "you", title: "You reported this", body: voice ? "Photo, location and a Kannada voice note sent." : "Photo and location sent." },
     ],
   };
@@ -87,7 +87,7 @@ export default function NodiApp({ jump, onScreen }: { jump?: { key: ScreenKey; n
             setToast("Thank you. Complaint closed.");
           }}
           onReopen={() => {
-            update(detail.id, (r) => ({ ...r, stage: 2, reopened: true, expected: "Tue, 29 Sep", statusLine: "Sent to the Asst. Executive Engineer. New deadline: Tue, 29 Sep. 2 neighbours asked to check.", timeline: [{ when: "Today, 12:05 PM", kind: "reopen", title: "Reopened and escalated", body: "You said it's not fixed. Sent to M. Prakash, Asst. Executive Engineer, with a new deadline." }, ...r.timeline] }));
+            update(detail.id, (r) => ({ ...r, stage: 2, reopened: true, expected: "Tue, 29 Sep", statusLine: "Sent to the Asst. Executive Engineer with a new deadline of Tue, 29 Sep. We've asked 2 neighbours to check it too.", timeline: [{ when: "Today, 12:05 PM", kind: "reopen", title: "Reopened and escalated", body: "You said it's not fixed. Sent to M. Prakash, Asst. Executive Engineer, with a new deadline." }, ...r.timeline] }));
             setToast("Reopened and escalated");
           }} />
       )}

@@ -60,7 +60,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
         {needsCheck && (
           <section className="confirmbox">
             <h3>{t("Is it actually fixed?")}</h3>
-            <p>Only you can close this complaint. If it isn't fixed, we reopen it and take it to the senior engineer.</p>
+            <p>Only you can close this complaint. If it isn't fixed, we'll reopen it and send it to the senior engineer.</p>
             <div className="cb-btns">
               <button className="yes" onClick={onConfirm}><Check size={22} strokeWidth={3} /> {t("Yes, it's fixed")}</button>
               <button className="no" onClick={() => setAskNo(true)}><AlertTriangle size={20} strokeWidth={2.5} /> {t("No, still there")}</button>
@@ -70,7 +70,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
 
         {report.stage >= 3 && report.cat === "pothole" && (
           <section className="xpost">
-            <div className="xp-label"><BadgeCheck size={14} /> Official proof from X</div>
+            <div className="xp-label"><BadgeCheck size={14} /> GBA's post on X</div>
             <div className="xp-card">
               <div className="xp-head">
                 <span className="xp-av"><img src="/img/gba-av.svg" alt="" /></span>
@@ -79,7 +79,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
               </div>
               <p>{post.text}</p>
               <img src={post.photo} alt="" className="xp-img" />
-              <div className="xp-foot"><span>Location match 18 m</span><span>Time match 2h</span></div>
+              <div className="xp-foot"><span>18 m from your report</span><span>Posted today, 11:42 AM</span></div>
             </div>
           </section>
         )}
@@ -115,7 +115,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
             <span className="grabber" />
             <div className="as-ic"><RotateCcw size={28} strokeWidth={2.4} /></div>
             <h3>Sorry about that. We'll reopen it.</h3>
-            <p>We'll send it to the Asst. Executive Engineer with a new deadline, and ask 2 neighbours to check too. A fresh photo helps.</p>
+            <p>We'll send it to the Asst. Executive Engineer with a new deadline and ask 2 neighbours to check it too. A fresh photo helps.</p>
             <button className="primary" onClick={() => { setAskNo(false); onReopen(); }}><Camera size={20} /> Add photo and reopen</button>
             <button className="textbtn" onClick={() => { setAskNo(false); onReopen(); }}>Reopen without photo</button>
           </div>
@@ -146,7 +146,7 @@ export function VerifiedSheet({ onClose }: { onClose: () => void }) {
         <span className="grabber" />
         <div className="as-ic gov"><Verified size={40} /></div>
         <h3>Verified government account</h3>
-        <p>This badge means the account or officer belongs to the Greater Bengaluru Authority. Nodi checks every official against GBA's published staff directory and its official X handle before showing their updates here.</p>
+        <p>This badge means the person or account works for the Greater Bengaluru Authority. We check every official against GBA's staff list and its X account before we show their updates.</p>
         <p className="fine">Updates without this badge are from other citizens.</p>
         <button className="primary" onClick={onClose}>Got it</button>
       </div>

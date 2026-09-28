@@ -487,7 +487,7 @@ figure { margin: 0; }
 .viewall { display: inline-flex; align-items: center; gap: 2px; font-size: calc(var(--k) * 14px); font-weight: 600; color: var(--t2); padding: 6px 2px 6px 8px; min-height: 36px; }
 .stack { display: flex; flex-direction: column; gap: 12px; margin: 0 16px; }
 
-/* Needs your check: no accent border, content stacked */
+/* Check if it's fixed: no accent border, content stacked */
 .checkcard { display: block; width: 100%; background: var(--s1); border-radius: 20px; overflow: hidden; text-align: left; box-shadow: 0 0 0 1px var(--line) inset; }
 .checkcard-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; height: 150px; }
 .checkcard-imgs figure { position: relative; overflow: hidden; }
@@ -616,3 +616,4 @@ figure { margin: 0; }
 
 /* Reduce motion (accessibility setting) */
 .nodi.calm *, .nodi.calm *::before, .nodi.calm *::after { animation: none !important; transition: none !important; }
+.nb-hint { margin: 6px 0 2px; font-size: calc(var(--k) * 12.5px); color: var(--t3); line-height: 1.45; }

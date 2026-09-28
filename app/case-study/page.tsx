@@ -277,7 +277,7 @@ const roadmap: { label: string; tone: string; items: string[] }[] = [
       "Automatic formal letter to ward engineer",
       "WhatsApp and push updates",
       "Citizen confirm and reopen",
-      "Nearby map with me too",
+      "Nearby map with a Support button",
       "Kannada and English, big text, Listen",
       "Verified badges, X proof matched by ops",
     ],
@@ -329,7 +329,7 @@ const metricGroups: { title: string; items: [string, string][] }[] = [
   {
     title: "Trust and engagement",
     items: [
-      ["Me too per issue", "Dedup health"],
+      ["Supporters per issue", "Dedup health"],
       ["Second report within 60 days", "Share"],
       ["WhatsApp update open rate", "Share"],
     ],

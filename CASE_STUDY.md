@@ -144,7 +144,7 @@ Ramesh is the person I designed for. If he can do it, Priya can do it faster.
 | Automatic formal letter to the ward engineer | Offline queue for poor network | Public open-data API, in line with Namma Yatri's open data |
 | WhatsApp and push updates | | |
 | Citizen confirm and reopen | | |
-| Nearby map with "me too" | | |
+| Nearby map with "Support" | | |
 | Kannada and English, big text, Listen | | |
 | Verified badges and X proof matched by ops | | |
 
@@ -168,7 +168,7 @@ All targets below are my starting goals for a pilot, not measured numbers. I'd r
 - Satisfaction rating after a fix.
 
 **Trust and engagement**
-- "Me too" count per issue, which also measures how well deduplication works.
+- "Support" count per issue, which also measures how well deduplication works.
 - People who file a second report within 60 days.
 - Open rate of WhatsApp status updates.
 
