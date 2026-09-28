@@ -38,7 +38,6 @@ People do report problems. The app just doesn't tell them what happened next, an
 - **Where it runs.** A mobile app, so accessibility is built in from day one: light and dark mode, Kannada, and bigger text.
 - **Who sends the letters.** A small Nodi team on the backend writes a formal letter to GBA for every report, on behalf of the resident.
 - **How GBA's work shows up.** An AI agent watches GBA's Twitter account and matches their posts to open complaints.
-- **No cross-selling.** Nodi is only for civic complaints. It does not promote Namma Yatri rides.
 
 ## How Nodi works
 

@@ -101,7 +101,6 @@ export default function CaseStudy() {
               <li><b>Where it runs.</b> A mobile app, so accessibility is built in from day one: light and dark mode, Kannada, and bigger text.</li>
               <li><b>Who sends the letters.</b> A small Nodi team on the backend writes a formal letter to GBA for every report, on behalf of the resident. I haven&apos;t designed the letter process in detail yet.</li>
               <li><b>How GBA&apos;s work shows up.</b> An AI agent watches GBA&apos;s Twitter account and matches their posts to open complaints.</li>
-              <li><b>No cross-selling.</b> Nodi is only for civic complaints. It does not promote Namma Yatri rides.</li>
             </ul>
           </section>
 
