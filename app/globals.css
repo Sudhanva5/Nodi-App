@@ -939,3 +939,5 @@ figure { margin: 0; }
 .privacy { margin: 18px 0 4px; }
 .confirm-media { height: 250px; }
 .scan { padding-bottom: 40px; }
+.confirm .privacy { justify-content: center; align-items: center; text-align: center; margin: 18px 12px 4px; }
+.confirm .privacy svg { margin-top: 0; }
