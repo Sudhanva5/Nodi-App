@@ -7,7 +7,7 @@ import Home from "./Home";
 import Detail, { VerifiedSheet } from "./Detail";
 import Nearby from "./Nearby";
 import Profile, { Prefs } from "./Profile";
-import { Capture, Confirm, Sending, Success, Letter, Attachment } from "./ReportFlow";
+import { Capture, Confirm, Sending, Success, Letter, Attachment, Resolved } from "./ReportFlow";
 
 export type ScreenKey = "home" | "capture" | "confirm" | "sending" | "success" | "detail" | "nearby";
 type Mode = "photo" | "video" | "voice";
@@ -45,6 +45,7 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
   const [letterFor, setLetterFor] = useState<string | null>(null);
   const [verified, setVerified] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [resolvedId, setResolvedId] = useState<string | null>(null);
   const t = tr(lang);
 
   const screen: ScreenKey = flow ?? (detailId ? "detail" : tab);
@@ -55,7 +56,7 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
 
   useEffect(() => {
     if (!jump) return;
-    setLetterFor(null); setVerified(false); setProfile(false);
+    setLetterFor(null); setVerified(false); setProfile(false); setResolvedId(null);
     switch (jump.key) {
       case "home": setFlow(null); setDetailId(null); setTab("home"); break;
       case "nearby": setFlow(null); setDetailId(null); setTab("nearby"); break;
@@ -85,7 +86,7 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
         <Detail report={detail} lang={lang} autoRead={prefs.readAloud} onBack={() => setDetailId(null)} onLetter={() => setLetterFor(detail.id)} onVerified={() => setVerified(true)}
           onConfirm={() => {
             update(detail.id, (r) => ({ ...r, stage: 4, statusLine: "", timeline: [{ when: "Just now", kind: "fixed", title: "Fixed", body: "You confirmed it's fixed, so the complaint is closed." }, ...r.timeline] }));
-            setToast("Thank you. Complaint closed.");
+            setResolvedId(detail.id);
           }}
           onReopen={() => {
             update(detail.id, (r) => ({ ...r, stage: 2, reopened: true, expected: "Tue, 29 Sep", statusLine: "New deadline: Tue, 29 Sep.", timeline: [{ when: "Just now", kind: "reopen", title: "Reopened", body: "You said it isn't fixed, so we sent it back to GBA with a new deadline of Tue, 29 Sep." }, ...r.timeline] }));
@@ -110,6 +111,9 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
         <div className="modal-screen"><Success report={newReport} onLetter={() => setLetterFor(NEW_ID)} onDone={() => { setFlow(null); setDetailId(null); setTab("home"); }} onTrack={() => { setFlow(null); setDetailId(NEW_ID); }} /></div>
       )}
 
+      {resolvedId && reports.find((r) => r.id === resolvedId) && (
+        <div className="modal-screen"><Resolved report={reports.find((r) => r.id === resolvedId)!} onDone={() => setResolvedId(null)} onReport={() => { setResolvedId(null); setDetailId(null); setMode("photo"); setFlow("capture"); }} /></div>
+      )}
       {letterFor && <Letter report={reports.find((r) => r.id === letterFor)!} onClose={() => setLetterFor(null)} />}
       {verified && <VerifiedSheet onClose={() => setVerified(false)} />}
       {profile && <Profile ward={ward} onWard={(w) => { setWard(w); setToast(`Ward set to ${w.name}`); }} prefs={prefs} setPrefs={setPrefs} onClose={() => setProfile(false)} />}

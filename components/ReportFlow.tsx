@@ -282,3 +282,34 @@ export function Letter({ report, onClose }: { report: Report; onClose: () => voi
     </div>
   );
 }
+
+/* ---------------- Resolved (after "Yes, it's fixed") ---------------- */
+export function Resolved({ report, onDone, onReport }: { report: Report; onDone: () => void; onReport: () => void }) {
+  return (
+    <div className="screen resolved">
+      <StatusBar />
+      <div className="rs-glow" />
+      <div className="rs-body">
+        <div className="rs-burst" aria-hidden>{Array.from({ length: 14 }).map((_, i) => <i key={i} style={{ ["--r" as string]: `${i * (360 / 14)}deg`, animationDelay: `${0.25 + (i % 3) * 0.05}s` } as React.CSSProperties} />)}</div>
+        <div className="rs-check"><Check size={40} strokeWidth={2.6} /></div>
+        <div className="rs-id mono">{report.id}</div>
+        <h1>It&apos;s fixed.<br />Thank you, Ramesh.</h1>
+        <p className="rs-sub">You confirmed the repair, so this complaint is now closed.</p>
+        {report.after && (
+          <div className="rs-ba">
+            <figure><img src={report.photo} alt="Before" /><figcaption>Before</figcaption></figure>
+            <figure><img src={report.after} alt="After" /><figcaption>After</figcaption></figure>
+          </div>
+        )}
+        <div className="rs-stats">
+          <div><b>3 days</b><span>from report to fix</span></div>
+          <div><b>You</b><span>closed it</span></div>
+        </div>
+      </div>
+      <div className="rs-foot">
+        <button className="primary" onClick={onDone}>Done</button>
+        <button className="textbtn" onClick={onReport}>Report another problem</button>
+      </div>
+    </div>
+  );
+}
