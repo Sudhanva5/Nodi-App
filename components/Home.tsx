@@ -54,9 +54,11 @@ export default function Home({ reports, lang, ward, onProfile, onReport, onOpen 
                     <figure><img src={r.after} alt="After" /><figcaption>{t("After")}</figcaption></figure>
                   </div>
                   <div className="checkcard-body">
-                    <div className="cc-title">{r.title}</div>
-                    <div className="cc-sub">{t("GBA says the work is done.")}</div>
-                    <span className="btn-secondary">{t("Take a look")}</span>
+                    <div className="cc-text">
+                      <div className="cc-title">{r.title}</div>
+                      <div className="cc-sub">{t("GBA says the work is done.")}</div>
+                    </div>
+                    <span className="cc-cta">{t("Take a look")}</span>
                   </div>
                 </button>
               ))}

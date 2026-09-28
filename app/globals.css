@@ -944,3 +944,9 @@ figure { margin: 0; }
 .confirm .privacy { display: block; }
 .confirm .privacy svg { display: inline-block; vertical-align: -2px; margin: 0 4px 0 0; }
 .nb-foot { justify-content: flex-end; }
+.checkcard-body { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 14px 14px 16px; }
+.cc-text { min-width: 0; }
+.checkcard .cc-sub { margin: 2px 0 0; }
+.cc-cta { flex-shrink: 0; display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; background: var(--yellow); color: var(--ink); font-weight: 600; font-size: calc(var(--k) * 14.5px); letter-spacing: -.01em; white-space: nowrap; }
+.cc-cta { background: var(--s2); color: var(--t1); box-shadow: 0 0 0 1px var(--line2) inset; }
+.nodi.light .cc-cta { background: var(--s2); }
