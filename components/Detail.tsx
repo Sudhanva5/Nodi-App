@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ChevronLeft, Share, Volume2, Square, FileText, Check, RotateCcw, Camera, AlertTriangle, MapPin, Play } from "lucide-react";
-import { Report, STAGES, OFFICIAL_POSTS } from "@/lib/data";
+import { ChevronLeft, Share, Volume2, VolumeX, Square, FileText, Check, RotateCcw, Camera, AlertTriangle, MapPin, Play, Pause, Maximize2, Mic } from "lucide-react";
+import { Report, STAGES, OFFICIAL_POSTS, TimelineItem } from "@/lib/data";
+
+type Media = NonNullable<TimelineItem["media"]>[number];
 import { Lang, tr } from "@/lib/i18n";
 import { StatusBar, StageBar, Verified, useSpeak, Tweet } from "./ui";
 
@@ -13,6 +15,7 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
   const hasProof = !!report.after;
   const [view, setView] = useState<"before" | "after">(hasProof ? "after" : "before");
   const [askNo, setAskNo] = useState(false);
+  const [viewer, setViewer] = useState<{ items: Media[]; index: number } | null>(null);
   const { speak, speaking } = useSpeak();
   const post = OFFICIAL_POSTS[0];
   const needsCheck = report.stage === 3 && !report.reopened;
@@ -83,19 +86,18 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
               <li key={i} className={"tl-" + e.kind + (i === 0 ? " latest" : "")}>
                 <span className="tl-dot" />
                 <div className="tl-body">
-                  <div className="tl-time">{e.when}</div>
-                  <div className="tl-stage">{e.title}</div>
+                  <div className="tl-row"><span className="tl-stage">{e.title}</span><span className="tl-time">{e.when}</span></div>
                   {e.body && <p className="tl-text">{e.body}</p>}
                   {e.thumb && <img src={e.thumb} alt="" className="tl-thumb" />}
                   {e.media && (
                     <div className="tl-media">
                       {e.media.map((m, k) => m.type === "voice" ? (
-                        <span key={k} className="tl-voice"><Play size={12} fill="currentColor" /><i className="tl-wave">{Array.from({ length: 14 }).map((_, j) => <b key={j} style={{ height: 4 + ((j * 7) % 12) }} />)}</i>{m.dur}</span>
+                        <button key={k} className="tl-voice" onClick={() => setViewer({ items: e.media!, index: k })} aria-label="Play voice note"><Play size={12} fill="currentColor" /><i className="tl-wave">{Array.from({ length: 14 }).map((_, j) => <b key={j} style={{ height: 4 + ((j * 7) % 12) }} />)}</i>{m.dur}</button>
                       ) : (
-                        <span key={k} className={"tl-mthumb" + (m.type === "video" ? " vid" : "")}>
+                        <button key={k} className={"tl-mthumb" + (m.type === "video" ? " vid" : "")} onClick={() => setViewer({ items: e.media!, index: k })} aria-label={m.type === "video" ? "Play video" : "View photo"}>
                           <img src={m.src} alt="" />
                           {m.type === "video" && <><span className="tl-play"><Play size={12} fill="currentColor" /></span><em>{m.dur}</em></>}
-                        </span>
+                        </button>
                       ))}
                     </div>
                   )}
@@ -107,6 +109,8 @@ export default function Detail({ report, lang, autoRead, onBack, onConfirm, onRe
         </section>
         <div style={{ height: 40 }} />
       </div>
+
+      {viewer && <MediaSheet items={viewer.items} index={viewer.index} onIndex={(i) => setViewer({ ...viewer, index: i })} onClose={() => setViewer(null)} />}
 
       {askNo && (
         <div className="modal-scrim" onClick={() => setAskNo(false)}>
@@ -134,6 +138,78 @@ export function VerifiedSheet({ onClose }: { onClose: () => void }) {
         <h3>Verified GBA official</h3>
         <p>This person works for the Greater Bengaluru Authority. We check every official against GBA&apos;s staff list before we show their updates.</p>
         <button className="primary" onClick={onClose}>Got it</button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Media viewer (bottom sheet) ---------- */
+const toSecs = (d?: string) => { const [m, s] = (d ?? "0:10").split(":").map(Number); return m * 60 + s; };
+const fmt = (n: number) => `${Math.floor(n / 60)}:${String(Math.floor(n % 60)).padStart(2, "0")}`;
+
+function MediaSheet({ items, index, onIndex, onClose }: { items: Media[]; index: number; onIndex: (i: number) => void; onClose: () => void }) {
+  const m = items[index];
+  const total = toSecs(m.dur);
+  const [playing, setPlaying] = useState(false);
+  const [pos, setPos] = useState(0);
+  const [muted, setMuted] = useState(false);
+  useEffect(() => { setPlaying(false); setPos(0); }, [index]);
+  useEffect(() => {
+    if (!playing) return;
+    const t = setInterval(() => setPos((p) => { if (p + 0.25 >= total) { setPlaying(false); return total; } return p + 0.25; }), 250);
+    return () => clearInterval(t);
+  }, [playing, total]);
+  const label = m.type === "photo" ? "Photo" : m.type === "video" ? "Video" : "Voice note";
+  const pct = total ? (pos / total) * 100 : 0;
+  const seek = (e: React.PointerEvent<HTMLDivElement>) => { const r = e.currentTarget.getBoundingClientRect(); setPos(Math.max(0, Math.min(total, ((e.clientX - r.left) / r.width) * total))); };
+
+  return (
+    <div className="modal-scrim" onClick={onClose}>
+      <div className="mediasheet" onClick={(e) => e.stopPropagation()}>
+        <div className="ms-bar">
+          <span className="grabber" />
+          <b>{label} <span>{index + 1} of {items.length}</span></b>
+          <button className="pf-done" onClick={onClose}>Done</button>
+        </div>
+
+        <div className="ms-stage">
+          {m.type === "photo" && <img src={m.src} alt="" className="ms-photo" />}
+          {m.type === "video" && (
+            <div className="ms-video">
+              {!playing && pos === 0 && <button className="ms-bigplay" onClick={() => setPlaying(true)} aria-label="Play"><Play size={30} fill="currentColor" /></button>}
+              <div className="ms-controls">
+                <button onClick={() => { if (pos >= total) setPos(0); setPlaying((p) => !p); }} aria-label={playing ? "Pause" : "Play"}>{playing ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" />}</button>
+                <span className="ms-t">{fmt(pos)}</span>
+                <div className="ms-scrub" onPointerDown={seek}><i style={{ width: `${pct}%` }} /><b style={{ left: `${pct}%` }} /></div>
+                <span className="ms-t">{fmt(total)}</span>
+                <button onClick={() => setMuted((x) => !x)} aria-label={muted ? "Unmute" : "Mute"}>{muted ? <VolumeX size={18} /> : <Volume2 size={18} />}</button>
+                <button aria-label="Full screen"><Maximize2 size={17} /></button>
+              </div>
+            </div>
+          )}
+          {m.type === "voice" && (
+            <div className="ms-voice">
+              <span className="ms-mic"><Mic size={26} /></span>
+              <div className="ms-vwave">{Array.from({ length: 42 }).map((_, j) => <b key={j} className={(j / 42) * 100 < pct ? "on" : ""} style={{ height: 8 + ((j * 13) % 34) }} />)}</div>
+              <div className="ms-vrow">
+                <button className="ms-vplay" onClick={() => { if (pos >= total) setPos(0); setPlaying((p) => !p); }} aria-label={playing ? "Pause" : "Play"}>{playing ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}</button>
+                <span className="ms-t">{fmt(pos)} / {fmt(total)}</span>
+              </div>
+              <p className="ms-trans">"ಬೆಳಗ್ಗೆಯಿಂದ ನೀರು ಹರಿಯುತ್ತಿದೆ, ಫುಟ್‌ಪಾತ್ ಮುಳುಗಿದೆ"<span>Water has been flowing since morning, the footpath is under water.</span></p>
+            </div>
+          )}
+        </div>
+
+        {items.length > 1 && (
+          <div className="ms-strip">
+            {items.map((it, i) => (
+              <button key={i} className={"ms-th" + (i === index ? " on" : "")} onClick={() => onIndex(i)} aria-label={it.type}>
+                {it.type === "voice" ? <Mic size={18} /> : <img src={it.src} alt="" />}
+                {it.type === "video" && <span className="ms-thplay"><Play size={10} fill="currentColor" /></span>}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
