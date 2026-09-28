@@ -950,3 +950,59 @@ figure { margin: 0; }
 .cc-cta { flex-shrink: 0; display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 10px; background: var(--yellow); color: var(--ink); font-weight: 600; font-size: calc(var(--k) * 14.5px); letter-spacing: -.01em; white-space: nowrap; }
 .cc-cta { background: var(--s2); color: var(--t1); box-shadow: 0 0 0 1px var(--line2) inset; }
 .nodi.light .cc-cta { background: var(--s2); }
+
+/* =========================================================
+   v14 · Nearby: photo pins, reported list, incident sheet
+   ========================================================= */
+.ppin { position: relative; width: 52px; height: 52px; border-radius: 14px; padding: 2px; background: var(--yellow); box-shadow: 0 6px 18px rgba(0,0,0,.55); cursor: pointer; transition: transform .2s var(--ease); }
+.ppin img { width: 100%; height: 100%; border-radius: 12px; object-fit: cover; display: block; }
+.ppin.check { background: var(--amber); }
+.ppin.done { background: var(--green); }
+.ppin.sel { transform: scale(1.18); box-shadow: 0 0 0 3px #fff, 0 10px 26px rgba(0,0,0,.6); }
+.ppin-ic { position: absolute; right: -6px; bottom: -6px; width: 22px; height: 22px; border-radius: 50%; background: #13131B; color: var(--yellow); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1.5px var(--yellow); }
+.ppin.done .ppin-ic { color: var(--green); box-shadow: 0 0 0 1.5px var(--green); }
+.ipin { width: 28px; height: 28px; border-radius: 50%; background: #13131B; color: var(--yellow); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1.5px var(--yellow), 0 4px 10px rgba(0,0,0,.5); cursor: pointer; transition: transform .2s var(--ease); }
+.ipin span { display: flex; }
+.ipin.done { color: var(--green); box-shadow: 0 0 0 1.5px var(--green), 0 4px 10px rgba(0,0,0,.5); }
+.ipin.sel { transform: scale(1.3); }
+.me-pin { width: 40px; height: 40px; border-radius: 50%; background: rgba(59,140,255,.18); display: flex; align-items: center; justify-content: center; animation: glow 2.6s ease-in-out infinite; }
+.me-pin span { width: 16px; height: 16px; border-radius: 50%; background: #3B8CFF; border: 3px solid #fff; box-shadow: 0 0 14px rgba(59,140,255,.9); }
+.recenter { position: absolute; z-index: 7; right: 16px; width: 44px; height: 44px; border-radius: 50%; background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: var(--t1); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px var(--line) inset, 0 6px 16px rgba(0,0,0,.35); transition: bottom .4s var(--ease); }
+
+.nb-area { padding: 2px 4px 2px; }
+.nb-area h2 { margin: 0; font-size: calc(var(--k) * 26px); font-weight: 700; letter-spacing: -.03em; }
+.nb-area p { margin: 3px 0 0; font-size: calc(var(--k) * 14px); color: var(--t3); }
+.nearby .segctl { margin: 14px 0 4px; }
+
+.rep-list { display: flex; flex-direction: column; }
+.rep { display: flex; gap: 14px; align-items: flex-start; width: 100%; padding: 14px 0; text-align: left; border-bottom: 1px solid var(--line); }
+.rep.sel { background: rgba(255,183,57,.06); margin: 0 -12px; padding: 14px 12px; width: calc(100% + 24px); border-radius: 14px; border-bottom-color: transparent; }
+.rep-main { flex: 1; min-width: 0; }
+.rep-where { display: flex; align-items: center; gap: 4px; font-size: calc(var(--k) * 12.5px); font-weight: 600; color: var(--yellow-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rep-title { margin-top: 3px; font-size: calc(var(--k) * 16.5px); font-weight: 600; letter-spacing: -.02em; line-height: 1.25; color: var(--t1); }
+.rep-desc { margin-top: 3px; font-size: calc(var(--k) * 13.5px); color: var(--t2); line-height: 1.4; }
+.rep-meta { display: flex; align-items: center; gap: 10px; margin-top: 8px; font-size: calc(var(--k) * 12.5px); color: var(--t3); }
+.rep-thumb { position: relative; flex-shrink: 0; width: 76px; height: 76px; }
+.rep-thumb img { width: 100%; height: 100%; border-radius: 12px; object-fit: cover; box-shadow: 0 0 0 1px var(--line); }
+.rep-thumb span { position: absolute; left: 5px; bottom: 5px; width: 22px; height: 22px; border-radius: 7px; background: rgba(10,10,10,.55); backdrop-filter: blur(10px); color: #fff; display: flex; align-items: center; justify-content: center; }
+
+.incident { width: 100%; max-height: 90%; overflow-y: auto; background: var(--sheet); border-radius: 28px 28px 0 0; box-shadow: 0 -1px 0 var(--line2); animation: slideup .38s var(--ease); scrollbar-width: none; }
+.incident::-webkit-scrollbar { display: none; }
+.inc-photo { position: relative; height: 230px; }
+.inc-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 28px 28px 0 0; }
+.inc-photo::after { content: ""; position: absolute; inset: 0; border-radius: 28px 28px 0 0; background: linear-gradient(180deg, rgba(0,0,0,.35), transparent 35%, transparent 60%, var(--sheet) 100%); }
+.inc-photo .grabber { position: absolute; z-index: 2; top: 8px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,.55); }
+.inc-close { position: absolute; z-index: 2; top: 14px; right: 14px; width: 36px; height: 36px; }
+.inc-photo .glasschip { z-index: 2; top: 14px; left: 14px; }
+.inc-body { padding: 4px 20px 36px; }
+.inc-body h3 { margin: 6px 0 0; font-size: calc(var(--k) * 22px); font-weight: 700; letter-spacing: -.025em; line-height: 1.2; }
+.inc-desc { margin: 6px 0 0; font-size: calc(var(--k) * 15px); color: var(--t2); line-height: 1.45; }
+.inc-status { margin-top: 16px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.inc-status .rep-meta { margin: 0 0 12px; }
+.inc-status .stagebar .seg { height: 3px; }
+.inc-h { margin: 20px 0 2px; font-size: calc(var(--k) * 18px); font-weight: 700; letter-spacing: -.02em; }
+.inc-tl { padding: 0 !important; }
+.inc-note { margin: 12px 0 0; text-align: center; font-size: 12px; color: var(--t3); }
+.nodi.light .ppin-ic, .nodi.light .ipin { background: #13131B; }
+.recenter.hide { opacity: 0; pointer-events: none; }
+.recenter { transition: bottom .4s var(--ease), opacity .2s; }

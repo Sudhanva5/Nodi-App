@@ -33,11 +33,11 @@ const NOTES: Record<ScreenKey, { n: string; title: string; why: string[] }> = {
     "'Is it actually fixed?' If the answer is no, the complaint reopens and goes back to GBA with a new deadline.",
     "The timeline names real people (the engineer) and has verified badges you can tap for an explanation.",
   ] },
-  nearby: { n: "04", title: "Nearby · Citizen-style live map", why: [
-    "A dark map with glowing pins for each category. The number on a pin shows how many neighbours support that complaint.",
-    "The ward scorecard (fixed on time, average days, open now) holds the authority publicly accountable.",
-    "'Support' adds your name to an existing complaint, so you don't have to file a new one.",
-    "The 'Official updates' tab shows verified GBA posts from X, linked to the complaints they close.",
+  nearby: { n: "04", title: "Nearby · What's happening around you", why: [
+    "Inspired by Citizen: a dark live map where reports show up as photo thumbnails, with small icon pins for the rest. It shows at a glance that people nearby are reporting things too.",
+    "Tapping any pin or row opens an incident sheet. It's read-only: the photo, the stage, and a short timeline of what GBA has done so far.",
+    "'Reported' lists every incident in the ward, newest first, in the same format as Citizen: distance and street, title, one line, and when it was last updated.",
+    "'Official updates' shows only GBA's posts on Twitter. Seeing residents report and GBA respond side by side builds trust.",
   ] },
 };
 
@@ -79,7 +79,7 @@ export default function Page() {
             <li>Tap <em>Report a problem</em>, then the shutter, then <em>Send to GBA</em>.</li>
             <li>Open the pothole card, then <em>No, still there</em>.</li>
             <li>Toggle <em>Aa</em> and <em>ಕ</em> on Home.</li>
-            <li>On Nearby, drag the sheet, tap pins, tap <em>Support</em>.</li>
+            <li>On Nearby, tap a photo pin, then switch to <em>Official updates</em>.</li>
           </ol>
         </div>
         <a className="p-link" href="/case-study">Read the case study: flow, trade-offs, metrics →</a>

@@ -1,4 +1,4 @@
-export type Category = "pothole" | "garbage" | "streetlight" | "water" | "drain" | "tree" | "other";
+export type Category = "pothole" | "garbage" | "streetlight" | "water" | "drain" | "tree" | "footpath" | "other";
 
 export const CATEGORIES: Record<Category, { label: string; kn: string; color: string; sla: number }> = {
   pothole: { label: "Pothole", kn: "ರಸ್ತೆ ಗುಂಡಿ", color: "#FF9F0A", sla: 3 },
@@ -7,6 +7,7 @@ export const CATEGORIES: Record<Category, { label: string; kn: string; color: st
   water: { label: "Water leak", kn: "ನೀರು ಸೋರಿಕೆ", color: "#64D2FF", sla: 1 },
   drain: { label: "Blocked drain", kn: "ಚರಂಡಿ", color: "#BF5AF2", sla: 2 },
   tree: { label: "Fallen tree", kn: "ಬಿದ್ದ ಮರ", color: "#34C759", sla: 1 },
+  footpath: { label: "Broken footpath", kn: "ಹಾಳಾದ ಫುಟ್‌ಪಾತ್", color: "#FF9F0A", sla: 5 },
   other: { label: "Something else", kn: "ಬೇರೆ", color: "#8E8E93", sla: 3 },
 };
 
@@ -115,47 +116,56 @@ export type NearbyIssue = {
   id: string;
   cat: Category;
   title: string;
+  desc: string;
   place: string;
   dist: string;
   stage: number;
-  meToo: number;
   photo: string;
   lat: number;
   lng: number;
   ago: string;
+  pin: "photo" | "icon";
+  due?: string;
 };
 
 export const NEARBY: NearbyIssue[] = [
-  { id: "n1", cat: "pothole", title: "Deep pothole at junction", place: "Sony World Junction", dist: "350 m", stage: 2, meToo: 38, photo: "/img/pothole.jpg", lat: 12.9372, lng: 77.6268, ago: "2h" },
-  { id: "n2", cat: "water", title: "Pipe burst on footpath", place: "80 Feet Road", dist: "120 m", stage: 0, meToo: 3, photo: "/img/water.jpg", lat: 12.9349, lng: 77.6232, ago: "25m" },
-  { id: "n3", cat: "garbage", title: "Garbage piling up", place: "1st Cross, 6th Block", dist: "600 m", stage: 4, meToo: 22, photo: "/img/garbage.jpg", lat: 12.9395, lng: 77.6209, ago: "8d" },
-  { id: "n4", cat: "streetlight", title: "Two lights out", place: "17th Main, 6th Block", dist: "450 m", stage: 2, meToo: 6, photo: "/img/streetlight.jpg", lat: 12.9381, lng: 77.6178, ago: "2d" },
-  { id: "n5", cat: "pothole", title: "Pothole near school gate", place: "4th Block, Jyoti Nivas", dist: "900 m", stage: 1, meToo: 17, photo: "/img/pothole.jpg", lat: 12.9318, lng: 77.6159, ago: "5h" },
-  { id: "n6", cat: "water", title: "Water flooding lane", place: "Ejipura Main Rd", dist: "1.1 km", stage: 3, meToo: 9, photo: "/img/water.jpg", lat: 12.9403, lng: 77.6305, ago: "1d" },
-  { id: "n7", cat: "garbage", title: "Dump behind bus stop", place: "Forum bus stop, Hosur Rd", dist: "1.3 km", stage: 2, meToo: 31, photo: "/img/garbage.jpg", lat: 12.9302, lng: 77.6286, ago: "3d" },
-  { id: "n8", cat: "streetlight", title: "Flickering streetlight", place: "8th Block, 3rd Main", dist: "250 m", stage: 0, meToo: 2, photo: "/img/streetlight.jpg", lat: 12.9336, lng: 77.6211, ago: "40m" },
-  { id: "n9", cat: "pothole", title: "Road caved in", place: "Koramangala 1st Block", dist: "1.6 km", stage: 3, meToo: 44, photo: "/img/pothole.jpg", lat: 12.9285, lng: 77.6338, ago: "4d" },
+  { id: "n1", pin: "photo", cat: "pothole", title: "Cluster of potholes at the junction", desc: "Large potholes across two lanes near the signal.", place: "Sony World Junction", dist: "350 m", stage: 2, photo: "/img/pothole2.jpg", lat: 12.9372, lng: 77.6268, ago: "2h", due: "Tue, 29 Sep" },
+  { id: "n2", pin: "photo", cat: "water", title: "Pipe burst on the footpath", desc: "Water has been flowing since morning.", place: "80 Feet Road", dist: "120 m", stage: 0, photo: "/img/water.jpg", lat: 12.9349, lng: 77.6232, ago: "25m" },
+  { id: "n3", pin: "photo", cat: "garbage", title: "Garbage dump cleared", desc: "The corner was cleaned by the waste team.", place: "1st Cross, 6th Block", dist: "600 m", stage: 4, photo: "/img/cleared.jpg", lat: 12.9395, lng: 77.6209, ago: "8d" },
+  { id: "n4", pin: "photo", cat: "streetlight", title: "Two streetlights out", desc: "The stretch goes dark after 7 pm.", place: "17th Main, 6th Block", dist: "450 m", stage: 2, photo: "/img/streetlight.jpg", lat: 12.9381, lng: 77.6178, ago: "2d", due: "Mon, 28 Sep" },
+  { id: "n5", pin: "photo", cat: "tree", title: "Fallen tree blocking the road", desc: "Half the road is blocked after last night's rain.", place: "4th Block, 2nd Cross", dist: "900 m", stage: 3, photo: "/img/tree.jpg", lat: 12.9318, lng: 77.6159, ago: "5h" },
+  { id: "n6", pin: "photo", cat: "drain", title: "Storm drain overflowing", desc: "Dirty water is spilling onto the road.", place: "Ejipura Main Rd", dist: "1.1 km", stage: 1, photo: "/img/drain.jpg", lat: 12.9403, lng: 77.6305, ago: "1d" },
+  { id: "n7", pin: "photo", cat: "garbage", title: "Garbage piling up at the bus stop", desc: "Bags dumped along the wall for three days.", place: "Forum bus stop, Hosur Rd", dist: "1.3 km", stage: 2, photo: "/img/garbage2.jpg", lat: 12.9302, lng: 77.6286, ago: "3d", due: "Mon, 28 Sep" },
+  { id: "n8", pin: "photo", cat: "footpath", title: "Broken footpath near the college", desc: "Missing slabs force people onto the road.", place: "Jyoti Nivas College Rd", dist: "800 m", stage: 1, photo: "/img/footpath.jpg", lat: 12.9336, lng: 77.6181, ago: "6h" },
+  { id: "n9", pin: "icon", cat: "pothole", title: "Pothole near the school gate", desc: "Deep pothole right at the drop-off point.", place: "5th Block, 1st Main", dist: "700 m", stage: 1, photo: "/img/pothole.jpg", lat: 12.9342, lng: 77.6258, ago: "4h" },
+  { id: "n10", pin: "icon", cat: "streetlight", title: "Flickering streetlight", desc: "Keeps switching on and off at night.", place: "8th Block, 3rd Main", dist: "250 m", stage: 0, photo: "/img/streetlight.jpg", lat: 12.9361, lng: 77.6212, ago: "40m" },
+  { id: "n11", pin: "icon", cat: "pothole", title: "Road caved in", desc: "A section of the road has sunk.", place: "Koramangala 1st Block", dist: "1.6 km", stage: 3, photo: "/img/pothole2.jpg", lat: 12.9285, lng: 77.6338, ago: "4d" },
+  { id: "n12", pin: "icon", cat: "garbage", title: "Overflowing bin", desc: "The public bin has not been emptied.", place: "Near Koramangala Club", dist: "1.0 km", stage: 2, photo: "/img/garbage.jpg", lat: 12.9328, lng: 77.6297, ago: "1d", due: "Sun, 27 Sep" },
+  { id: "n13", pin: "icon", cat: "water", title: "Waterlogging after rain", desc: "Water collects at the dip every time it rains.", place: "6th Block, 5th Cross", dist: "650 m", stage: 4, photo: "/img/water.jpg", lat: 12.9412, lng: 77.6239, ago: "6d" },
+  { id: "n14", pin: "icon", cat: "drain", title: "Blocked drain", desc: "Silt and plastic are blocking the flow.", place: "7th Block, 2nd Main", dist: "1.2 km", stage: 2, photo: "/img/drain.jpg", lat: 12.9371, lng: 77.6143, ago: "2d", due: "Wed, 30 Sep" },
+  { id: "n15", pin: "icon", cat: "streetlight", title: "Dark stretch on the service road", desc: "No working lights for about 200 m.", place: "Inner Ring Rd service road", dist: "1.4 km", stage: 1, photo: "/img/streetlight.jpg", lat: 12.9427, lng: 77.6281, ago: "9h" },
+  { id: "n16", pin: "icon", cat: "footpath", title: "Missing slab on the footpath", desc: "An open gap next to the bus stop.", place: "60 Feet Rd", dist: "500 m", stage: 0, photo: "/img/footpath.jpg", lat: 12.9315, lng: 77.6215, ago: "1h" },
+  { id: "n17", pin: "icon", cat: "tree", title: "Hanging branch over the road", desc: "A broken branch is hanging over two-wheeler lanes.", place: "3rd Cross, 8th Block", dist: "300 m", stage: 2, photo: "/img/tree.jpg", lat: 12.9359, lng: 77.6249, ago: "7h", due: "Mon, 28 Sep" },
+  { id: "n18", pin: "icon", cat: "pothole", title: "Potholes filled", desc: "The stretch was resurfaced this week.", place: "100 Feet Rd link", dist: "1.8 km", stage: 4, photo: "/img/fixed.jpg", lat: 12.9449, lng: 77.6322, ago: "5d" },
 ];
 
+/** Informative log of what GBA has done, derived from the stage. */
+export function gbaLog(i: NearbyIssue) {
+  const log: { when: string; stage: string; text: string }[] = [
+    { when: `${i.ago} ago`, stage: "Reported", text: "A resident reported this with photos and the exact location." },
+  ];
+  if (i.stage >= 1) log.push({ when: "Soon after", stage: "Letter sent", text: "A formal letter went to the Ward 151 office and was logged on Sahaaya." });
+  if (i.stage >= 2) log.push({ when: "Next day", stage: "Assigned", text: `The ward engineer was assigned${i.due ? ` and asked to fix it by ${i.due}` : ""}.` });
+  if (i.stage >= 3) log.push({ when: "Later", stage: "Work done", text: "GBA marked the work as done and shared a photo." });
+  if (i.stage >= 4) log.push({ when: "Last", stage: "Fixed", text: "The resident who reported it confirmed it's fixed." });
+  return log.reverse();
+}
+
 export const OFFICIAL_POSTS = [
-  {
-    id: "p1",
-    handle: "@GBA_office",
-    name: "Greater Bengaluru Authority",
-    time: "1h",
-    text: "Pothole filling works completed at 5th Cross, Koramangala 8th Block. Bengaluru South City Corporation. #PotholeFreeBengaluru",
-    photo: "/img/fixed.jpg",
-    matched: 1,
-  },
-  {
-    id: "p2",
-    handle: "@GBA_office",
-    name: "Greater Bengaluru Authority",
-    time: "5h",
-    text: "Garbage black spots cleared across Ward 151 this morning. Please use the door-to-door collection vehicle.",
-    photo: "",
-    matched: 3,
-  },
+  { id: "p1", handle: "@GBA_office", name: "Greater Bengaluru Authority", time: "11:42 AM · Sep 27, 2026", text: "Pothole filling works completed at 5th Cross, Koramangala 8th Block. Bengaluru South City Corporation. #PotholeFreeBengaluru", photo: "/img/fixed.jpg", likes: 212, matched: 1 },
+  { id: "p2", handle: "@GBA_office", name: "Greater Bengaluru Authority", time: "7:10 AM · Sep 27, 2026", text: "Garbage black spots cleared across Ward 151 this morning. Please hand over waste only to the door-to-door collection vehicle. #CleanBengaluru", photo: "/img/cleared.jpg", likes: 148, matched: 3 },
+  { id: "p3", handle: "@GBA_office", name: "Greater Bengaluru Authority", time: "6:05 PM · Sep 26, 2026", text: "Tree-fall teams are clearing roads in Koramangala and Ejipura after heavy rain. Report fallen trees on 1533. #BengaluruRains", photo: "", likes: 96, matched: 2 },
+  { id: "p4", handle: "@GBA_office", name: "Greater Bengaluru Authority", time: "10:30 AM · Sep 26, 2026", text: "Streetlight repair drive underway in Bengaluru South City Corporation. 84 non-working lights fixed this week.", photo: "", likes: 131, matched: 4 },
 ];
 
 export type Ward = { id: string; name: string; kn: string; corp: string; open: number };

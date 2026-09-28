@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { Construction, Trash2, Lightbulb, Droplets, Waves, TreePine, CircleHelp } from "lucide-react";
+import { Construction, Trash2, Lightbulb, Droplets, Waves, TreePine, CircleHelp, Footprints } from "lucide-react";
 import { Category, CATEGORIES, STAGES } from "@/lib/data";
 
 export function CatIcon({ cat, size = 18, color }: { cat: Category; size?: number; color?: string }) {
@@ -12,6 +12,7 @@ export function CatIcon({ cat, size = 18, color }: { cat: Category; size?: numbe
     case "water": return <Droplets {...p} />;
     case "drain": return <Waves {...p} />;
     case "tree": return <TreePine {...p} />;
+    case "footpath": return <Footprints {...p} />;
     default: return <CircleHelp {...p} />;
   }
 }

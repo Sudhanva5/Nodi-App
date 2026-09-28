@@ -80,7 +80,7 @@ export default function NodiApp({ jump, onScreen, theme, onTheme }: { jump?: { k
           onReport={(m) => { setMode(m ?? "photo"); setFlow("capture"); }}
           onOpen={(id) => setDetailId(id)} />
       )}
-      {screen === "nearby" && <Nearby lang={lang} onVerified={() => setVerified(true)} extraMeToo={{}} />}
+      {screen === "nearby" && <Nearby lang={lang} />}
       {screen === "detail" && detail && (
         <Detail report={detail} lang={lang} autoRead={prefs.readAloud} onBack={() => setDetailId(null)} onLetter={() => setLetterFor(detail.id)} onVerified={() => setVerified(true)}
           onConfirm={() => {
