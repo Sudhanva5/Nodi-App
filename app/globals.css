@@ -941,3 +941,5 @@ figure { margin: 0; }
 .scan { padding-bottom: 40px; }
 .confirm .privacy { justify-content: center; align-items: center; text-align: center; margin: 18px 12px 4px; }
 .confirm .privacy svg { margin-top: 0; }
+.confirm .privacy { display: block; }
+.confirm .privacy svg { display: inline-block; vertical-align: -2px; margin: 0 4px 0 0; }
