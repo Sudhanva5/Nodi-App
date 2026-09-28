@@ -1,6 +1,9 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import s from "./case-study.module.css";
+import { NOTES } from "@/lib/notes";
+
+const SCREEN_ORDER = ["home", "capture", "confirm", "sending", "success", "detail", "nearby"] as const;
 
 export const metadata = {
   title: "Nodi case study | Namma Yatri design assignment",
@@ -146,7 +149,7 @@ const personas = [
     name: "Assistant Engineer",
     role: "GBA ward office (secondary)",
     situation: "Receives complaints from many channels.",
-    need: "Clean, deduplicated, geo-tagged tickets with photos.",
+    need: "Clean, geo-tagged tickets with photos and videos.",
     primary: false,
   },
 ];
@@ -180,7 +183,7 @@ const tradeoffs = [
   [
     "One confirm sheet instead of a multi-step form.",
     "Less room for detail up front.",
-    "Smart defaults plus an optional voice note. Detail can be added later.",
+    "Smart defaults, plus extra photos, videos and an optional note that can be typed or spoken.",
   ],
 ];
 
@@ -198,8 +201,8 @@ const decisions = [
     "People don't think in department names. If the AI is wrong, one tap fixes it instead of blocking the report.",
   ],
   [
-    "Duplicates become \"add your voice\".",
-    "Fourteen tickets for one pothole help nobody. Joining gives the citizen the same tracking and the engineer one clean ticket with a count of how many people care.",
+    "More evidence is one tap away.",
+    "A + tile under the first photo adds other angles or a short video, and Additional details takes a typed or spoken note. The engineer knows what they're walking into before the site visit.",
   ],
   [
     "Tracking looks like a delivery tracker.",
@@ -215,22 +218,22 @@ const decisions = [
   ],
   [
     "Official proof is labelled with its source.",
-    "A verified @GBA_office post marked \"Pulled from X\" is stronger than a status change. The label keeps us honest when a post is vague or staged.",
+    "GBA's own post appears as a Twitter-identical embed, with the real GBA logo and an Open on Twitter link. A post you can check is stronger than a status change, and it stays on the complaint even after a reopen.",
   ],
   [
-    "Dark map for Nearby, light screens elsewhere.",
-    "Coloured pins read at a glance on a dark map. Tracking and reading stay light and high contrast for older eyes.",
+    "One dark system, with a light mode.",
+    "Near-black surfaces and a single yellow accent keep the app calm, and photo pins stand out on the dark map. Anyone who reads better on white can switch to light mode in Profile.",
   ],
   [
-    "Nearby shows authority action, not only problems.",
-    "A map of only potholes makes reporting feel pointless. A ward scorecard and recent fixes show that reports lead somewhere.",
+    "Nearby is read-only and shows both sides.",
+    "Reported lists what residents have raised, and Official updates shows only GBA's own posts. Seeing both next to each other is the point. There's nothing to tap except to read, so it can't turn into a complaints forum.",
   ],
 ];
 
 const trust = [
   [
     "Powered-by loader",
-    "On Send you see who carries the complaint: Namma Yatri, then GBA Ward 151. A name instead of a spinner.",
+    "On Send you see who carries the complaint: Namma Yatri, then GBA Ward 151, with the real GBA logo. A name instead of a spinner.",
   ],
   [
     "Formal letter",
@@ -241,12 +244,12 @@ const trust = [
     "Official accounts and engineers get a check. Tap it to see what verified means and who checked it.",
   ],
   [
-    "X proof",
-    "Posts from @GBA_office about that spot appear in the timeline with photo, badge and a \"Pulled from X\" label.",
+    "GBA's post on Twitter",
+    "When @GBA_office posts about that spot, the post shows up on the complaint exactly as it looks on Twitter, with Open on Twitter underneath.",
   ],
   [
     "Citizen-only closure",
-    "Nothing is Fixed until the reporter says so, or 72 hours of silence plus two neighbours confirm it.",
+    "Nothing is Fixed until the reporter says so. If they say it isn't, the complaint reopens and goes back to GBA with a new deadline.",
   ],
   [
     "Named people and dates",
@@ -255,14 +258,14 @@ const trust = [
 ];
 
 const elders = [
-  ["Aa", "Big text toggle on Home. One tap scales the whole app."],
-  ["Mic", "Hold to speak in Kannada, English or Hindi, plus a Voice only mode."],
-  ["Listen", "Every status update can be read aloud."],
-  ["ಕ / EN", "Language switch on Home. Search and voice understand BBMP and GBA."],
+  ["Aa", "Bigger text in Profile, under Accessibility. One switch scales the whole app."],
+  ["Mic", "Additional details can be spoken instead of typed. Hold the mic and Nodi types it out."],
+  ["Listen", "Every status update can be read aloud, or read automatically when a complaint opens."],
+  ["ಕ / EN", "Kannada or English in Profile. Kannada is set in Anek Kannada so it stays easy to read."],
   ["1", "One obvious primary action per screen. Secondary options are text links."],
   ["44pt", "Touch targets of 44pt or more, per Apple's HIG. Main buttons are much larger."],
   ["WhatsApp", "Updates arrive where elders already read messages."],
-  ["1533", "The helpline is one tap away on the tracking screen."],
+  ["Motion", "Reduce motion in Profile stops the flipping text and animations."],
 ];
 
 const roadmap: { label: string; tone: string; items: string[] }[] = [
@@ -270,16 +273,16 @@ const roadmap: { label: string; tone: string; items: string[] }[] = [
     label: "Now (MVP)",
     tone: s.now,
     items: [
-      "Camera-first report: photo, video or voice",
+      "Camera-first report: photo or video",
+      "Extra photos and videos, plus a typed or spoken note",
       "AI category guess and GPS-to-ward routing",
-      "Duplicate detection and add your voice",
       "Five-stage tracker with owners and dates",
       "Automatic formal letter to ward engineer",
       "WhatsApp and push updates",
-      "Citizen confirm and reopen",
-      "Nearby map with a Support button",
-      "Kannada and English, big text, Listen",
-      "Verified badges, X proof matched by ops",
+      "Citizen confirm, reopen sends it back to GBA",
+      "Nearby map of reported incidents and GBA posts",
+      "Kannada and English, bigger text, read aloud, light and dark",
+      "Verified badges, GBA posts matched by ops",
     ],
   },
   {
@@ -288,8 +291,8 @@ const roadmap: { label: string; tone: string; items: string[] }[] = [
     items: [
       "GBA officer console for ward engineers",
       "Automatic Sahaaya and X API sync",
-      "Auto escalation ladder: AE, AEE, EE",
-      "Ward scorecards on the map",
+      "Duplicate detection, so one pothole is one ticket",
+      "Alerts for new reports in your ward",
       "Offline queue for poor network",
     ],
   },
@@ -329,7 +332,7 @@ const metricGroups: { title: string; items: [string, string][] }[] = [
   {
     title: "Trust and engagement",
     items: [
-      ["Supporters per issue", "Dedup health"],
+      ["Reports with extra photos or videos", "Share"],
       ["Second report within 60 days", "Share"],
       ["WhatsApp update open rate", "Share"],
     ],
@@ -369,16 +372,12 @@ const risks = [
     "Citizen confirmation covers it, but saying \"not fixed\" has to feel calm, not like a fight with the government.",
   ],
   [
-    "Neighbour confirmation can be gamed",
-    "Two confirmations is a guess that needs abuse checks and real data.",
+    "Mixed-language spoken notes",
+    "Kannada, English and Hindi in one sentence is hard to transcribe. Engineers may need the audio as well as the text.",
   ],
   [
-    "Mixed-language voice notes",
-    "Kannada, English and Hindi in one sentence is hard to transcribe. Engineers may need the audio.",
-  ],
-  [
-    "Silence after 72 hours",
-    "Auto-closing when the reporter goes quiet could feel like the old problem returning. Needs testing.",
+    "Reporters who never come back",
+    "Only the reporter can close a complaint, so some will sit at Work done forever. I'd test a reminder first, then a neutral close with the proof attached.",
   ],
 ];
 
@@ -420,19 +419,19 @@ function FlowDiagram() {
         <div className={s.laneLabel}>Report, about 20 seconds</div>
         <Node n={{ t: "Home", d: "Big yellow Report a problem", kind: "start" }} />
         <Down label="tap" />
-        <Node n={{ t: "Camera", d: "Photo / Video / Voice only" }} />
+        <Node n={{ t: "Camera", d: "Photo or video" }} />
         <Down label="snap" />
         <div className={s.row3}>
           <Node n={{ t: "Category guess", d: "Pothole, looks large", kind: "auto" }} />
           <Node n={{ t: "GPS to ward", d: "5th Cross, Ward 151", kind: "auto" }} />
-          <Node n={{ t: "Duplicate check", d: "14 neighbours nearby", kind: "auto" }} />
+          <Node n={{ t: "Extra evidence", d: "+ photos, videos, a note" }} />
         </div>
         <Down />
-        <Node n={{ t: "One confirm sheet", d: "Photo, chip, location, optional voice note" }} />
+        <Node n={{ t: "One confirm page", d: "Category, location, extras" }} />
         <Down label="send" />
         <Node n={{ t: "Powered-by loader", d: "Namma Yatri, delivered to GBA Ward 151" }} />
         <Down />
-        <Node n={{ t: "Success", d: "NODI-24519, letter sent, expected date", kind: "good" }} />
+        <Node n={{ t: "Sent", d: "NODI-24611, letter sent, expected date", kind: "good" }} />
       </div>
 
       <div className={s.lane}>
@@ -445,20 +444,20 @@ function FlowDiagram() {
           <li><b>5</b>You confirm</li>
         </ol>
         <Down />
-        <Node n={{ t: "Is it actually fixed?", d: "After-photo + @GBA_office post", kind: "decision" }} />
+        <Node n={{ t: "Is it actually fixed?", d: "After photo + GBA post on Twitter", kind: "decision" }} />
         <div className={s.branch}>
           <div className={s.branchCol}>
             <Down label="yes" />
             <Node n={{ t: "Fixed", d: "Closed by the citizen", kind: "good" }} />
             <p className={s.branchNote}>
-              Also closes after 72h of silence plus 2 neighbour confirmations.
+              Only the reporter can close it.
             </p>
           </div>
           <div className={s.branchCol}>
             <Down label="no" />
             <Node n={{ t: "Reopen", kind: "bad" }} />
             <Down />
-            <Node n={{ t: "Escalate to AEE", d: "Neighbours asked to verify", kind: "bad" }} />
+            <Node n={{ t: "Back to GBA", d: "New deadline, same timeline", kind: "bad" }} />
             <div className={s.loop}>Back to Assigned</div>
           </div>
         </div>
@@ -568,6 +567,32 @@ export default function CaseStudy() {
           plain-language stages, and the citizen has the last word.
         </p>
         <FlowDiagram />
+      </section>
+
+      <section className={s.section}>
+        <h2 className={s.h2}>Screen by screen</h2>
+        <p>
+          What each screen in the prototype is doing, and why. The prototype
+          runs in dark and light mode; the reasons are the same in both.
+        </p>
+        <ol className={s.screens}>
+          {SCREEN_ORDER.map((k) => {
+            const n = NOTES[k];
+            return (
+              <li key={k} className={s.screen}>
+                <div className={s.screenHead}>
+                  <span className={s.screenNum}>{n.n}</span>
+                  <h3>{n.title}</h3>
+                </div>
+                <ul>
+                  {n.why.map((w) => (
+                    <li key={w}>{w}</li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ol>
       </section>
 
       <section className={s.section}>
@@ -686,14 +711,14 @@ export default function CaseStudy() {
           <li>Report the pothole in this photo. Time to Send, hesitations, trust in the category guess.</li>
           <li>You already reported this. What&apos;s happening? Can they name the stage and the owner?</li>
           <li>The city says it&apos;s fixed, but it isn&apos;t. Do they find &quot;No, not fixed&quot; and understand what follows?</li>
-          <li>Elders only: the same report without typing, using big text and voice.</li>
+          <li>Elders only: the same report without typing, using bigger text and the mic.</li>
         </ol>
         <div className={s.bar}>
           <strong>Success bar for round one</strong>
           <p>
             At least 8 of 10 people report the pothole without help, and elders
-            finish at close to the commuter rate. If elders fall behind, voice
-            and big text move ahead of everything else on the roadmap.
+            finish at close to the commuter rate. If elders fall behind, spoken
+            notes and bigger text move ahead of everything else on the roadmap.
           </p>
         </div>
       </section>

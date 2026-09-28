@@ -1,6 +1,6 @@
 .page {
-  --y: #fcc32c;
-  --ink: #111111;
+  --y: #ffb739;
+  --ink: #13131b;
   --ink2: #3a3a3c;
   --muted: #6e6e73;
   --line: #e5e5ea;
@@ -12,7 +12,7 @@
   max-width: 760px;
   margin: 0 auto;
   padding: 24px 20px 80px;
-  font-family: var(--font-inter), var(--font-kn), -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Noto Sans Kannada", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", var(--font-kn), var(--font-inter), "Segoe UI", Roboto, sans-serif;
   color: var(--ink);
   background: var(--bg);
   font-size: 17px;
@@ -791,4 +791,54 @@
   .navMeta {
     display: none;
   }
+}
+
+
+/* Screen by screen */
+.screens {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.screen {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px 14px;
+}
+.screenHead {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.screenHead h3 {
+  margin: 0;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.screenNum {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: var(--y);
+  padding: 3px 7px;
+  border-radius: 6px;
+}
+.screen ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.screen li {
+  margin: 0 0 6px;
+  color: var(--ink2);
+  line-height: 1.55;
+  font-size: 15px;
+}
+.screen li::marker {
+  color: var(--muted);
 }
