@@ -5,7 +5,7 @@ import PhoneClip from "./PhoneClip";
 
 export const metadata: Metadata = {
   title: "Nodi · Case study",
-  description: "How I designed Nodi, a free helper app by Namma Yatri that makes Bengaluru's civic complaints easy to report and easy to track.",
+  description: "Introducing Nodi, a free helper app by Namma Yatri for frictionless civic complaints in Bengaluru.",
 };
 
 const SECTIONS = [
@@ -21,10 +21,10 @@ const SECTIONS = [
 ];
 
 const REVIEWS = [
-  { name: "Shreyas B S", date: "4 Aug 2026", text: "Name sake app. Report any complaint in the app, they will just close it as per their wish. No resolution. Ticket closing option should be given to the person who raised the complaint along with work completion photo..." },
-  { name: "sharath shanker", date: "23 Jun 2026", text: "I have not seen any visible update since registering an issue about the road condition...there is no timeline shared, no status update..no plan shared with me... the road has got worse even more now." },
-  { name: "ZH Javali", date: "14 Jan 2026", text: "The 'submit' button doesn't work even after we fill up the entire form without skipping anything. Plenty of money is spent on these apps, but the system sucks even then." },
-  { name: "Khadija Thumbal", date: "2 May 2026", text: "Filling all the complaint details was so long after that once everything was done the submit button was not working even after clicking and waiting so many times..." },
+  { img: "/img/reviews/rp.png", name: "R P", text: "lot of bugs 1. At my complaint, it is showing as no data even though there are several complaints. 2. No option from BBMP staff to update evidence before closing the ticket. 3. No option to upload both video and image while raising a complaint. 4. No Notification to user 5. overall app is not maintained at all." },
+  { img: "/img/reviews/gagan-rai.png", name: "Gagan Rai", text: "I kept complaining about wet waste vehicle not being arrived and also about 2 roads with potholes and roads full of stones. Same as others mentioned, they close it without any resolution." },
+  { img: "/img/reviews/sharath-shanker.png", name: "sharath shanker", text: "I have not seen any visible update since registering an issue about the road condition...there is no timeline shared, no status update." },
+  { img: "/img/reviews/tathagata-saha.png", name: "Tathagata Saha", text: "it fails to identify location on the map automatically and complaints raised here not addressed. They simply delete the records as well. I will uninstall app." },
 ];
 
 const NEWS = [
@@ -41,7 +41,7 @@ export default function CaseStudy() {
       <header className={s.hero}>
         <div className={s.heroText}>
           <div className={s.eyebrow}>Namma Yatri · Product design assignment</div>
-          <h1>How I designed Nodi, a helper app that makes civic complaints in Bengaluru easy to report and easy to trust</h1>
+          <h1>Introducing Nodi: frictionless civic complaints for Bengaluru</h1>
           <a className={s.cta} href={PROTOTYPE} target="_blank" rel="noreferrer">Open the prototype ↗</a>
         </div>
         <img src="/img/cs-hero.jpg" alt="Three screens of the Nodi app: tracking a pothole, the home screen and the Nearby map" className={s.heroImg} />
@@ -80,15 +80,14 @@ export default function CaseStudy() {
               ))}
             </div>
             <h3>What people say on the Play Store</h3>
-            <div className={s.reviews}>
+            <div className={s.reviewShots}>
               {REVIEWS.map((r) => (
-                <div key={r.name} className={s.review}>
-                  <p>{r.text}</p>
-                  <span className={s.reviewer}>{r.name} · {r.date}</span>
-                </div>
+                <figure key={r.name} className={s.reviewShot}>
+                  <img src={r.img} alt={`1-star Google Play review by ${r.name}: ${r.text}`} loading="lazy" />
+                </figure>
               ))}
             </div>
-            <p className={s.caption}>Verbatim reviews from the Namma Bengaluru (Sahaaya 2.0) listing on Google Play.</p>
+            <p className={s.caption}>1-star reviews from the Namma Bengaluru (Sahaaya 2.0) listing on Google Play, June to September 2026.</p>
             <div className={s.callout}>
               <b>So, the brief for Nodi:</b> make reporting take seconds, show every step of the fix, and only close a complaint when the person who reported it says it&apos;s done.
             </div>

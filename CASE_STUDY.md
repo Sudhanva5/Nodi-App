@@ -1,4 +1,4 @@
-# How I designed Nodi, a helper app that makes civic complaints in Bengaluru easy to report and easy to trust
+# Introducing Nodi: frictionless civic complaints for Bengaluru
 
 Namma Yatri · Product design assignment · Product Designer · iOS · Concept and prototype · 2026
 
@@ -20,13 +20,15 @@ People do report problems. The app just doesn't tell them what happened next, an
 - "Bengaluru residents are frustrated as the BBMP Sahaaya 2.0 grievance app marks complaints as resolved without action." ([Times of India, 2024](https://timesofindia.indiatimes.com/city/bengaluru/bengalurus-bbmp-sahaaya-20-app-fails-to-address-civic-complaints/articleshow/115392024.cms))
 - GBA's planned Sahaya 3.0 "will also allow citizens to reopen complaints that they believe have not been satisfactorily resolved." ([The Hindu, 2026](https://www.thehindu.com/news/cities/bangalore/sahaya-30-gba-to-develop-upgraded-portal-for-civic-grievances/article71448055.ece))
 
-Verbatim Play Store reviews:
+1-star Play Store reviews (screenshots in `public/img/reviews/`):
 
-> "Name sake app. Report any complaint in the app, they will just close it as per their wish. No resolution. Ticket closing option should be given to the person who raised the complaint along with work completion photo..." (Shreyas B S, Aug 2026)
+> "No option from BBMP staff to update evidence before closing the ticket. 3. No option to upload both video and image while raising a complaint. 4. No Notification to user" (R P, 12 Sep 2026)
 
-> "I have not seen any visible update since registering an issue about the road condition...there is no timeline shared, no status update..no plan shared with me..." (sharath shanker, Jun 2026)
+> "Same as others mentioned, they close it without any resolution. App is just to show that they are all digitally sorting things." (Gagan Rai, 5 Sep 2026)
 
-> "The 'submit' button doesn't work even after we fill up the entire form without skipping anything." (ZH Javali, Jan 2026)
+> "I have not seen any visible update since registering an issue about the road condition...there is no timeline shared, no status update." (sharath shanker, 23 Jun 2026)
+
+> "it fails to identify location on the map automatically and complaints raised here not addressed. They simply delete the records as well." (Tathagata Saha, 14 Sep 2026)
 
 **So, the brief for Nodi:** make reporting take seconds, show every step of the fix, and only close a complaint when the person who reported it says it's done.
 
