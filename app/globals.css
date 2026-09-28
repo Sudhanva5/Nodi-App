@@ -1048,3 +1048,17 @@ html:has(.demo), body:has(.demo) { background: transparent !important; overflow:
 .cl-list li.done b { color: var(--t2); text-decoration: line-through; text-decoration-color: var(--t4); }
 .cl-list p { margin: 4px 0 0; font-size: 13px; line-height: 1.5; color: var(--t3); }
 @media (max-width: 900px) { .checklist { display: none; } }
+
+/* =========================================================
+   v15 · Yellow diet: one yellow thing per screen (the camera FAB)
+   ========================================================= */
+.hero-glow { background: radial-gradient(circle, rgba(255,183,57,.07), transparent 65%) !important; }
+.hero .primary { background: var(--t1); color: var(--bg); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.flip.accent { color: var(--t1); opacity: .62; }
+.tabpill button.on { color: var(--t1) !important; background: rgba(255,255,255,.12); }
+.nodi.light .tabpill button.on .lucide { color: var(--t1); }
+.nodi.light .tabpill button.on { background: rgba(19,19,27,.07); }
+.home .stagebar .seg.on, .home .stagebar .seg.now { background: var(--t2); }
+.home .stagebar .seg.now::after { display: none; }
+.home .sdot-label.prog i { background: var(--t2); box-shadow: 0 0 0 3px rgba(128,128,128,.14); }
+.nodi.light .hero-glow { background: radial-gradient(circle, rgba(255,183,57,.12), transparent 65%) !important; }
