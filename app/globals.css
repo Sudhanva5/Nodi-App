@@ -823,3 +823,12 @@ figure { margin: 0; }
 .tl-wave { display: inline-flex; align-items: center; gap: 2px; height: 16px; }
 .tl-wave b { width: 2px; border-radius: 1px; background: var(--t2); }
 .d-scroll { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18px); mask-image: linear-gradient(to bottom, transparent 0, #000 18px); padding-top: 4px; }
+
+/* v10.1 · lighter progressive blur, bottom 34% only */
+.pblur { height: 34%; }
+.pblur i:nth-child(1) { backdrop-filter: blur(.5px); -webkit-backdrop-filter: blur(.5px); }
+.pblur i:nth-child(2) { backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px); }
+.pblur i:nth-child(3) { backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+.pblur i:nth-child(4) { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.pblur i:nth-child(5) { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.d-hero-shade { background: linear-gradient(180deg, rgba(0,0,0,.45) 0%, transparent 22%, transparent 58%, color-mix(in srgb, var(--bg) 40%, transparent) 78%, color-mix(in srgb, var(--bg) 85%, transparent) 92%, var(--bg) 100%) !important; }
