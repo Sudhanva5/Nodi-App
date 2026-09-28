@@ -1062,3 +1062,7 @@ html:has(.demo), body:has(.demo) { background: transparent !important; overflow:
 .home .stagebar .seg.now::after { display: none; }
 .home .sdot-label.prog i { background: var(--t2); box-shadow: 0 0 0 3px rgba(128,128,128,.14); }
 .nodi.light .hero-glow { background: radial-gradient(circle, rgba(255,183,57,.12), transparent 65%) !important; }
+
+/* v16 · type scale down ~7% (iOS default size); Bigger text still scales up */
+.nodi { --k: .93; }
+.nodi.big { --k: 1.1; }
